@@ -12,7 +12,7 @@ def index():
 
 @app.route('/', methods=['POST'])
 def process_login(): 
-	model.connect_to_db()
+	#model.connect_to_db()
 	username = request.form.get('username')
 	password = request.form.get('password')
 	return redirect(url_for('index'))
