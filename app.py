@@ -1,10 +1,10 @@
 from flask import Flask, render_template, request, redirect, url_for
-#from flask.ext.sqlalchemy import SQLAlchemy
+from flask.ext.sqlalchemy import SQLAlchemy
 import model
 
 app = Flask(__name__)
-#app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://localhost/mrscutrona.db'
-#db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+db = SQLAlchemy(app)
 
 @app.route('/')
 def index():
