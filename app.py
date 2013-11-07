@@ -104,15 +104,6 @@ def show_blog(author_id):
 def show_post(post_id):
 	post = model.get_post_by_id(post_id)
 	return render_template('post.html', post=post, user=current_user)
-
-# @app.route('/blog/<int:author_id>/<int:post_id>', methods=['POST'])
-# @login-required
-# def comment():
-# 	return jasonify({
-# 		'comment': model.add_comment(
-# 			request.form['']
-# 			)
-# 		})
 ########## end login-not-required views ##########
 
 ########## login-required views ##########
@@ -127,6 +118,15 @@ def show_posts():
 def show_grades():
 	grades = model.get_grades_by_user_id(current_user.id)
 	return render_template('mygrades.html',grades=grades,user=current_user)
+
+@app.route('/post/<int:post_id>', methods=['POST'])
+@login_required
+def comment(post_id):
+	return jasonify({
+		'comment': model.add_comment(
+			current_user.id,
+			post_id,
+			request.form['content'])})
 ########## end login-required views ##########
 
 if __name__ == "__main__":
