@@ -6,6 +6,7 @@ from flask.ext.login import UserMixin
 import os 
 import config 
 import bcrypt 
+import datetime
 
 engine = create_engine(config.DB_URI, echo=False)
 session = scoped_session(sessionmaker(bind=engine,autocommit=False,autoflush=False))
@@ -99,6 +100,11 @@ def get_grades_by_user_id(user_id):
 
 def get_posts():
 	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
+
+def add_comment(author_id,post_id,content):
+	new_comment = Comment(timestamp=datetime.datetime.now(),author_id=author_id,post_id=post_id,content=content)
+	session.add(new_comment)
+	session.commit()
 
 ########### FUNCTIONS ###########
 
