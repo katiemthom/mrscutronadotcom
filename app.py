@@ -126,7 +126,7 @@ def comment(post_id):
 		'comment': model.add_comment(
 			current_user.id,
 			post_id,
-			request.form['content'])})
+			form.comment.data)})
 ########## end login-required views ##########
 
 if __name__ == "__main__":

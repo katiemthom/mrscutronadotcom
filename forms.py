@@ -7,3 +7,6 @@ class LoginForm(Form):
 class ContactForm(Form):
 	page = TextField('Page', [validators.Required()])
 	bug = TextAreaField('Bug', [validators.Required()])
+
+class CommentForm(Form):
+	comment = TextAreaField('Comment', [validators.Required()])
