@@ -66,7 +66,7 @@ def show_notes():
 @app.route('/blogs')
 def show_blogs():
 	posts = model.get_posts()
-	
+
 	return render_template('blogs.html', user=current_user, posts=posts)
 
 @app.route('/classes')
@@ -94,10 +94,10 @@ def send_bug():
 		mail.send(msg)
 		return redirect('/reportbug')
 
-@app.route('/blog')
-def show_blog():
-	posts = model.get_posts_by_user_id(1)
-	author = model.get_user_by_id(1)
+@app.route('/blog/<int:author_id>')
+def show_blog(author_id):
+	posts = model.get_posts_by_user_id(author_id)
+	author = model.get_user_by_id(author_id)
 	return render_template('blog.html', posts=posts, user=current_user, author=author)
 ########## end login-not-required views ##########
 

@@ -50,7 +50,7 @@
 
 <div class='container'>
     {% for post in posts %}
-        <a href="#"><h1>{{post.timestamp}} {{post.user.first_name}}</h1></a>
+        <a href="{{url_for('show_blog', author_id=post.user.id)}}"><h1>{{post.timestamp}} {{post.user.first_name}}</h1></a>
         <p>{{post.content}}</p>
     {% endfor %}
 </div>	
