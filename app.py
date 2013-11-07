@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
 from flask.ext.login import LoginManager, login_required, login_user, current_user, logout_user
 from model import User, session
 from flask.ext.mail import Message, Mail 
@@ -99,6 +99,20 @@ def show_blog(author_id):
 	posts = model.get_posts_by_user_id(author_id)
 	author = model.get_user_by_id(author_id)
 	return render_template('blog.html', posts=posts, user=current_user, author=author)
+
+@app.route('post/<int:post_id>')
+def show_post(post_id):
+	post = model.get_post_by_id(post_id)
+	return render_template('post.html', post=post, user=current_user)
+
+# @app.route('/blog/<int:author_id>/<int:post_id>', methods=['POST'])
+# @login-required
+# def comment():
+# 	return jasonify({
+# 		'comment': model.add_comment(
+# 			request.form['']
+# 			)
+# 		})
 ########## end login-not-required views ##########
 
 ########## login-required views ##########

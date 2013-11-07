@@ -106,6 +106,9 @@ def add_comment(author_id,post_id,content):
 	session.add(new_comment)
 	session.commit()
 
+def get_post_by_id(post_id): 
+	return session.query(Post).filter_by(id=post_id).one()
+
 ########### FUNCTIONS ###########
 
 def main(): 
