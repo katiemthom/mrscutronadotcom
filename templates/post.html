@@ -3,6 +3,9 @@
 <div class='container'>
 	<h1>{{ post.timestamp }}</h1>
 	<p>{{ post.content }}</p>
-	<button>Comment</button>
+		<form action='{{url_for('comment',post_id=post.id)}}' method=post>
+		<p><input type='textarea' class='form-control' name='comment' placeholder='Share your thoughts...!'></input></p>
+		<p><button type="submit" class="btn">Submit</button></p>
+	</form>
 </div>	
 {% endblock %}
