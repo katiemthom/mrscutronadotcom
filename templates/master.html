@@ -1,13 +1,58 @@
-<html>
+<html lang='english'>
 	<head>
-			<link href="/static/css/bootstrap.css" rel="stylesheet">
-			<link href="/static/css/main.css" rel="stylesheet">
-			<title>mrscutrona.com</title>
+        <script type="text/javascript" src="/static/js/jquery-2.0.3.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+		<link rel="stylesheet" type="text/css" href="/static/css/jumbotron.css">
+		<script type="text/javascript" src="/static/js/bootstrap.js"></script>
+		<title>mrscutronadotcom</title>
 	</head>
 	<body>
-		<div class='container'>
+        <div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">mrscutronadotcom</a>
+            </div>
+            <div class="navbar-collapse collapse">
+                {% if not user.is_active() %}
+                <form class="navbar-form navbar-right" method='post'>
+                    <div class="form-group">
+                        <input type="email" placeholder="Email" class="form-control" name='email'>
+                    </div>
+                    <div class="form-group">
+                        <input type="password" placeholder="Password" class="form-control" name='password'>
+                    </div>
+                    <button type="submit" class="btn btn-success">Sign in</button>
+                </form>
+                {% else %}
+                <div class="navbar-text"> 
+                <div class='btn-group'>
+                    <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown'>{{user.email}} <span class='caret'></span>
+                    </button>
+                    <ul class='dropdown-menu' role='menu'>
+                        <li><a href="/myblog">my blog</a></li>
+                        <li><a href="/mygrades">my grades</a></li>
+                        <li class='divider'></li>
+                        <li><a href="/logout">sign out</a></li>
+                    </ul>
+                </div>
+                </div>
+                {% endif %}
+            </div>
+            </div>
+        </div>
+        <div class='container'>
 			{% block body %}
 			{% endblock %}
+            <footer>
+                <p>&copy; katiemthom 2013 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                    <a href='/reportbug'>report a bug</a>
+                </p>
+            </footer>
 		</div>
 	</body>
 </html>

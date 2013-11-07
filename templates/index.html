@@ -1,11 +1,36 @@
 {% extends 'master.html' %}
 {% block body %}
+<div class="jumbotron">
+    <div class="container">
+        <h1>Hello, Laura!</h1>
+            <p>This is going to be the landing page for your website.  I'd love to hear what you'd like to have featured up here in the "jumbotron." :)  I'm thinking...the moustache student?  Or the current project?</p>
+            <p><a class="btn btn-primary btn-lg" role="button">I want to see! &raquo;</a></p>
+    </div>
+</div>
 
-	<form class='signin' method='POST'>
- 		<h2 class='signin-heading'>Sign in:</h2>
- 		<input type ='text' class='form-control' placeholder='CAT email' name='email'>
- 		<input type='password' class='form-control' placeholder='password' name='password'>
- 		<input type='submit' class='btn btn-lg btn-primary btn-block' value='submit'>
- 	</form>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <h2>Get Notes</h2>
+            <p>Keep up-to-date if you are sick or miss class.  Find daily notes and classwork here.</p>
+            <p><a class="btn btn-default" href="/notes" role="button">Go To Notes &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Read Blogs</h2>
+            <p>The mathematical thinking of CAT's Algebra II students.  Read these to get a sense of how CAT's Algebra II students are thinking.</p>
+            <p><a class="btn btn-default" href="/blogs" role="button">Browse Blogs &raquo;</a></p>
+        </div>
+        <div class="col-md-4">
+            <h2>Stack Up</h2>
+            <p>How does your class measure up against the Algebra II periods at CAT?  Are you in the lead?</p>
+            <p><a class="btn btn-default" href="/classes" role="button">Compare Class Stats &raquo;</a></p>
+        </div>
+    </div>
+    <p>
+        {% for message in get_flashed_messages() %}
+        {{message}}
+        {% endfor %}
+    </p>
+</div>
 
 {% endblock %}

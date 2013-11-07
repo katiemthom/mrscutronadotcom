@@ -1,0 +1,14 @@
+{% extends 'master.html' %}
+{% block body %}
+<div class='container'>
+	<form action='{{url_for('report_bug')}}' method=post>
+		<br>
+		<p><input class='form-control' name='page' placeholder='What page is the bug on?'></input></p>
+		<p><input type='textarea' class='form-control' name='bug' placeholder='Describe the bug is as much detail as you can...'></input></p>
+		<p><button type="submit" class="btn">Send</button></p>
+	</form>
+	{% for message in get_flashed_messages() %}
+    	<div class="flash">{{ message }}</div>
+  	{% endfor %}
+</div>	
+{% endblock %}

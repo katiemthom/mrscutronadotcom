@@ -1,26 +1,48 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine
-from sqlalchemy import Column, Integer, String, DateTime, Text
+from sqlalchemy import create_engine, ForeignKey, desc 
+from sqlalchemy import Column, Integer, String, Date, Text, Float, Boolean, DateTime
+from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
+from flask.ext.login import UserMixin
+import os 
+import config 
+import bcrypt 
+
+engine = create_engine(config.DB_URI, echo=False)
+session = scoped_session(sessionmaker(bind=engine,autocommit=False,autoflush=False))
 
 Base = declarative_base()
-ENGINE = None
-Session = None 
+Base.query = session.query_property 
 
 ########### CLASS DEFINITIONS ###########
 
-class User(Base): 
-	__tablename__ = 'users'
-	id = Column(Integer, primary_key = True)
-	email = Column(String(64))
-	password = Column(String(64))
-	period = Column(Integer)
+class User(Base, UserMixin): 
+    __tablename__ = 'users'
+    id = Column(Integer, primary_key = True)
+    first_name = Column(String(64))
+    last_name = Column(String(64))
+    email = Column(String(64))
+    password = Column(String(64))
+    period = Column(Integer)
+    salt = Column(String(64))
 
-class Post(Base): 
+    def setpw(self, pw):
+        self.salt = bcrypt.gensalt()
+        pw = pw.encode("utf-8")
+        self.password = bcrypt.hashpw(pw, self.salt)
+        session.commit()
+
+    def authenticate(self, password):
+        password = password.encode('utf-8')
+        return bcrypt.hashpw(password, self.salt.encode('utf-8')) == self.password
+
+class Post(Base):
 	__tablename__ = 'posts'
 	id = Column(Integer, primary_key = True)
 	timestamp = Column(DateTime)
 	content = Column(Text)
-	author_id = Column(Integer)
+	author_id = Column(Integer, ForeignKey('users.id'))
+	featured = Column(Boolean, default=False)
+	user = relationship("User", backref="posts")
 
 class Comment(Base): 
 	__tablename__ = 'comments'
@@ -35,8 +57,8 @@ class Comment(Base):
 class Assignment(Base): 
 	__tablename__ = 'assignments'
 	id = Column(Integer, primary_key = True)
-	assigned_date = Column(DateTime)
-	due_date = Column(DateTime)
+	assigned_date = Column(Date)
+	due_date = Column(Date)
 	link = Column(String(120), nullable = True)
 	description = Column(Text)
 	max_points = Column(Integer)
@@ -46,7 +68,7 @@ class Grade(Base):
 	__tablename__ = 'grades'
 	id = Column(Integer, primary_key = True)
 	assignment_id = Column(Integer, ForeignKey('assignments.id'))
-	value = Column(Integer)
+	value = Column(Float)
 	user_id = Column(Integer, ForeignKey('users.id'))
 	user = relationship("User", backref='grades')
 	assignment = relationship("Assignment", backref='grades')
@@ -55,16 +77,30 @@ class Notes(Base):
 	__tablename__ = 'notes'
 	id = Column(Integer, primary_key = True)
 	link = Column(String(120), nullable = True)
-	date = Column(DateTime)
+	created_on = Column(Date)
 
 ########### FUNCTIONS ###########
 
-def connect_to_db(): 
-	global ENGINE
-	global Session 
-	ENGINE = create_engine("postgres://ekgeujzpmsqkme:7LQzlA8jPu7eq4tJAPaGM7Fvlc@ec2-54-235-78-155.compute-1.amazonaws.com:5432/d280dpo6dangu0", echo=True)
-	Session = sessionmaker(bind=ENGINE)
-	return Session()
+def create_db():
+	Base.metadata.create_all(engine)
+	print 'db created!'
+
+def get_user_by_id(user_id):
+	return session.query(User).get(user_id)
+
+def get_notes(): 
+	return session.query(Notes).all()
+
+def get_posts_by_user_id(user_id):
+	return session.query(Post).filter_by(author_id=user_id).all()
+
+def get_grades_by_user_id(user_id):
+	return session.query(Grade).filter_by(user_id=user_id).all()
+
+def get_posts():
+	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
+
+########### FUNCTIONS ###########
 
 def main(): 
 	pass

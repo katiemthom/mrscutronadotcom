@@ -1,0 +1,14 @@
+{% extends 'master.html' %}
+{% block body %}
+<h1>
+	{{author.first_name}} {{author.last_name}} <small>blog</small>
+	
+</h1>
+<div class='container'>
+	{% for post in posts %}
+	<h1>{{ post.timestamp }}</h1>
+	<p>{{ post.content }}</p>
+	<button>Comment</button>
+	{% endfor %}
+</div>	
+{% endblock %}
