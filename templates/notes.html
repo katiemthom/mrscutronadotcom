@@ -4,25 +4,25 @@
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
 jQuery(function($){
-	$("#datepicker").datepicker({
-				dateFormat: "dd-mm-yy",
-				onSelect: function(dateText, inst) {
-					var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
-					var dateText1 = $.datepicker.formatDate("D, d M yy", date, inst.settings);
-					date.setDate(date.getDate() + 7);
-					var dateText2 = $.datepicker.formatDate("D, d M yy", date, inst.settings);
-					$("#dateoutput").html("Chosen date is <b>" + dateText1 + "</b>; chosen date + 7 days yields <b>" + dateText2 + "</b>");
-				}
-			});
+  $("#datepicker").datepicker({
+        dateFormat: "dd-mm-yy",
+        onSelect: function(dateText, inst) {
+          var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
+          var dateText1 = $.datepicker.formatDate("D, d M yy", date, inst.settings);
+          date.setDate(date.getDate() + 7);
+          var dateText2 = $.datepicker.formatDate("D, d M yy", date, inst.settings);
+          $("#dateoutput").html("Chosen date is <b>" + dateText1 + "</b>; chosen date + 7 days yields <b>" + dateText2 + "</b>");
+        }
+      });
 });
 </script>
-
 {% extends 'master.html' %}
 {% block body %}
 <div class="page-header">
 	<h1>
 		Get Notes<small> Keep up-to-date if you are sick or miss class.</small>
-		<p>Date: <input type='text' id='datepicker' /></p> 
+    <button id='cal-button'><span class="glyphicon glyphicon-calendar"></span></button>
+		<p>Date: <input type='text' id='datepicker' /></p>
 	</h1>
 </div>
 <div class="row">
@@ -49,7 +49,5 @@ jQuery(function($){
     </div>
   {% endfor %}
 </div>
-<!-- need dropdown to select notes by day -->
-<!-- maybe i need to includ unit and day in my notes -->
 {% endblock %}
 
