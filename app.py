@@ -103,7 +103,8 @@ def show_blog(author_id):
 @app.route('/post/<int:post_id>')
 def show_post(post_id):
 	post = model.get_post_by_id(post_id)
-	return render_template('post.html', post=post, user=current_user)
+	comments = model.get_comments_by_post_id(post_id)
+	return render_template('post.html', post=post, user=current_user, comments=comments)
 ########## end login-not-required views ##########
 
 ########## login-required views ##########
@@ -126,7 +127,8 @@ def comment(post_id):
 	print new_comment.content
 	return jsonify({
 		'comment_author': new_comment.user.first_name,
-		'comment_content': new_comment.content})
+		'comment_content': new_comment.content,
+		'comment_timestamp': new_comment.timestamp})
 ########## end login-required views ##########
 
 if __name__ == "__main__":

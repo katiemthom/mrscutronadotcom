@@ -6,8 +6,8 @@ function addComment(authorId,postId,startId,destId) {
   		data: { author_id: authorId, post_id: postId, comment: $(startId).val() }
 		}).done(function( msg ) {
 			console.log(msg) 
+			$(destId).append('<h3>'+msg['comment_timestamp']+' '+msg['comment_author']+'</h3>')
 			$(destId).append('<p>'+msg['comment_content']+'</p>'); 
-    		$(destId).append('<p>'+msg['comment_author']+'</p>'); 
   		});	
 }
 </script>
@@ -18,7 +18,12 @@ function addComment(authorId,postId,startId,destId) {
 	<h1>{{ post.timestamp }}</h1>
 	<p>{{ post.content }}</p>
 
-	<p><div id="comments-div"></div></p>
+	<div id="comments-div">
+		{% for comment in comments %}
+		<h3>{{comment.timestamp}} {{comment.user.first_name}}</h3>
+		<p>{{comment.content}}</p>
+		{% endfor %}
+	</div>
 
 
 
