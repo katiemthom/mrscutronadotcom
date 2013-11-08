@@ -10,3 +10,6 @@ class ContactForm(Form):
 
 class CommentForm(Form):
 	comment = TextAreaField('Comment', [validators.Required()])
+
+class AddPostForm(Form):
+	post_content = TextField('Content', [validators.Required()])

@@ -121,14 +121,31 @@ def show_grades():
 	return render_template('mygrades.html',grades=grades,user=current_user)
 
 @app.route('/post/<int:post_id>', methods=['POST'])
-#@login_required
+@login_required
 def comment(post_id):
 	new_comment = model.add_comment(request.form.get('author_id'),request.form.get('post_id'),request.form.get('comment'))
-	print new_comment.content
 	return jsonify({
 		'comment_author': new_comment.user.first_name,
 		'comment_content': new_comment.content,
 		'comment_timestamp': new_comment.timestamp})
+
+@app.route('/addpost')
+@login_required
+def show_add_post():
+	return render_template('addpost.html', user=current_user)
+
+@app.route('/addpost', methods=['POST'])
+@login_required
+def add_post():
+	form = forms.AddPostForm(request.form)
+	if form.validate() == False: 
+		flash('All fields are required.')
+		return render_template('addpost.html')
+	else:
+		content = form.post_content.data
+		new_post = model.add_post(current_user.id, content)
+	return redirect('/myblog')
+
 ########## end login-required views ##########
 
 if __name__ == "__main__":
