@@ -1,8 +1,9 @@
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import create_engine, ForeignKey, desc 
+from sqlalchemy import create_engine, ForeignKey, desc
 from sqlalchemy import Column, Integer, String, Date, Text, Float, Boolean, DateTime
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 from flask.ext.login import UserMixin
+from flask.ext.sqlalchemy import Pagination
 import os 
 import config 
 import bcrypt 
@@ -94,8 +95,8 @@ def get_notes():
 
 ########### FUNCTIONS WITH POSTS ###########
 
-def get_posts_by_user_id(user_id):
-	return session.query(Post).filter_by(author_id=user_id).order_by(desc(Post.timestamp)).all()
+def get_posts_by_user_id(user_id,page):
+	return session.query(Post).filter_by(author_id=user_id).order_by(desc(Post.timestamp)).paginate(page,5,False).items
 
 def get_posts():
 	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
