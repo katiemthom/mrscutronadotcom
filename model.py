@@ -92,6 +92,8 @@ def get_user_by_id(user_id):
 def get_notes(): 
 	return session.query(Notes).all()
 
+########### FUNCTIONS WITH POSTS ###########
+
 def get_posts_by_user_id(user_id):
 	return session.query(Post).filter_by(author_id=user_id).all()
 
@@ -101,8 +103,18 @@ def get_posts():
 def get_post_by_id(post_id): 
 	return session.query(Post).filter_by(id=post_id).one()
 
+def add_post(author_id,content):
+	new_post = Post(timestamp=datetime.datetime.now(),author_id=author_id,content=content)
+	session.add(new_post)
+	session.commit()
+	return new_post
+
+########### FUNCTIONS WITH GRADES ###########
+
 def get_grades_by_user_id(user_id):
 	return session.query(Grade).filter_by(user_id=user_id).all()
+
+########### FUNCTIONS WITH COMMENTS ###########
 
 def add_comment(author_id,post_id,content):
 	new_comment = Comment(timestamp=datetime.datetime.now(),author_id=author_id,post_id=post_id,content=content)
