@@ -90,8 +90,10 @@ def create_db():
 def get_user_by_id(user_id):
 	return session.query(User).get(user_id)
 
+########### FUNCTIONS WITH NOTES ###########
+
 def get_notes(): 
-	return session.query(Notes).all()
+	return session.query(Notes).limit(3).all()
 
 ########### FUNCTIONS WITH POSTS ###########
 

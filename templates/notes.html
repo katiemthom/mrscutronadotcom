@@ -25,11 +25,30 @@ jQuery(function($){
 		<p>Date: <input type='text' id='datepicker' /></p> 
 	</h1>
 </div>
-<a href=""><<<</a>
-<a href="http://katiemthom.com/katiemthom_resume.pdf" title=""> 
-<img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" /> 
-</a>
-<a href="">>>></a>
+<div class="row">
+<!--   	<div class="col-sm-6 col-md-4">
+    	<div class="thumbnail">
+      		<img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" /> 
+      		<div class="caption">
+        		<h3>Thumbnail label</h3>
+        		<p>...</p>
+        		<p><a href="http://katiemthom.com/katiemthom_resume.pdf" class="btn btn-primary" role="button">Preview</a> <a href="#" class="btn btn-default" role="button">Download</a></p>
+      		</div>
+    	</div>
+  	</div> -->
+  {% for note in notes %}
+  <div class="col-sm-6 col-md-4">
+      <div class="thumbnail">
+          <img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" /> 
+          <div class="caption">
+            <h3>{{note.created_on}}</h3>
+            <p>{{note.description}}</p>
+            <p><a href="/static{{note.link}}" class="btn btn-primary" role="button">Preview</a></p>
+          </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
 <!-- need dropdown to select notes by day -->
 <!-- maybe i need to includ unit and day in my notes -->
 {% endblock %}

@@ -36,7 +36,7 @@ def load_notes():
             link = urllib.quote(link)
             ndate = time.strptime(data[2],"%d-%b-%Y")
             ndate = date(ndate[0],ndate[1],ndate[2])
-            new_notes = model.Notes(id=id, link=link,date=ndate)
+            new_notes = model.Notes(id=id, link=link,created_on=ndate)
             model.session.add(new_notes)
         model.session.commit()
         f.close()
