@@ -9,5 +9,9 @@
 		<a href="#" class="list-group-item">Porta ac consectetur ac</a>
 		<a href="#" class="list-group-item">Vestibulum at eros</a>
 	</div>
+	{% for post in posts %}
+	<h3><a href="{{url_for('show_post', post_id=post.id)}}">{{post.timestamp}}</a></h3>
+	<p>{{post.content}}</p>
+	{% endfor %}
 </div>	
 {% endblock %}
