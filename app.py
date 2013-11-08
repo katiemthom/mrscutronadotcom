@@ -120,13 +120,13 @@ def show_grades():
 	return render_template('mygrades.html',grades=grades,user=current_user)
 
 @app.route('/post/<int:post_id>', methods=['POST'])
-@login_required
+#@login_required
 def comment(post_id):
-	return jasonify({
-		'comment': model.add_comment(
-			current_user.id,
-			post_id,
-			form.comment.data)})
+	new_comment = model.add_comment(request.form.get('author_id'),request.form.get('post_id'),request.form.get('comment'))
+	print new_comment.content
+	return jsonify({
+		'comment_author': new_comment.user.first_name,
+		'comment_content': new_comment.content})
 ########## end login-required views ##########
 
 if __name__ == "__main__":

@@ -105,6 +105,7 @@ def add_comment(author_id,post_id,content):
 	new_comment = Comment(timestamp=datetime.datetime.now(),author_id=author_id,post_id=post_id,content=content)
 	session.add(new_comment)
 	session.commit()
+	return new_comment
 
 def get_post_by_id(post_id): 
 	return session.query(Post).filter_by(id=post_id).one()

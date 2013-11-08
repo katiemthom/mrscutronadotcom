@@ -1,11 +1,35 @@
+<script type="text/javascript">
+function addComment(authorId,postId,startId,destId) {
+	$.ajax({
+		type: "POST",
+  		url: "/post/1",
+  		data: { author_id: authorId, post_id: postId, comment: $(startId).val() }
+		}).done(function( msg ) {
+			console.log(msg) 
+			$(destId).append('<p>'+msg['comment_content']+'</p>'); 
+    		$(destId).append('<p>'+msg['comment_author']+'</p>'); 
+  		});	
+}
+</script>
 {% extends 'master.html' %}
 {% block body %}
 <div class='container'>
+
 	<h1>{{ post.timestamp }}</h1>
 	<p>{{ post.content }}</p>
-		<form action='{{url_for('comment',post_id=post.id)}}' method=post>
-		<p><input type='textarea' class='form-control' name='comment' placeholder='Share your thoughts...!'></input></p>
-		<p><button type="submit" class="btn">Submit</button></p>
-	</form>
+
+	<p><div id="comments-div"></div></p>
+
+
+
+	<p><input id='comment_input' type='text' class='form-control' name='comment_input' placeholder='Share your thoughts...!'></input></p>
+
+	<p>
+		<a href="javascript:addComment({{post.user.id}},{{post.id}},'#comment_input','#comments-div');" id="add-comment-button"><button>Submit</button></a>
+	</p>
+
+
+
 </div>	
 {% endblock %}
+
