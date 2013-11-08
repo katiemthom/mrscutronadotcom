@@ -12,10 +12,10 @@ import forms
 mail = Mail()
 app = Flask(__name__)
 app.config.from_object(config)
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_SERVER'] = 'mail.mrscutrona.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'katiemthom@gmail.com'
+app.config['MAIL_USERNAME'] = 'bugs@mrscutrona.com'
 app.config['MAIL_PASSWORD'] = config.epw
 mail.init_app(app)
 ########## end Flask Setup ##########
@@ -86,7 +86,7 @@ def send_bug():
 	else:
 		page = form.page.data
 		bug = form.bug.data
-		msg = Message('bug report', sender='katiemthom@gmail.com', recipients=['katiemthom@gmail.com'])
+		msg = Message('bug report', sender='bugs@mrscutrona.com', recipients=['katiemthom@gmail.com'])
 		msg.body = """
 		Page: %s
 		%s
