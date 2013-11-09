@@ -72,8 +72,9 @@ def show_notes():
 @app.route('/blogs')
 def show_blogs():
 	featured_posts = model.get_featured_posts()
+	print featured_posts[0].user.profile_picture
 	recent_posts = model.get_recent_posts()
-	return render_template('blogs.html', user=current_user, featured_posts=featured_posts, recent_post=recent_post)
+	return render_template('blogs.html', user=current_user, featured_posts=featured_posts, recent_posts=recent_posts)
 
 @app.route('/classes')
 def show_classes():

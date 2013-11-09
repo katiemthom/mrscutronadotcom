@@ -6,7 +6,7 @@
 </h1>
 <div class='container'>
 	{% for post in posts %}
-	<a href="{{url_for('show_post', post_id=post.id)}}"><h1>{{ post.timestamp }}</h1></a>
+	<a href="{{url_for('show_post', post_id=post.post_id)}}"><h1>{{ post.timestamp }}</h1></a>
 	<p>{{ post.content }}</p>
 	{% endfor %}
 </div>	
