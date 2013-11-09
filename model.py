@@ -1,9 +1,10 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, ForeignKey, desc
-from sqlalchemy import Column, Integer, String, Date, Text, Float, Boolean, DateTime
+from sqlalchemy import Column, Integer, String, Date, Text, Float, Boolean, DateTime, BigInteger
 from sqlalchemy.orm import sessionmaker, scoped_session, relationship, backref
 from flask.ext.login import UserMixin
 from math import ceil
+import data_loader
 
 import os 
 import config 
@@ -20,13 +21,16 @@ Base.query = session.query_property
 
 class User(Base, UserMixin): 
     __tablename__ = 'users'
-    id = Column(Integer, primary_key = True)
-    first_name = Column(String(64))
-    last_name = Column(String(64))
-    email = Column(String(64))
-    password = Column(String(64))
-    period = Column(Integer)
-    salt = Column(String(64))
+    user_id = Column(BigInteger, primary_key = True)
+    first_name = Column(String(64), nullable=False)
+    last_name = Column(String(64), nullable=False)
+    email = Column(String(64), nullable=False)
+    password = Column(String(64), nullable=False)
+    period = Column(Integer, nullable=False)
+    salt = Column(String(64), nullable=False)
+    is_banned = Column(Boolean, nullable=False, default=False)
+    profile_picture = Column(String(64), nullable=True, default='http://katiemthom.com/cat_ph.jpeg')
+    school_id = Column(Integer, nullable=False)
 
     def setpw(self, pw):
         self.salt = bcrypt.gensalt()
@@ -40,20 +44,28 @@ class User(Base, UserMixin):
 
 class Post(Base):
 	__tablename__ = 'posts'
-	id = Column(Integer, primary_key = True)
-	timestamp = Column(DateTime)
-	content = Column(Text)
-	author_id = Column(Integer, ForeignKey('users.id'))
-	featured = Column(Boolean, default=False)
+	post_pk = Column(BigInteger, primary_key = True)
+	post_id = Column(BigInteger, nullable=False)
+	timestamp = Column(DateTime, nullable=False)
+	content = Column(Text, nullable=False)
+	user_id = Column(BigInteger, ForeignKey('users.user_id'), nullable=False)
+	is_featured = Column(Boolean, default=False, nullable=False)
+	version_id = Column(Integer, nullable=False, default=1)
+	is_deleted = Column(Boolean, default=False)
 	user = relationship("User", backref="posts")
+	comment_count = Column(Integer, nullable=False, default=0)
+	title = Column(String(64), nullable=False)
 
 class Comment(Base): 
 	__tablename__ = 'comments'
-	id = Column(Integer, primary_key = True)
-	timestamp = Column(DateTime)
-	author_id = Column(Integer, ForeignKey('users.id'))
-	post_id = Column(Integer, ForeignKey('posts.id'))
-	content = Column(String(500))
+	comment_pk = Column(BigInteger, primary_key = True)
+	comment_id = Column(BigInteger, nullable=False)
+	timestamp = Column(DateTime, nullable=False)
+	user_id = Column(BigInteger, ForeignKey('users.user_id'), nullable=False)
+	post_pk = Column(BigInteger, ForeignKey('posts.post_pk'), nullable=False)
+	content = Column(String(500), nullable=False)
+	version_id = Column(Integer, nullable=False)
+	is_deleted = Column(Boolean, default=False)
 	user = relationship("User", backref="comments")
 	post = relationship("Post", backref="comments")
 
@@ -72,7 +84,7 @@ class Grade(Base):
 	id = Column(Integer, primary_key = True)
 	assignment_id = Column(Integer, ForeignKey('assignments.id'))
 	value = Column(Float)
-	user_id = Column(Integer, ForeignKey('users.id'))
+	user_id = Column(Integer, ForeignKey('users.user_id'))
 	user = relationship("User", backref='grades')
 	assignment = relationship("Assignment", backref='grades')
 
@@ -120,6 +132,11 @@ def create_db():
 	Base.metadata.create_all(engine)
 	print 'db created!'
 
+	data_loader.load_users()
+	# data_loader.load_notes()
+	data_loader.load_posts()
+	print 'db created!'
+
 def get_user_by_id(user_id):
 	return session.query(User).get(user_id)
 
@@ -133,8 +150,14 @@ def get_notes():
 # def get_posts_by_user_id(user_id,page):
 # 	return session.query(Post).filter_by(author_id=user_id).order_by(desc(Post.timestamp)).paginate(page,5,False).items
 
+def get_featured_posts():
+	return session.query(Post).order_by(desc(Post.comment_count)).limit(3).all()
+
+def get_recent_posts():
+	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
+
 def get_posts_by_user_id(user_id):
- 	return session.query(Post).filter_by(author_id=user_id).order_by(desc(Post.timestamp)).all()
+	return session.query(Post).filter_by(author_id=user_id).order_by(desc(Post.timestamp)).all()
 
 def get_posts():
 	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
