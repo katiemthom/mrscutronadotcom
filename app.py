@@ -18,7 +18,7 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'bugs@mrscutrona.com'
 app.config['MAIL_PASSWORD'] = config.epw
 mail.init_app(app)
-PER_PAGE = 5
+PER_PAGE = 1
 def url_for_other_page(page):
 	args = dict(request.view_args.items() + request.args.to_dict().items())
 	args['page'] = page
@@ -101,11 +101,13 @@ def send_bug():
 		mail.send(msg)
 		return redirect('/reportbug')
 
-@app.route('/blog/<int:author_id>')
-def show_blog(author_id):
-	posts = model.get_posts_by_user_id(author_id)
-	author = model.get_user_by_id(author_id)
-	return render_template('blog.html', posts=posts, user=current_user, author=author)
+@app.route('/blog/<int:author_id>', defaults={'page':1})
+@app.route('/blog/<int:author_id>/<int:page>')
+def show_blog(author_id, page):
+	count = model.count_all_posts(author_id)
+	posts = model.get_posts_for_page(author_id, page, PER_PAGE, count)
+	pagination = model.Pagination(page, PER_PAGE, count)
+	return render_template('blog.html', posts=posts, user=current_user, pagination=pagination)
 
 @app.route('/post/<int:post_id>')
 def show_post(post_id):

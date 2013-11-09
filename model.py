@@ -170,12 +170,12 @@ def get_posts_for_page(user_id, page, per_page, count):
 	# end slice - per_page = beginning slice
 	end = page * per_page
 	begin = end - per_page
-	posts = session.query(Post).filter_by(author_id=user_id).order_by(desc(Post.timestamp)).all()
+	posts = session.query(Post).filter_by(user_id=user_id).order_by(desc(Post.timestamp)).all()
 	return posts[begin:end]
 
 
 def count_all_posts(user_id):
-	return len(session.query(Post).filter_by(author_id=user_id).all())
+	return len(session.query(Post).filter_by(user_id=user_id).all())
 
 def add_post(author_id,content):
 	new_post = Post(timestamp=datetime.datetime.now(),author_id=author_id,content=content)
