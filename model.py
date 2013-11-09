@@ -81,6 +81,7 @@ class Notes(Base):
 	id = Column(Integer, primary_key = True)
 	link = Column(String(120), nullable = True)
 	created_on = Column(Date)
+	description = Column(String(200), nullable = True)
 
 class Pagination(object):
 
@@ -106,12 +107,13 @@ class Pagination(object):
 		for num in xrange(1, self.pages + 1):
 			if num <= left_edge or \
 				(num > self.page - left_current - 1 and \
-				num < sel.page + right_current) or \
+				num < self.page + right_current) or \
 				num > self.pages - right_edge:
 				if last + 1 != num: 
 					yield None
 				yield num
 				last = num 
+
 ########### FUNCTIONS ###########
 
 def create_db():
@@ -139,6 +141,18 @@ def get_posts():
 
 def get_post_by_id(post_id): 
 	return session.query(Post).filter_by(id=post_id).one()
+
+def get_posts_for_page(user_id, page, per_page, count):
+	# page * per_page = end slice
+	# end slice - per_page = beginning slice
+	end = page * per_page
+	begin = end - per_page
+	posts = session.query(Post).filter_by(author_id=user_id).order_by(desc(Post.timestamp)).all()
+	return posts[begin:end]
+
+
+def count_all_posts(user_id):
+	return len(session.query(Post).filter_by(author_id=user_id).all())
 
 def add_post(author_id,content):
 	new_post = Post(timestamp=datetime.datetime.now(),author_id=author_id,content=content)

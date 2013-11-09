@@ -18,6 +18,12 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'bugs@mrscutrona.com'
 app.config['MAIL_PASSWORD'] = config.epw
 mail.init_app(app)
+PER_PAGE = 5
+def url_for_other_page(page):
+	args = dict(request.view_args.items() + request.args.to_dict().items())
+	args['page'] = page
+	return url_for(request.endpoint, **args)
+app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 ########## end Flask Setup ##########
 
 ########## Login Manager to make login easier ##########
@@ -108,11 +114,14 @@ def show_post(post_id):
 ########## end login-not-required views ##########
 
 ########## login-required views ##########
-@app.route('/myblog')
+@app.route('/myblog/', defaults={'page':1})
+@app.route('/myblog/page/<int:page>')
 @login_required
-def show_posts():
-	posts = model.get_posts_by_user_id(current_user.id)
-	return render_template('myblog.html', posts = posts, user = current_user)
+def show_posts(page):
+	count = model.count_all_posts(current_user.id)
+	posts = model.get_posts_for_page(current_user.id, page, PER_PAGE, count)
+	pagination = model.Pagination(page, PER_PAGE, count)
+	return render_template('myblog.html', pagination=pagination,posts = posts, user = current_user)
 
 @app.route('/mygrades')
 @login_required
