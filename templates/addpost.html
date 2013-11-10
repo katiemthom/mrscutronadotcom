@@ -1,7 +1,9 @@
 {% extends 'master.html' %}
 {% block body %}
 <div class='container'>
-	<br><br><br>
+	<div class="page-header">
+		<h1>Add Post</h1>
+	</div>
 	<form action='{{url_for("add_post")}}' method='post'>
 		<p>
 			<input id='post_content' type='text' class='form-control' name='post_title' placeholder='Title'></input>
@@ -10,10 +12,10 @@
 			<input id='post_content' type='text' class='form-control' name='post_content' placeholder='Write your newpost!'></input>
 		</p>
 		<p>
-			<input type='submit' id="add_post_submit"></input>
+			<input class="btn btn-default" type='submit' id="add_post_submit"></input>
 		</p>
 	</form>
 
-
+	<br><br><br>
 </div>	
 {% endblock %}
