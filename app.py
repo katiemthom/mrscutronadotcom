@@ -179,6 +179,13 @@ def process_edit(post_pk):
 		model.edit_post(current_user.user_id,old_post.post_id,content,old_post.title,old_post.is_featured,old_post.version_id+1,old_post.comment_count)
 	return redirect(url_for("show_blog",author_id=current_user.user_id))
 
+@app.route('/deletepost/<int:post_pk>')
+@login_required
+def delete_post(post_pk): 
+	post = model.get_post_by_id(post_pk)
+	post.is_deleted = True 
+	model.session.commit()
+	return redirect(url_for("show_blog",author_id=current_user.user_id))
 ########## end login-required views ##########
 
 if __name__ == "__main__":
