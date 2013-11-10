@@ -18,6 +18,7 @@
 	<p><a href="{{url_for('show_post', post_id=post.post_id)}}">{{ post.comment_count }} Comments</a></p>
 	{% if user.user_id == posts[0].user.user_id %}
 	<a href='{{url_for("edit_post", post_pk=post.post_pk)}}'><button type="button" class="btn btn-default">Edit Post</button></a>
+	<a href='{{url_for("edit_post", post_pk=post.post_pk)}}'><button type="button" class="btn btn-default">Delete Post</button></a>
 	{% endif %}
 	{% endfor %}
 

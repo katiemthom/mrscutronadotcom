@@ -157,7 +157,7 @@ def add_post():
 		content = form.post_content.data
 		title = form.post_title.data
 		new_post = model.add_post(current_user.user_id, content, title)
-	return redirect('/myblog', user=current_user)
+	return redirect(url_for("show_blog",author_id=current_user.user_id))
 
 @app.route('/editpost/<int:post_pk>')
 @login_required
