@@ -1,3 +1,4 @@
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script type="text/javascript">
 function addComment(authorId,postId,startId,destId) {
 	$.ajax({
@@ -10,6 +11,13 @@ function addComment(authorId,postId,startId,destId) {
 			$(destId).append('<p>'+msg['comment_content']+'</p>'); 
   		});	
 }
+</script>
+<script>
+$(document).ready(function() {
+	$('#comment_submit').click(function() {
+		$('#comment_input').val(""); 
+	});
+});
 </script>
 {% extends 'master.html' %}
 {% block body %}
@@ -35,7 +43,7 @@ function addComment(authorId,postId,startId,destId) {
 	<p><input id='comment_input' type='text' class='form-control' name='comment_input' placeholder='Share your thoughts...!'></input></p>
 
 	<p>
-		<a href="javascript:addComment({{post.user_id}},{{post.post_pk}},'#comment_input','#comments-div');" id="add-comment-button"><button>Submit</button></a>
+		<a href="javascript:addComment({{post.user_id}},{{post.post_pk}},'#comment_input','#comments-div');" id="add-comment-button"><button id="comment_submit">Submit</button></a>
 	</p>
 
 	<br><br>
