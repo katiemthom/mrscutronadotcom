@@ -152,12 +152,32 @@ def add_post():
 	form = forms.AddPostForm(request.form)
 	if form.validate() == False: 
 		flash('All fields are required.')
-		return render_template('addpost.html')
+		return render_template('addpost.html', user=current_user)
 	else:
 		content = form.post_content.data
 		title = form.post_title.data
 		new_post = model.add_post(current_user.user_id, content, title)
-	return redirect('/myblog')
+	return redirect('/myblog', user=current_user)
+
+@app.route('/editpost/<int:post_pk>')
+@login_required
+def edit_post(post_pk): 
+	post = model.get_post_by_id(post_pk)
+	return render_template('editpost.html',user=current_user, post=post)
+
+@app.route('/editpost/<int:post_pk>', methods=['POST'])
+@login_required
+def process_edit(post_pk):
+	form = forms.EditPostForm(request.form)
+	if form.validate() == False: 
+		flash('All fields are required.')
+		return render_template('url_for(edit_post)', post_pk = post_pk)
+	else:
+		content = form.new_content.data
+		old_post = model.get_post_by_id(post_pk)
+		old_post.is_deleted = True
+		model.edit_post(current_user.user_id,old_post.post_id,content,old_post.title,old_post.is_featured,old_post.version_id+1,old_post.comment_count)
+	return redirect(url_for("show_blog",author_id=current_user.user_id))
 
 ########## end login-required views ##########
 

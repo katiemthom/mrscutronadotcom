@@ -4,6 +4,10 @@
 	<div class="page-header">
 		<h1>Add Post</h1>
 	</div>
+	{% for message in get_flashed_messages() %}
+        <div class="alert alert-warning">{{message}}</div>
+    {% endfor %}
+    
 	<form action='{{url_for("add_post")}}' method='post'>
 		<p>
 			<input id='post_title' type='text' class='form-control' name='post_title' placeholder='Title'></input>

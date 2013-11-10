@@ -1,0 +1,21 @@
+{% extends 'master.html' %}
+{% block body %}
+<div class="page-header">
+	<h1>
+		Edit Post <small>{{post.title}}</small>
+	</h1>
+
+</div>
+<div class='container'>
+	<form action='{{url_for("edit_post", post_pk=post.post_pk)}}' method='post'>	
+		<p>
+			<textarea id='new_content' class='form-control' name='new_content' placeholder=''>{{post.content}}</textarea>
+		</p>
+		<p>
+			<input class="btn btn-default" type='submit' id="add_post_submit"></input>
+		</p>
+	</form>
+</div>
+
+<br><br>
+{% endblock %}

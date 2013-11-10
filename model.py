@@ -165,24 +165,30 @@ def get_posts_by_user_id(user_id):
 def get_posts():
 	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
 
-def get_post_by_id(post_id): 
-	return session.query(Post).filter_by(post_id=post_id).one()
+def get_post_by_id(post_pk): 
+	return session.query(Post).filter_by(post_pk=post_pk).one()
 
 def get_posts_for_page(user_id, page, per_page, count):
 	# page * per_page = end slice
 	# end slice - per_page = beginning slice
 	end = page * per_page
 	begin = end - per_page
-	posts = session.query(Post).filter_by(user_id=user_id).order_by(desc(Post.timestamp)).all()
+	posts = session.query(Post).filter_by(user_id=user_id).filter_by(is_deleted=False).order_by(desc(Post.timestamp)).all()
 	return posts[begin:end]
 
 
 def count_all_posts(user_id):
-	return len(session.query(Post).filter_by(user_id=user_id).all())
+	return len(session.query(Post).filter_by(user_id=user_id).filter_by(is_deleted=False).all())
 
 def add_post(author_id,content,title):
 	last = session.query(Post).order_by(desc(Post.post_pk)).first()
 	new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=last.post_pk+1, title=title)
+	session.add(new_post)
+	session.commit()
+	return new_post
+
+def edit_post(user_id,post_id,content,title,is_featured,version_id,comment_count):
+	new_post = Post(timestamp=datetime.datetime.now(),user_id=user_id,post_id=post_id,content=content,is_featured=is_featured,version_id=version_id,title=title,comment_count=comment_count)
 	session.add(new_post)
 	session.commit()
 	return new_post
