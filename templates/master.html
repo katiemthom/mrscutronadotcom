@@ -55,6 +55,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">signin or signup <b class="caret"></b></a>
 {% endif %}
 <ul class="dropdown-menu">
+{% if not user.is_active() %}
 <li>
 <form class="navbar-form navbar-right" method='post' action='/'>
 <div class="form-group">
@@ -66,9 +67,7 @@
 <button type="submit" class="btn btn-success">Sign in</button>
 </form>
 </li>
-
-
-<li class="divider"></li>
+{% endif %}
 <li><a href="/logout">sign out</a></li>
 </ul>
 </li>
