@@ -32,6 +32,9 @@ class User(Base, UserMixin):
     profile_picture = Column(String(64), nullable=True, default='http://katiemthom.com/cat_ph.jpeg')
     school_id = Column(Integer, nullable=False)
 
+    def get_id(self):
+    	return self.user_id
+
     def setpw(self, pw):
         self.salt = bcrypt.gensalt()
         pw = pw.encode("utf-8")
@@ -64,7 +67,7 @@ class Comment(Base):
 	user_id = Column(BigInteger, ForeignKey('users.user_id'), nullable=False)
 	post_pk = Column(BigInteger, ForeignKey('posts.post_pk'), nullable=False)
 	content = Column(String(500), nullable=False)
-	version_id = Column(Integer, nullable=False)
+	version_id = Column(Integer, nullable=False, default=1)
 	is_deleted = Column(Boolean, default=False)
 	user = relationship("User", backref="comments")
 	post = relationship("Post", backref="comments")
@@ -177,8 +180,9 @@ def get_posts_for_page(user_id, page, per_page, count):
 def count_all_posts(user_id):
 	return len(session.query(Post).filter_by(user_id=user_id).all())
 
-def add_post(author_id,content):
-	new_post = Post(timestamp=datetime.datetime.now(),author_id=author_id,content=content)
+def add_post(author_id,content,title):
+	last = session.query(Post).order_by(desc(Post.post_pk)).first()
+	new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=last.post_pk+1, title=title)
 	session.add(new_post)
 	session.commit()
 	return new_post
@@ -190,8 +194,13 @@ def get_grades_by_user_id(user_id):
 
 ########### FUNCTIONS WITH COMMENTS ###########
 
+
+
 def add_comment(author_id,post_id,content):
-	new_comment = Comment(timestamp=datetime.datetime.now(),author_id=author_id,post_id=post_id,content=content)
+	last = session.query(Comment).order_by(desc(Comment.comment_pk)).first()
+	new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_id,content=content,comment_id=last.comment_pk+1)
+	post = session.query(Post).filter_by(post_pk=post_id).one()
+	post.comment_count += 1
 	session.add(new_comment)
 	session.commit()
 	return new_comment

@@ -18,7 +18,7 @@ app.config['MAIL_USE_SSL'] = True
 app.config['MAIL_USERNAME'] = 'bugs@mrscutrona.com'
 app.config['MAIL_PASSWORD'] = config.epw
 mail.init_app(app)
-PER_PAGE = 1
+PER_PAGE = 5
 def url_for_other_page(page):
 	args = dict(request.view_args.items() + request.args.to_dict().items())
 	args['page'] = page
@@ -121,8 +121,8 @@ def show_post(post_id):
 @app.route('/myblog/page/<int:page>')
 @login_required
 def show_posts(page):
-	count = model.count_all_posts(current_user.id)
-	posts = model.get_posts_for_page(current_user.id, page, PER_PAGE, count)
+	count = model.count_all_posts(current_user.user_id)
+	posts = model.get_posts_for_page(current_user.user_id, page, PER_PAGE, count)
 	pagination = model.Pagination(page, PER_PAGE, count)
 	return render_template('myblog.html', pagination=pagination,posts = posts, user = current_user)
 
@@ -132,10 +132,10 @@ def show_grades():
 	grades = model.get_grades_by_user_id(current_user.id)
 	return render_template('mygrades.html',grades=grades,user=current_user)
 
-@app.route('/post/<int:post_id>', methods=['POST'])
+@app.route('/post/<int:post_pk>', methods=['POST'])
 @login_required
-def comment(post_id):
-	new_comment = model.add_comment(request.form.get('author_id'),request.form.get('post_id'),request.form.get('comment'))
+def comment(post_pk):
+	new_comment = model.add_comment(request.form.get('user_id'),request.form.get('post_pk'),request.form.get('comment'))
 	return jsonify({
 		'comment_author': new_comment.user.first_name,
 		'comment_content': new_comment.content,
@@ -155,7 +155,8 @@ def add_post():
 		return render_template('addpost.html')
 	else:
 		content = form.post_content.data
-		new_post = model.add_post(current_user.id, content)
+		title = form.post_content.data
+		new_post = model.add_post(current_user.user_id, content, title)
 	return redirect('/myblog')
 
 ########## end login-required views ##########

@@ -37,7 +37,7 @@
 
 
 	{% for post in posts %}
-	<h3><a href="{{url_for('show_post', post_id=post.id)}}">{{post.timestamp}}</a></h3>
+	<h3><a href="{{url_for('show_post', post_id=post.post_pk)}}">{{post.timestamp}}</a></h3>
 	<p>{{post.content}}</p>
 	{% endfor %}
 </div>	

@@ -3,7 +3,7 @@ function addComment(authorId,postId,startId,destId) {
 	$.ajax({
 		type: "POST",
   		url: "/post/1",
-  		data: { author_id: authorId, post_id: postId, comment: $(startId).val() }
+  		data: { user_id: authorId, post_pk: postId, comment: $(startId).val() }
 		}).done(function( msg ) {
 			console.log(msg) 
 			$(destId).append('<h3>'+msg['comment_timestamp']+' '+msg['comment_author']+'</h3>')
@@ -35,7 +35,7 @@ function addComment(authorId,postId,startId,destId) {
 	<p><input id='comment_input' type='text' class='form-control' name='comment_input' placeholder='Share your thoughts...!'></input></p>
 
 	<p>
-		<a href="javascript:addComment({{post.user.id}},{{post.id}},'#comment_input','#comments-div');" id="add-comment-button"><button>Submit</button></a>
+		<a href="javascript:addComment({{post.user_id}},{{post.post_pk}},'#comment_input','#comments-div');" id="add-comment-button"><button>Submit</button></a>
 	</p>
 
 	<br><br>

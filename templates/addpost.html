@@ -4,7 +4,10 @@
 	<br><br><br>
 	<form action='{{url_for("add_post")}}' method='post'>
 		<p>
-			<input id='post_content' type='text' class='form-control' name='post_content' placeholder='Write you newpost!'></input>
+			<input id='post_content' type='text' class='form-control' name='post_title' placeholder='Title'></input>
+		</p>		
+		<p>
+			<input id='post_content' type='text' class='form-control' name='post_content' placeholder='Write your newpost!'></input>
 		</p>
 		<p>
 			<input type='submit' id="add_post_submit"></input>

@@ -1,7 +1,13 @@
 {% extends 'master.html' %}
 {% block body %}
 <div class="page-header">
-	<h1>{{posts[0].user.first_name}} {{posts[0].user.last_name}}'s Blog</h1>
+	<h1>
+		{{posts[0].user.first_name}} {{posts[0].user.last_name}}'s Blog
+		{% if user.user_id == posts[0].user.user_id %}
+		<a href='{{url_for("add_post")}}'><button type="button" class="btn btn-default">Add Post</button></a>
+		{% endif %}
+	</h1>
+
 </div>
 <div class='container'>
 	{% for post in posts %}
