@@ -13,3 +13,4 @@ class CommentForm(Form):
 
 class AddPostForm(Form):
 	post_content = TextField('Content', [validators.Required()])
+	post_title = TextField('Content', [validators.Required()])

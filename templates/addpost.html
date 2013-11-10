@@ -6,10 +6,10 @@
 	</div>
 	<form action='{{url_for("add_post")}}' method='post'>
 		<p>
-			<input id='post_content' type='text' class='form-control' name='post_title' placeholder='Title'></input>
+			<input id='post_title' type='text' class='form-control' name='post_title' placeholder='Title'></input>
 		</p>		
 		<p>
-			<input id='post_content' type='text' class='form-control' name='post_content' placeholder='Write your newpost!'></input>
+			<textarea id='post_content' class='form-control' name='post_content' placeholder='Write your newpost!'></textarea>
 		</p>
 		<p>
 			<input class="btn btn-default" type='submit' id="add_post_submit"></input>

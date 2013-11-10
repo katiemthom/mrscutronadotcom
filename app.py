@@ -155,7 +155,7 @@ def add_post():
 		return render_template('addpost.html')
 	else:
 		content = form.post_content.data
-		title = form.post_content.data
+		title = form.post_title.data
 		new_post = model.add_post(current_user.user_id, content, title)
 	return redirect('/myblog')
 
