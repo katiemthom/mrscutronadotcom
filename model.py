@@ -57,7 +57,7 @@ class Post(Base):
 	is_deleted = Column(Boolean, default=False)
 	user = relationship("User", backref="posts")
 	comment_count = Column(Integer, nullable=False, default=0)
-	title = Column(String(64), nullable=False)
+	title = Column(String(250), nullable=False)
 
 class Comment(Base): 
 	__tablename__ = 'comments'

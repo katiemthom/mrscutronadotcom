@@ -12,7 +12,15 @@ function addComment(authorId,postId,startId,destId) {
   		});	
 }
 </script>
-
+<script>
+$(document).ready(function() {
+	$('#comment_input').keyup(function(event) {
+		if(event.keyCode == 13) {
+			$('#comment_submit').click();
+		}
+	});
+});
+</script>
 {% extends 'master.html' %}
 {% block body %}
 <div class='container'>
@@ -37,7 +45,7 @@ function addComment(authorId,postId,startId,destId) {
 	<p><input id='comment_input' type='text' class='form-control' name='comment_input' placeholder='Share your thoughts...!'></input></p>
 
 	<p>
-		<a href="javascript:addComment({{user.user_id}},{{post.post_pk}},'#comment_input','#comments-div');" id="add-comment-button"><button id="comment_submit">Submit</button></a>
+		<a href="javascript:addComment({{user.user_id}},{{post.post_pk}},'#comment_input','#comments-div');" id="add-comment-button"><button id="comment_submit" class="btn btn-default">Submit</button></a>
 	</p>
 
 	<br><br>
