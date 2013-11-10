@@ -48,7 +48,12 @@
 <ul class="nav navbar-nav navbar-right">
 <li><a href="#">Link</a></li>
 <li class="dropdown">
+{% if user.is_active() %}
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">{{user.first_name}} <b class="caret"></b></a>
+{% endif %}
+{% if not user.is_active() %}
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">signin or signup <b class="caret"></b></a>
+{% endif %}
 <ul class="dropdown-menu">
 <li>
 <form class="navbar-form navbar-right" method='post' action='/'>
