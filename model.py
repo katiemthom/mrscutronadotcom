@@ -163,7 +163,7 @@ def get_posts():
 	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
 
 def get_post_by_id(post_id): 
-	return session.query(Post).filter_by(id=post_id).one()
+	return session.query(Post).filter_by(post_id=post_id).one()
 
 def get_posts_for_page(user_id, page, per_page, count):
 	# page * per_page = end slice
@@ -196,8 +196,8 @@ def add_comment(author_id,post_id,content):
 	session.commit()
 	return new_comment
 
-def get_comments_by_post_id(post_id):
-	return session.query(Comment).filter_by(post_id=post_id).all()
+def get_comments_by_post_id(post_pk):
+	return session.query(Comment).filter_by(post_pk=post_pk).all()
 
 ########### FUNCTIONS ###########
 

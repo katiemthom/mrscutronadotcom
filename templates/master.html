@@ -7,8 +7,8 @@
         <title>mrscutronadotcom</title>
 	</head>
 	<body>
-        <div class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container">
+        <div class="navbar navbar-inverse" role='navigation'>
+            
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
@@ -17,7 +17,21 @@
                 </button>
                 <a class="navbar-brand" href="/">mrscutronadotcom</a>
             </div>
+
             <div class="navbar-collapse collapse">
+            <div class="dropdown">
+                <button class="btn dropdown-toggle sr-only" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                studentblogs
+                <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Action</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Another action</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Something else here</a></li>
+                    <li role="presentation" class="divider"></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Separated link</a></li>
+                </ul>
+            </div>
                 {% if not user.is_active() %}
                 <form class="navbar-form navbar-right" method='post'>
                     <div class="form-group">
@@ -43,7 +57,7 @@
                 </div>
                 {% endif %}
             </div>
-            </div>
+
         </div>
         <div class='container'>
 			{% block body %}

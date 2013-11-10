@@ -14,10 +14,15 @@ function addComment(authorId,postId,startId,destId) {
 {% extends 'master.html' %}
 {% block body %}
 <div class='container'>
-
-	<h1>{{ post.timestamp }}</h1>
+	<div class="page-header">
+		<h1>{{post.title}}</h1><small>{{ post.timestamp }} by {{post.user.first_name}} {{post.user.last_name}}</small>
+	</div>
 	<p>{{ post.content }}</p>
-
+	<br>
+	<a href='{{url_for("show_blog",author_id=post.user_id)}}'>&laquo; back</a>
+	<div class="page-header">
+		<h3>Comments</h3>
+	</div>
 	<div id="comments-div">
 		{% for comment in comments %}
 		<h3>{{comment.timestamp}} {{comment.user.first_name}}</h3>
@@ -32,6 +37,8 @@ function addComment(authorId,postId,startId,destId) {
 	<p>
 		<a href="javascript:addComment({{post.user.id}},{{post.id}},'#comment_input','#comments-div');" id="add-comment-button"><button>Submit</button></a>
 	</p>
+
+	<br><br>
 
 
 
