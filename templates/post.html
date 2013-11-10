@@ -35,8 +35,12 @@ $(document).ready(function() {
 	</div>
 	<div id="comments-div">
 		{% for comment in comments %}
-		<h3>{{comment.timestamp}} {{comment.user.first_name}}</h3>
+		<div class="page-header">
+		<h4>{{comment.user.first_name}}:</h4>
 		<p>{{comment.content}}</p>
+		<small>{{comment.timestamp}}</small>
+		</div>
+
 		{% endfor %}
 	</div>
 
