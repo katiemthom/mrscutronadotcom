@@ -24,6 +24,9 @@ def url_for_other_page(page):
 	args['page'] = page
 	return url_for(request.endpoint, **args)
 app.jinja_env.globals['url_for_other_page'] = url_for_other_page
+def format_date(dt):
+	return dt.strftime('%B %d, %Y %I:%M %p')
+app.jinja_env.globals['format_date'] = format_date
 ########## end Flask Setup ##########
 
 ########## Login Manager to make login easier ##########

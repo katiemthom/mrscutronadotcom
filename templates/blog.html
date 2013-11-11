@@ -1,12 +1,17 @@
 {% extends 'master.html' %}
 {% block body %}
 <div class="page-header">
+	<div class="media">
+	<a class="pull-left" href="#">
+    <img class="media-object" src="{{posts[0].user.profile_picture}}" height='100px' width='80px' alt="...">
+  	</a>
 	<h1>
 		{{posts[0].user.first_name}} {{posts[0].user.last_name}}'s Blog
 		{% if user.user_id == posts[0].user.user_id %}
 		<a href='{{url_for("add_post")}}'><button type="button" class="btn btn-default">Add Post</button></a>
 		{% endif %}
 	</h1>
+	</div>
 
 </div>
 <div class='container'>
@@ -15,12 +20,12 @@
 		<h1>{{post.title}}</h1>
 		{% if post.version_id == 1%}
 		<small>
-		created on {{post.timestamp}}
+		created on {{post.timestamp.year}}
 		</small>
 		{% endif %}
 		{% if post.version_id > 1%}
 		<small>
-		edited on {{post.timestamp}}
+		edited on {{format_date(post.timestamp)}}
 		</small>
 		{% endif %}
 	</div>

@@ -143,6 +143,23 @@ def create_db():
 def get_user_by_id(user_id):
 	return session.query(User).get(user_id)
 
+def format_date(raw_date):
+	month = raw_date.month()
+	year = raw_date.year()
+	day = raw_date.day()
+	hour = raw_date.hour()
+	apm = ""
+	if hour > 12: 
+		hour = hour - 12
+		amp = 'pm'
+	elif hour == 12: 
+		amp = 'pm'
+	else: 
+		amp = 'am' 
+	minute = raw_date.minute()
+	formatted = month + "-" + day + "-" + year + ' ' + hour + ':' + minute + " " + amp
+	return formatted
+
 ########### FUNCTIONS WITH NOTES ###########
 
 def get_notes(): 

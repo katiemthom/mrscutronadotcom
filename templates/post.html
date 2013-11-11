@@ -7,8 +7,7 @@ function addComment(authorId,postId,startId,destId) {
   		data: { user_id: authorId, post_pk: postId, comment: $(startId).val() }
 		}).done(function( msg ) {
 			$('#comment_input').val(""); 
-			$(destId).append('<h3>'+msg['comment_timestamp']+' '+msg['comment_author']+'</h3>')
-			$(destId).append('<p>'+msg['comment_content']+'</p>'); 
+			$(destId).append('<div class="page-header"><h4>'+msg['comment_author']+':</h4><p>'+msg['comment_content']+'</p><small>'+msg['comment_timestamp']+'</small></div>');
   		});	
 }
 </script>
