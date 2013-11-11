@@ -219,10 +219,10 @@ def get_grades_by_user_id(user_id):
 
 
 
-def add_comment(author_id,post_id,content):
+def add_comment(author_id,post_pk,content):
 	last = session.query(Comment).order_by(desc(Comment.comment_pk)).first()
-	new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_id,content=content,comment_id=last.comment_pk+1)
-	post = session.query(Post).filter_by(post_pk=post_id).one()
+	new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_pk,content=content,comment_id=last.comment_pk+1)
+	post = session.query(Post).filter_by(post_pk=post_pk).one()
 	post.comment_count += 1
 	session.add(new_comment)
 	session.commit()
