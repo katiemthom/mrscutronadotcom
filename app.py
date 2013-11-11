@@ -7,6 +7,7 @@ import model
 import os 
 import config
 import forms 
+import json
 
 ########## Flask Setup ##########
 mail = Mail()
@@ -136,9 +137,27 @@ def show_grades():
 	return render_template('mygrades.html',grades=grades,user=current_user)
 
 @app.route('/post/<int:post_pk>', methods=['POST'])
-@login_required
 def comment(post_pk):
 	new_comment = model.add_comment(request.form.get('user_id'),request.form.get('post_pk'),request.form.get('comment'))
+	return jsonify({
+		'comment_author': new_comment.user.first_name,
+		'comment_content': new_comment.content,
+		'comment_timestamp': new_comment.timestamp})
+
+@app.route('/edit_comment/<int:comment_pk>', methods=['GET'])
+def edit_comment(comment_pk):
+	comment = model.get_comment_by_pk(comment_pk)
+	print 'GELLLLO'
+	print jsonify({
+		'comment_content': comment.content})
+	return jsonify({
+		'comment_content': comment.content})
+
+@app.route('/edit_comment/<int:comment_pk>', methods=['POST'])
+def show_new_comment(comment_pk):
+	print request.form.get('edited_content')
+	old_comment = model.get_comment_by_pk(comment_pk)
+	new_comment = model.edit_comment(current_user.user_id, old_comment.post.post_pk, comment_pk, request.form.get('edited_comment'))
 	return jsonify({
 		'comment_author': new_comment.user.first_name,
 		'comment_content': new_comment.content,

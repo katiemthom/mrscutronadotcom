@@ -17,3 +17,6 @@ class AddPostForm(Form):
 
 class EditPostForm(Form):
 	new_content = TextField('Content', [validators.Required()])
+
+class EditCommentForm(Form):
+	new_content = TextField('Content', [validators.Required()])

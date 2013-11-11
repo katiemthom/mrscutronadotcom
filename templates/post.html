@@ -1,30 +1,8 @@
-<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-<script type="text/javascript">
-function addComment(authorId,postId,startId,destId) {
-	$.ajax({
-		type: "POST",
-  		url: "/post/1",
-  		data: { user_id: authorId, post_pk: postId, comment: $(startId).val() }
-		}).done(function( msg ) {
-			$('#comment_input').val(""); 
-			$(destId).append('<div class="page-header"><h4>'+msg['comment_author']+':</h4><p>'+msg['comment_content']+'</p><small>'+msg['comment_timestamp']+'</small></div>');
-  		});	
-}
-</script>
-<script>
-$(document).ready(function() {
-	$('#comment_input').keyup(function(event) {
-		if(event.keyCode == 13) {
-			$('#comment_submit').click();
-		}
-	});
-});
-</script>
 {% extends 'master.html' %}
 {% block body %}
 <div class='container'>
 	<div class="page-header">
-		<h1>{{post.title}}</h1><small>{{ post.timestamp }} by {{post.user.first_name}} {{post.user.last_name}}</small>
+		<h1>{{post.title}}</h1><small>{{format_date(post.timestamp)}} by {{post.user.first_name}} {{post.user.last_name}}</small>
 	</div>
 	<p>{{ post.content }}</p>
 	<br>
@@ -36,25 +14,77 @@ $(document).ready(function() {
 		{% for comment in comments %}
 		<div class="page-header">
 		<h4>{{comment.user.first_name}}:</h4>
-		<p>{{comment.content}}</p>
-		<small>{{comment.timestamp}}</small>
+		<div id='{{comment.comment_pk}}'>{{comment.content}}</div>
+		<small>
+			{{format_date(post.timestamp)}}
+			{% if user.user_id == comment.user_id %}
+			<a href="javascript:editComment('#{{comment.comment_pk}}',{{comment.comment_pk}});">edit</a>
+			<a href="">delete</a>
+			{% endif %}
+		</small>
 		</div>
-
 		{% endfor %}
 	</div>
 
-
-
+	{% if user.is_active() %}
 	<p><input id='comment_input' type='text' class='form-control' name='comment_input' placeholder='Share your thoughts...!'></input></p>
 
 	<p>
 		<a href="javascript:addComment({{user.user_id}},{{post.post_pk}},'#comment_input','#comments-div');" id="add-comment-button"><button id="comment_submit" class="btn btn-default">Submit</button></a>
 	</p>
-
+	{% endif %}
+	{% if not user.is_active() %}
+	<div class="alert alert-warning">You must be logged in to comment.</div>
+	{% endif %}
 	<br><br>
 
 
 
 </div>	
+{% endblock %}
+
+{% block javascript %}
+
+<script type="text/javascript">
+function addComment(authorId,postId,startId,destId) {
+	$.ajax({
+		type: "POST",
+  		url: "/post/1",
+  		data: { user_id: authorId, post_pk: postId, comment: $(startId).val() }
+		}).done(function( msg ) {
+			$('#comment_input').val(""); 
+			$(destId).append('<div class="page-header"><h4>'+msg['comment_author']+':</h4><p>'+msg['comment_content']+'</p><small>'+msg['comment_timestamp']+'</small></div>');
+  		});	
+}
+$(document).ready(function() {
+	$('#comment_input').keyup(function(event) {
+		if(event.keyCode == 13) {
+			$('#comment_submit').click();
+		}
+	});
+});
+function editComment(destId,commentPk) {
+	$.ajax({
+		type: "GET",
+		url: "/edit_comment/" + commentPk
+	}).done(function(msg) {
+		console.log(msg)
+		var first = '<p><textarea class="form-control" id="edited_comment">'+msg["comment_content"]+'</textarea></p><p><a href="javascript:submitEdit(\'' + destId + '\',' + commentPk + ');"><button class="btn btn-default">Submit</button></a></p>';
+		$(destId).append(first);
+	});
+}
+function submitEdit(startId,commentPk) {
+	$.ajax({
+		type: "POST",
+  		url: "/edit_comment/" + commentPk,
+  		data: { edited_comment: $('#edited_comment').val() }
+		}).done(function( msg ) {
+			console.log(msg);
+			$(startId).val(""); 
+			$(startId).append(msg['comment_content']);
+  		});	
+}
+</script>
+
 {% endblock %}
 

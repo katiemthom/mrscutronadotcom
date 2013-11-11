@@ -217,8 +217,6 @@ def get_grades_by_user_id(user_id):
 
 ########### FUNCTIONS WITH COMMENTS ###########
 
-
-
 def add_comment(author_id,post_pk,content):
 	last = session.query(Comment).order_by(desc(Comment.comment_pk)).first()
 	new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_pk,content=content,comment_id=last.comment_pk+1)
@@ -228,8 +226,19 @@ def add_comment(author_id,post_pk,content):
 	session.commit()
 	return new_comment
 
+def edit_comment(user_id,post_pk,comment_pk,content):
+	old_comment = get_comment_by_pk(comment_pk)
+	old_comment.is_deleted = True 
+	new_comment = Comment(timestamp=datetime.datetime.now(),user_id=user_id,post_pk=post_pk,content=content, comment_id=old_comment.comment_id, version_id=old_comment.version_id+1)
+	session.add(new_comment)
+	session.commit()
+	return new_comment
+
 def get_comments_by_post_id(post_pk):
 	return session.query(Comment).filter_by(post_pk=post_pk).all()
+
+def get_comment_by_pk(comment_pk):
+	return session.query(Comment).filter_by(comment_pk=comment_pk).first()	
 
 ########### FUNCTIONS ###########
 
