@@ -68,7 +68,9 @@
 </form>
 </li>
 {% endif %}
+{% if user.is_active() %}
 <li><a href="/logout">sign out</a></li>
+{% endif %}
 </ul>
 </li>
 </ul>
