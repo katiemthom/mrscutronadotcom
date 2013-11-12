@@ -15,9 +15,9 @@ function addComment(authorId,postId,startId,destId) {
 				+msg['comment_content']
 				+'<br><br><small>'
 				+msg['comment_timestamp']
-				+'<a href="javascript:editComment(#'
+				+'<a href="javascript:editComment(\'#'
 				+msg['comment_pk']
-				+','
+				+'\','
 				+msg['comment_pk']
 				+');"> edit</a><a href="/deletecomment/'
 				+msg['comment_pk']
