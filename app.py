@@ -3,6 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash, jso
 from flask.ext.login import LoginManager, login_required, login_user, current_user, logout_user
 from model import User, session
 from flask.ext.mail import Message, Mail 
+from flaskext.markdown import Markdown
 
 import model
 import os 
@@ -13,6 +14,7 @@ import forms
 ########## Flask Setup ##########
 app = Flask(__name__)
 app.config.from_object(config)
+Markdown(app)
 ########## end Flask Setup ##########
 
 ########## Mail Setup ##########
@@ -218,6 +220,12 @@ def delete_comment(comment_pk):
 	model.session.commit()
 	return redirect(url_for("show_post",post_pk=comment.post_pk))
 ########## end comment views ##########
+
+########## test views ##########
+@app.route('/test')
+def test():
+	return render_template('test.html')
+########## end test views ##########
 
 if __name__ == "__main__":
     app.run(debug = True)

@@ -1,0 +1,16 @@
+<html>
+<head></head>
+<body>
+<button id='test'>Bold</button>
+<button id='preview'>Preview</button>
+<br>
+<textarea id='post-editor'> </textarea>
+<div id='show-preview'>
+{% filter markdown %}
+</div>
+{% endfilter %}
+<script type="text/javascript" src="/static/js/jquery.js"></script>
+<script src="/static/js/jquery.selection.js"></script>
+<script type="text/javascript" src="/static/js/addpost.js"></script>
+</body>
+</html>
