@@ -5,7 +5,17 @@ function addComment(authorId,postId,startId,destId) {
   		data: { user_id: authorId, post_pk: postId, comment: $(startId).val() }
 		}).done(function( msg ) {
 			$('#comment_input').val(""); 
-			$(destId).append('<div class="page-header"><h4>'+msg['comment_author']+':</h4><p>'+msg['comment_content']+'</p><small>'+msg['comment_timestamp']+'</small></div>');
+			$('#added_comments').append('<div class="page-header"><h4>'
+				+msg['comment_author']
+				+':</h4><div>'
+				+msg['comment_content']
+				+'<br><br><small>'
+				+msg['comment_timestamp']
+				+'<a href="javascript:editComment(#'
+				+msg['comment_pk']
+				+','
+				+msg['comment_pk']
+				+');"> edit</a></small></div></div>');
   		});	
 }
 $(document).ready(function() {
