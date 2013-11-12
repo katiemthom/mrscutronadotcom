@@ -34,14 +34,14 @@
 				<br><br>
 				<small>
 					{% if comment.version_id == 1%}
-						<small>
+						
 						{{format_date(comment.timestamp)}}
-						</small>
+						
 					{% endif %}
-					{% if post.version_id > 1%}
-						<small>
+					{% if comment.version_id > 1%}
+						
 						edited on {{format_date(comment.timestamp)}}
-						</small>
+						
 					{% endif %}
 					{% if user.user_id == comment.user_id %}
 						<a href="javascript:editComment('#{{comment.comment_pk}}',{{comment.comment_pk}});">edit</a>
