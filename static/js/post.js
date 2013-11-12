@@ -30,7 +30,8 @@ function editComment(destId,commentPk) {
 		type: "GET",
 		url: "/edit_comment/" + commentPk
 	}).done(function(msg) {
-		var first = '<textarea class="form-control" id="edited_comment">'+msg['comment_content']+'</textarea><a href="javascript:submitEdit(\'' + destId + '\',' + commentPk + ');"><button class="btn btn-default" id="edit_submit">Submit</button></a>';
+		var first = '<textarea class="form-control" id="edited_comment">'+msg['comment_content']+'</textarea><br><a href="javascript:submitEdit(\'' + destId + '\',' + commentPk + ');"><button class="btn btn-default" id="edit_submit">Submit</button></a><br>';
+		$(destId).append('<br><br>');
 		$(destId).append(first);
 	});
 }
