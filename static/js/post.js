@@ -7,7 +7,11 @@ function addComment(authorId,postId,startId,destId) {
 			$('#comment_input').val(""); 
 			$('#added_comments').append('<div class="page-header"><h4>'
 				+msg['comment_author']
-				+':</h4><div>'
+				+':</h4><div id="'
+				+msg['comment_pk']
+				+'-mom"></div><div id="'
+				+msg['comment_pk']
+				+'">'
 				+msg['comment_content']
 				+'<br><br><small>'
 				+msg['comment_timestamp']
@@ -15,9 +19,16 @@ function addComment(authorId,postId,startId,destId) {
 				+msg['comment_pk']
 				+','
 				+msg['comment_pk']
-				+');"> edit</a></small></div></div>');
+				+');"> edit</a><a href="/deletecomment/'
+				+msg['comment_pk']
+				+'"> delete</a></small></div></div>');
   		});	
 }
+
+
+
+
+
 $(document).ready(function() {
 	$('#comment_input').keyup(function(event) {
 		if(event.keyCode == 13) {
