@@ -207,6 +207,15 @@ def show_new_comment(comment_pk):
 		'comment_author': new_comment.user.first_name,
 		'comment_content': new_comment.content,
 		'comment_timestamp': new_comment.timestamp})
+
+@app.route('/deletecomment/<int:comment_pk>')
+@login_required
+def delete_comment(comment_pk): 
+	comment = model.get_comment_by_pk(comment_pk)
+	comment.is_deleted = True 
+	comment.post.comment_count -= 1 
+	model.session.commit()
+	return redirect(url_for("show_post",post_pk=comment.post_pk))
 ########## end comment views ##########
 
 if __name__ == "__main__":
