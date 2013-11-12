@@ -25,10 +25,6 @@ function addComment(authorId,postId,startId,destId) {
   		});	
 }
 
-
-
-
-
 $(document).ready(function() {
 	$('#comment_input').keyup(function(event) {
 		if(event.keyCode == 13) {
@@ -53,13 +49,14 @@ function submitEdit(startId,commentPk) {
   		data: { edited_comment: $('#edited_comment').val() }
 		}).done(function( msg ) {
 			$(startId).hide();
-			$(startId+"-mom").append(msg['comment_content']);
-			$(startId+"-mom").append('<br><br><small>');
-			$(startId+"-mom").append(msg['comment_timestamp']);
-			$(startId+"-mom").append('<a href="javascript:editComment(#');
-			$(startId+"-mom").append(msg['comment_pk']);
-			$(startId+"-mom").append(',');
-			$(startId+"-mom").append(msg['comment_pk']);
-			$(startId+"-mom").append(');">edit</a></small></div>');
+			$(startId+"-mom").append(msg['comment_content']
+			+'<br><br><small>'
+			+msg['comment_timestamp']
+			+'<a href="javascript:editComment(\'#'
+			+msg['comment_pk']
+			+'\','
+			+msg['comment_pk']
+			+');"> edit</a></small></div>');
+
   		});	
 }

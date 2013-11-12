@@ -203,10 +203,11 @@ def edit_comment(comment_pk):
 def show_new_comment(comment_pk):
 	old_comment = model.get_comment_by_pk(comment_pk)
 	new_comment = model.edit_comment(current_user.user_id, old_comment.post.post_pk, comment_pk, request.form.get('edited_comment'))
+	new_comment_timestamp = format_date(new_comment.timestamp)
 	return jsonify({
 		'comment_author': new_comment.user.first_name,
 		'comment_content': new_comment.content,
-		'comment_timestamp': new_comment.timestamp})
+		'comment_timestamp': new_comment_timestamp})
 
 @app.route('/deletecomment/<int:comment_pk>')
 @login_required
