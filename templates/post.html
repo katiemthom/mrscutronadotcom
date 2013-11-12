@@ -14,7 +14,13 @@
 		{% for comment in comments %}
 		<div class="page-header">
 		<h4>{{comment.user.first_name}}:</h4>
-		<div id='{{comment.comment_pk}}'>{{comment.content}}</div>
+
+		<div id='{{comment.comment_pk}}-mom'>
+		</div>
+		<div id='{{comment.comment_pk}}'>
+			{{comment.content}}
+		</div>
+
 		<small>
 			{{format_date(post.timestamp)}}
 			{% if user.user_id == comment.user_id %}
@@ -49,7 +55,7 @@
 function addComment(authorId,postId,startId,destId) {
 	$.ajax({
 		type: "POST",
-  		url: "/post/1",
+  		url: "/post/" + postId, 
   		data: { user_id: authorId, post_pk: postId, comment: $(startId).val() }
 		}).done(function( msg ) {
 			$('#comment_input').val(""); 
@@ -68,8 +74,7 @@ function editComment(destId,commentPk) {
 		type: "GET",
 		url: "/edit_comment/" + commentPk
 	}).done(function(msg) {
-		console.log(msg)
-		var first = '<p><textarea class="form-control" id="edited_comment">'+msg["comment_content"]+'</textarea></p><p><a href="javascript:submitEdit(\'' + destId + '\',' + commentPk + ');"><button class="btn btn-default">Submit</button></a></p>';
+		var first = '<textarea class="form-control" id="edited_comment">'+msg['comment_content']+'</textarea><a href="javascript:submitEdit(\'' + destId + '\',' + commentPk + ');"><button class="btn btn-default" id="edit_submit">Submit</button></a>';
 		$(destId).append(first);
 	});
 }
@@ -79,9 +84,9 @@ function submitEdit(startId,commentPk) {
   		url: "/edit_comment/" + commentPk,
   		data: { edited_comment: $('#edited_comment').val() }
 		}).done(function( msg ) {
-			console.log(msg);
-			$(startId).val(""); 
-			$(startId).append(msg['comment_content']);
+			$(startId).hide();
+			$(startId+"-mom").append(msg['comment_content']);
+			
   		});	
 }
 </script>

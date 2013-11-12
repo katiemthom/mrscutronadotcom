@@ -1,3 +1,4 @@
+########### IMPORT ###########
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import create_engine, ForeignKey, desc
 from sqlalchemy import Column, Integer, String, Date, Text, Float, Boolean, DateTime, BigInteger
@@ -10,14 +11,17 @@ import os
 import config 
 import bcrypt 
 import datetime
+########### END IMPORT ###########
 
+########### SESSION ###########
 engine = create_engine(config.DB_URI, echo=False)
 session = scoped_session(sessionmaker(bind=engine,autocommit=False,autoflush=False))
+########### END SESSION ###########
+
+########### CLASS DEFINITIONS ###########
 
 Base = declarative_base()
 Base.query = session.query_property 
-
-########### CLASS DEFINITIONS ###########
 
 class User(Base, UserMixin): 
     __tablename__ = 'users'
@@ -128,9 +132,9 @@ class Pagination(object):
 					yield None
 				yield num
 				last = num 
+########### END CLASS DEFINITIONS ###########
 
 ########### FUNCTIONS ###########
-
 def create_db():
 	Base.metadata.create_all(engine)
 	print 'db created!'
@@ -142,57 +146,30 @@ def create_db():
 
 def get_user_by_id(user_id):
 	return session.query(User).get(user_id)
+########### END FUNCTIONS ###########
 
-def format_date(raw_date):
-	month = raw_date.month()
-	year = raw_date.year()
-	day = raw_date.day()
-	hour = raw_date.hour()
-	apm = ""
-	if hour > 12: 
-		hour = hour - 12
-		amp = 'pm'
-	elif hour == 12: 
-		amp = 'pm'
-	else: 
-		amp = 'am' 
-	minute = raw_date.minute()
-	formatted = month + "-" + day + "-" + year + ' ' + hour + ':' + minute + " " + amp
-	return formatted
 
 ########### FUNCTIONS WITH NOTES ###########
 
 def get_notes(): 
 	return session.query(Notes).limit(3).all()
+########### END FUNCTIONS WITH NOTES ###########
 
 ########### FUNCTIONS WITH POSTS ###########
-
-# def get_posts_by_user_id(user_id,page):
-# 	return session.query(Post).filter_by(author_id=user_id).order_by(desc(Post.timestamp)).paginate(page,5,False).items
-
 def get_featured_posts():
 	return session.query(Post).order_by(desc(Post.comment_count)).limit(3).all()
 
 def get_recent_posts():
 	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
 
-def get_posts_by_user_id(user_id):
-	return session.query(Post).filter_by(user_id=user_id).order_by(desc(Post.timestamp)).all()
-
-def get_posts():
-	return session.query(Post).order_by(desc(Post.timestamp)).limit(5).all()
-
-def get_post_by_id(post_pk): 
+def get_post_by_pk(post_pk): 
 	return session.query(Post).filter_by(post_pk=post_pk).one()
 
 def get_posts_for_page(user_id, page, per_page, count):
-	# page * per_page = end slice
-	# end slice - per_page = beginning slice
 	end = page * per_page
 	begin = end - per_page
 	posts = session.query(Post).filter_by(user_id=user_id).filter_by(is_deleted=False).order_by(desc(Post.timestamp)).all()
 	return posts[begin:end]
-
 
 def count_all_posts(user_id):
 	return len(session.query(Post).filter_by(user_id=user_id).filter_by(is_deleted=False).all())
@@ -209,14 +186,14 @@ def edit_post(user_id,post_id,content,title,is_featured,version_id,comment_count
 	session.add(new_post)
 	session.commit()
 	return new_post
+########### END FUNCTIONS WITH POSTS ###########
 
 ########### FUNCTIONS WITH GRADES ###########
-
 def get_grades_by_user_id(user_id):
 	return session.query(Grade).filter_by(user_id=user_id).all()
+########### END FUNCTIONS WITH GRADES ###########
 
 ########### FUNCTIONS WITH COMMENTS ###########
-
 def add_comment(author_id,post_pk,content):
 	last = session.query(Comment).order_by(desc(Comment.comment_pk)).first()
 	new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_pk,content=content,comment_id=last.comment_pk+1)
@@ -234,14 +211,14 @@ def edit_comment(user_id,post_pk,comment_pk,content):
 	session.commit()
 	return new_comment
 
-def get_comments_by_post_id(post_pk):
-	return session.query(Comment).filter_by(post_pk=post_pk).all()
+def get_comments_by_post_pk(post_pk):
+	return session.query(Comment).filter_by(post_pk=post_pk).filter_by(is_deleted=False).all()
 
 def get_comment_by_pk(comment_pk):
 	return session.query(Comment).filter_by(comment_pk=comment_pk).first()	
+########### END FUNCTIONS WITH COMMENTS ###########
 
 ########### FUNCTIONS ###########
-
 def main(): 
 	pass
 
