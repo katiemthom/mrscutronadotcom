@@ -142,6 +142,7 @@ def comment(post_pk):
 	return jsonify({
 		'comment_author': new_comment.user.first_name,
 		'comment_content': new_comment.content,
+		'comment_pk': new_comment.comment_pk,
 		'comment_timestamp': comment_timestamp})
 
 @app.route('/addpost')
