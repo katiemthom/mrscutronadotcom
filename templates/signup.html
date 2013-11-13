@@ -1,19 +1,31 @@
 {% extends 'master.html' %}
 {% block body %}
 <div class='container'>
+	<div class="well" id='signup_well'>
+	<div class='page-header'>
+		<h1>Sign Up</h1>
+	</div>
 	<form action='{{url_for('sign_up')}}' method='post'>
 		<br>
-		<p><input class='form-control' name='first_name' placeholder='First Name' id='signup'></input></p>
-		<p><input class='form-control' name='last_name' placeholder='Last Name' id='signup'></input></p>
-		<p><input class='form-control' name='email' placeholder='Email' id='signup'></input></p>
-		<p><input class='form-control' name='first_name' placeholder='First Name' id='signup'></input></p>
+		<p><input class='form-control' name='first_name' placeholder='First Name' id='signup' {% if first %}value={{first}} {% endif %}></input></p>
+		<p><input class='form-control' name='last_name' placeholder='Last Name' id='signup' {% if last %} value={{last}} {% endif %}></input></p>
+		<p><input class='form-control' name='email' placeholder='Email' id='signup' {% if email %} value={{email}} {% endif %}></input></p>
 		<p><input class='form-control' name='password' placeholder='Password' id='signup'></input></p>
 		<p><input class='form-control' name='validate_password' placeholder='Validate Password' id='signup'></input></p>
-		<p><button type="submit" class="btn">Send</button></p>
+		<p><input class='form-control' name='profile_picture' placeholder='Upload Profile Picture' id='signup' type='file'></input></p>
+		<p><select class='form-control' name='period' placeholder='Period' id='signup'>
+		<option value='2'>2</option>
+		<option value='3'>3</option>
+		<option value='4'>4</option>
+		<option value='5'>5</option>
+		</select></p>
+		<p><input class='form-control' name='school_id' placeholder='School ID' id='signup'></input></p>
+		<p><button type="submit" class="btn btn-default">Send</button></p>
 	</form>
 	{% for message in get_flashed_messages() %}
-    	<div class="flash">{{ message }}</div>
+    	<div class="alert alert-warning">{{ message }}</div>
   	{% endfor %}
+  </div>
 </div>	
 
 

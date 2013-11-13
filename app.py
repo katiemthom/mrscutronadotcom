@@ -45,7 +45,7 @@ app.jinja_env.globals['format_date'] = format_date
 ########## Login Manager to make login easier ##########
 login_manager = LoginManager()
 login_manager.init_app(app)
-#login_manager.login_view = 'show_blogs'
+login_manager.login_view = 'index'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -228,7 +228,27 @@ def test():
 
 @app.route('/signup')
 def sign_up():
-	return render_template('signup.html')
+	return render_template('signup.html', user=current_user)
+
+@app.route('/signup', methods=['POST'])
+def process_sign_up():
+	form = forms.SignupForm(request.form)
+	first_name = form.first_name.data
+	last_name = form.last_name.data
+	email = form.email.data
+	password = form.password.data
+	validate_password = form.validate_password.data
+	profile_picture = form.profile_picture.data
+	period = form.period.data
+	school_id = form.school_id.data
+	if password != validate_password:
+		flash('Passwords do not match.')
+		return render_template('signup.html', user=current_user, first=first_name
+			, last=last_name,email=email)
+	else:
+		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
+		login_user(new_user)
+		return render_template('index.html',user=current_user)
 ########## end test views ##########
 
 if __name__ == "__main__":

@@ -1,4 +1,13 @@
+#signup_well{
+	border-radius: 0px;
+	padding-top: 0px;
+	width: 30em;
 
+}
+
+#signup {
+	margin-bottom: 20px;
+}
 
 #master_login {
 	margin-bottom: 5px;

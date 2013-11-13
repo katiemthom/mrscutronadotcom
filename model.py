@@ -138,19 +138,20 @@ class Pagination(object):
 ########### FUNCTIONS ###########
 ########### FUNCTIONS ###########
 
-
-
 ########### USER FUNCTIONS ###########
 def get_user_by_id(user_id):
 	return session.query(User).get(user_id)
 
-def create_user():
-	pass
+def create_user(first_name,last_name,email,password,period,school_id,salt="salt"):
+	new_user = User(first_name=first_name,last_name=last_name,email=email,password=password,period=period,school_id=school_id,salt=salt)
+	new_user.setpw(password)
+	session.add(new_user)
+	session.commit()
+	return new_user
 ########### END USER FUNCTIONS ###########
 
 
 ########### FUNCTIONS WITH NOTES ###########
-
 def get_notes(): 
 	return session.query(Notes).limit(3).all()
 ########### END FUNCTIONS WITH NOTES ###########
