@@ -1,8 +1,17 @@
-#signup_well{
+.well{
 	border-radius: 0px;
 	padding-top: 0px;
-	width: 30em;
+	
+}
 
+#signup_well {
+	width: 30em;
+}
+
+#add_post_well {
+	width: 48%;
+	float: left;
+	margin-right: 20px;
 }
 
 #signup {
@@ -11,4 +20,14 @@
 
 #master_login {
 	margin-bottom: 5px;
+}
+
+#preview {
+	background-color: #FFFFFF;
+	border: 1px solid #e3e3e3;
+	padding: 19px;
+}
+
+#post_content {
+	height: 400px;
 }

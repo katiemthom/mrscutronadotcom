@@ -4,10 +4,17 @@
 	<div class="page-header">
 		<h1>Add Post</h1>
 	</div>
+	<div class="well" id="add_post_well">
+	<div class="page-header">
+		<h2>Post Editor</h2>
+	</div>
 	{% for message in get_flashed_messages() %}
         <div class="alert alert-warning">{{message}}</div>
     {% endfor %}
-    
+	<p>
+		<button id="bold" class="btn btn-default">Bold</button>
+		<button class="btn btn-default">Italic</button>
+	</p>    
 	<form action='{{url_for("add_post")}}' method='post'>
 		<p>
 			<input id='post_title' type='text' class='form-control' name='post_title' placeholder='Title'></input>
@@ -19,7 +26,27 @@
 			<input class="btn btn-default" type='submit' id="add_post_submit"></input>
 		</p>
 	</form>
+	</div>
 
-	<br><br><br>
+
+
+	<div class="well" id="add_post_well">
+	<div class="page-header">
+		<h2>Post Preview</h2>
+	</div>
+	<div id="preview">
+	 
+	</div>
+    
+
+	</div>
 </div>	
+{% endblock %}
+
+
+
+<!-- **************** SCRIPTS **************** -->
+{% block javascript %}
+<script src="/static/js/jquery.selection.js"></script>
+<script type="text/javascript" src="/static/js/addpost.js"></script>
 {% endblock %}

@@ -227,9 +227,7 @@ def create_db():
 	Base.metadata.drop_all(engine)
 	Base.metadata.create_all(engine)
 	print 'db created!'
-
 	data_loader.load_users()
-	# data_loader.load_notes()
 	data_loader.load_posts()
 	print 'db created!'
 
