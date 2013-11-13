@@ -133,20 +133,20 @@ class Pagination(object):
 				yield num
 				last = num 
 ########### END CLASS DEFINITIONS ###########
+########### END CLASS DEFINITIONS ###########
 
 ########### FUNCTIONS ###########
-def create_db():
-	Base.metadata.create_all(engine)
-	print 'db created!'
+########### FUNCTIONS ###########
 
-	data_loader.load_users()
-	# data_loader.load_notes()
-	data_loader.load_posts()
-	print 'db created!'
 
+
+########### USER FUNCTIONS ###########
 def get_user_by_id(user_id):
 	return session.query(User).get(user_id)
-########### END FUNCTIONS ###########
+
+def create_user():
+	pass
+########### END USER FUNCTIONS ###########
 
 
 ########### FUNCTIONS WITH NOTES ###########
@@ -221,6 +221,16 @@ def get_comment_by_pk(comment_pk):
 ########### FUNCTIONS ###########
 def main(): 
 	pass
+
+def create_db():
+	Base.metadata.drop_all(engine)
+	Base.metadata.create_all(engine)
+	print 'db created!'
+
+	data_loader.load_users()
+	# data_loader.load_notes()
+	data_loader.load_posts()
+	print 'db created!'
 
 if __name__ == "__main__":
 	main()

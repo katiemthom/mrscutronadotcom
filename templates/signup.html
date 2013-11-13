@@ -1,0 +1,20 @@
+{% extends 'master.html' %}
+{% block body %}
+<div class='container'>
+	<form action='{{url_for('sign_up')}}' method='post'>
+		<br>
+		<p><input class='form-control' name='first_name' placeholder='First Name' id='signup'></input></p>
+		<p><input class='form-control' name='last_name' placeholder='Last Name' id='signup'></input></p>
+		<p><input class='form-control' name='email' placeholder='Email' id='signup'></input></p>
+		<p><input class='form-control' name='first_name' placeholder='First Name' id='signup'></input></p>
+		<p><input class='form-control' name='password' placeholder='Password' id='signup'></input></p>
+		<p><input class='form-control' name='validate_password' placeholder='Validate Password' id='signup'></input></p>
+		<p><button type="submit" class="btn">Send</button></p>
+	</form>
+	{% for message in get_flashed_messages() %}
+    	<div class="flash">{{ message }}</div>
+  	{% endfor %}
+</div>	
+
+
+{% endblock %}

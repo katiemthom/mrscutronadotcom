@@ -225,6 +225,10 @@ def delete_comment(comment_pk):
 @app.route('/test')
 def test():
 	return render_template('test.html')
+
+@app.route('/signup')
+def sign_up():
+	return render_template('signup.html')
 ########## end test views ##########
 
 if __name__ == "__main__":
