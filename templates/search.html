@@ -1,0 +1,51 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<div class='container'>
+
+	<div class="page-header">
+		<h1>Search for a Student</h1>
+	</div>
+
+	<div class="well" id='search-well'>
+		<div class="page-header">
+			<h2>by First Name</h2>
+		</div>
+		<div id="search">
+		<input type='text' class='form-control' name='search_by_first'></input>
+		<br>
+		<button class='btn btn-default'>Search</button>
+		</div>
+	</div>
+
+	<div class="well" id='search-well'>
+		<div class="page-header">
+			<h2>by Last Name</h2>
+		</div>
+		<div id="search">
+		<input type='text' class='form-control' name='search_by_last'></input>
+		<br>
+		<button class='btn btn-default'>Search</button>
+		</div>
+	</div>
+
+	<div class="well" id='search-well'>
+		<div class="page-header">
+			<h2>by Email</h2>
+		</div>
+		<div id="search">
+		<input type='text' class='form-control' name='search_by_email'></input>
+		<br>
+		<button class='btn btn-default'>Search</button>
+		</div>
+	</div>
+
+</div>	
+{% endblock %}
+
+
+
+
+<!-- **************** SCRIPTS **************** -->
+{% block javascript %}
+{% endblock %}

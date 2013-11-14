@@ -33,7 +33,7 @@
 <a href="#" class="dropdown-toggle" data-toggle="dropdown">studentblogs <b class="caret"></b></a>
 <ul class="dropdown-menu">
 <li><a href="/blogs">featured and recent</a></li>
-<li><a href="#">search by student</a></li>
+<li><a href="/search">search by student</a></li>
 {% if user.is_active() %}
 <li class="divider"></li>
 <li><a href="{{url_for('show_blog', author_id=user.user_id)}}">my blog</a></li>

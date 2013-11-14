@@ -128,6 +128,10 @@ def show_blog(author_id, page):
 	posts = model.get_posts_for_page(author_id, page, PER_PAGE, count)
 	pagination = model.Pagination(page, PER_PAGE, count)
 	return render_template('blog.html', posts=posts, user=current_user, pagination=pagination)
+
+@app.route('/search')
+def search():
+	return render_template('search.html', user=current_user)
 ########## end blog views ##########
 
 ########## post views ##########
