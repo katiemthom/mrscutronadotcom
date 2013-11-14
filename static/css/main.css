@@ -14,6 +14,17 @@
 	margin-right: 20px;
 }
 
+#add-comment-well {
+	width: 48%;
+	float: left;
+	margin-right: 20px;
+}
+
+#comment_input {
+	height: 200px;
+	width: 100%;
+}
+
 #search-well {
 	width: 31%;
 	float: left;
