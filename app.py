@@ -144,8 +144,17 @@ def process_search():
 	else:
 		search_term = form.search_term.data
 		user_ids = model.search_user(search_term)
-		print user_ids
-		return render_template('search.html', user=current_user)
+		users = []
+		posts = []
+		for user_id in user_ids:
+			##ifnone##
+			user = model.get_user_by_id(user_id)
+			post = model.get_last_post(user_id)
+			users.append(user)
+			posts.append(post)
+		print users
+		print posts 
+		return render_template('searchresults.html', user=current_user, users=users,posts=posts)
 ########## end blog views ##########
 
 ########## post views ##########

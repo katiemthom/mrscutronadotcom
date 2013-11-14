@@ -1,0 +1,33 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<div class='container'>
+
+<!-- **************** HEADER **************** -->
+	<div class="page-header">
+		<h1>Search Results</h1><small></small>
+	</div>
+<!-- **************** END HEADER **************** -->
+
+
+{% for post in posts %}
+<div class='well' id='search-results'>
+    <div class="media">
+		<a class="pull-left" href="#">
+    		<img class="media-object" src="{{user.profile_picture}}" height='64px' width='64px' alt="...">
+  		</a>
+  		<div class="media-body">
+    		<a href="{{url_for('show_blog', author_id=user.user_id)}}">
+    		<h4 class="media-heading">{{post.user.first_name}} {{post.user.last_name}}</h4></a>
+    		<small>{{post.user.email}}</small>
+		</div>
+	</div>
+
+	<h4>Most Recent Post: {{post.title}}</h4>
+	{% filter markdown %}{{post.content}}{% endfilter %}
+	<a href="{{url_for('show_blog', author_id=user.user_id)}}">Go to full blog >></a>
+</div>
+{% endfor %}
+
+</div>
+{% endblock %}

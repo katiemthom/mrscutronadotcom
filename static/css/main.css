@@ -20,6 +20,13 @@
 	margin-right: 20px;
 }
 
+#search-results {
+	width: 48%;
+	float: left;
+	margin-right: 20px;
+	padding-top: 20px;
+}
+
 #comment_input {
 	height: 200px;
 	width: 100%;

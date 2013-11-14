@@ -197,6 +197,10 @@ def edit_post(user_id,post_id,content,title,is_featured,version_id,comment_count
 	session.add(new_post)
 	session.commit()
 	return new_post
+
+def get_last_post(user_id):
+	last_post = session.query(Post).filter_by(user_id=user_id).order_by(desc(Post.timestamp)).first()
+	return last_post
 ########### END FUNCTIONS WITH POSTS ###########
 
 ########### FUNCTIONS WITH GRADES ###########
