@@ -131,7 +131,20 @@ def show_blog(author_id, page):
 
 @app.route('/search')
 def search():
+	# run db query
+	# return results
 	return render_template('search.html', user=current_user)
+
+@app.route('/search', methods=['POST'])
+def process_search():
+	form = forms.SearchForm(request.form)
+	if form.validate() == False: 
+		flash("You didn't search for anything.")
+		return render_template('search.html', user=current_user)
+	else:
+		search_term = form.search_term.data
+		print search_term
+		return render_template('search.html', user=current_user)
 ########## end blog views ##########
 
 ########## post views ##########

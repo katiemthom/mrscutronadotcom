@@ -18,6 +18,9 @@ class AddPostForm(Form):
 class EditPostForm(Form):
 	new_content = TextField('Content', [validators.Required()])
 
+class SearchForm(Form):
+	search_term = TextField('Term', [validators.Required()])
+
 class SignupForm(Form):
 	first_name = TextField('First', [validators.Required()])
 	last_name = TextField('Last', [validators.Required()])

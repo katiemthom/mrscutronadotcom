@@ -9,35 +9,19 @@
 
 	<div class="well" id='search-well'>
 		<div class="page-header">
-			<h2>by First Name</h2>
+			<h2>By Name or Email</h2>
 		</div>
-		<div id="search">
-		<input type='text' class='form-control' name='search_by_first'></input>
-		<br>
-		<button class='btn btn-default'>Search</button>
-		</div>
-	</div>
 
-	<div class="well" id='search-well'>
-		<div class="page-header">
-			<h2>by Last Name</h2>
-		</div>
 		<div id="search">
-		<input type='text' class='form-control' name='search_by_last'></input>
-		<br>
-		<button class='btn btn-default'>Search</button>
-		</div>
-	</div>
 
-	<div class="well" id='search-well'>
-		<div class="page-header">
-			<h2>by Email</h2>
-		</div>
-		<div id="search">
-		<input type='text' class='form-control' name='search_by_email'></input>
+		<form action='{{url_for('process_search')}}' method='post'>
+		<input type='text' class='form-control' name='search_term'></input>
 		<br>
 		<button class='btn btn-default'>Search</button>
+		</form>	
+
 		</div>
+
 	</div>
 
 </div>	
