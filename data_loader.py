@@ -1,6 +1,7 @@
 import model
 import csv
 from datetime import date
+import datetime
 import time
 import urllib
 
