@@ -4,6 +4,14 @@ from datetime import date
 import time
 import urllib
 
+def load_comments():
+    comment_id = 1
+    timestamp = datetime.datetime.now()
+    user_id = 1
+    post_pk = 6
+    content = 'comment'
+    new_comment = model.Comment(comment_id=comment_id,timestamp=timestamp,user_id=user_id,post_pk=post_pk, content=content)
+
 
 def load_users():
     with open("data/users","rb") as f:

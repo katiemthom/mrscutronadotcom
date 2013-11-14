@@ -229,6 +229,7 @@ def create_db():
 	print 'db created!'
 	data_loader.load_users()
 	data_loader.load_posts()
+	data_loader.load_comments()
 	print 'db created!'
 
 if __name__ == "__main__":
