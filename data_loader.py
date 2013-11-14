@@ -12,7 +12,8 @@ def load_comments():
     post_pk = 6
     content = 'comment'
     new_comment = model.Comment(comment_id=comment_id,timestamp=timestamp,user_id=user_id,post_pk=post_pk, content=content)
-
+    model.session.add(new_comment)
+    model.session.commit()
 
 def load_users():
     with open("data/users","rb") as f:
