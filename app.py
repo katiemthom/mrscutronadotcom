@@ -143,7 +143,8 @@ def process_search():
 		return render_template('search.html', user=current_user)
 	else:
 		search_term = form.search_term.data
-		print search_term
+		user_ids = model.search_user(search_term)
+		print user_ids
 		return render_template('search.html', user=current_user)
 ########## end blog views ##########
 

@@ -150,8 +150,11 @@ def create_user(first_name,last_name,email,password,period,school_id,salt="salt"
 	return new_user
 
 def search_user(search_term):
-	results = session.query(User).filter(User.first_name.like(search_term)).all()
-	return results
+	results = engine.execute("select user_id from users where user_index_col @@ to_tsquery('"+search_term+":*');")
+	user_ids = []
+	for result in results:
+		user_ids.append(result[0])
+	return user_ids
 ########### END USER FUNCTIONS ###########
 
 
