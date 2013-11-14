@@ -177,7 +177,10 @@ def count_all_posts(user_id):
 
 def add_post(author_id,content,title):
 	last = session.query(Post).order_by(desc(Post.post_pk)).first()
-	new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=last.post_pk+1, title=title)
+	if last.post_pk >= 1:
+		new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=last.post_pk+1, title=title)
+	else:
+		new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=1, title=title)
 	session.add(new_post)
 	session.commit()
 	return new_post
@@ -227,7 +230,7 @@ def main():
 	pass
 
 def create_db():
-	Base.metadata.drop_all(engine)
+	# Base.metadata.drop_all(engine)
 	Base.metadata.create_all(engine)
 	print 'db created!'
 	#data_loader.load_users()
