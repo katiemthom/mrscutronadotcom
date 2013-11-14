@@ -65,8 +65,9 @@
     			<a href="{{url_for('show_blog', author_id=post.user.user_id)}}">
     			<h4 class="media-heading">{{post.title}}</h4></a>
     			<h4 class="media-heading">{{post.user.first_name}} {{post.user.last_name}}</h4>
-    			
+    			{% filter markdown %}
     			{{post.content}}
+    			{% endfilter %}
   			</div>
 		</div>
     {% endfor %}

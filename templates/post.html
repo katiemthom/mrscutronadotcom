@@ -11,7 +11,9 @@
 
 <!-- **************** POST **************** -->
 	<div class='post'>
-	<p>{{ post.content }}</p>
+	{% filter markdown %}
+	{{ post.content }}
+	{% endfilter %}
 	</div>
 <!-- **************** END POST **************** -->
 
