@@ -197,7 +197,10 @@ def get_grades_by_user_id(user_id):
 ########### FUNCTIONS WITH COMMENTS ###########
 def add_comment(author_id,post_pk,content):
 	last = session.query(Comment).order_by(desc(Comment.comment_pk)).first()
-	new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_pk,content=content,comment_id=last.comment_pk+1)
+	if last.comment_pk >= 1: 
+		new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_pk,content=content,comment_id=last.comment_pk+1)
+	else: 
+		new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_pk,content=content,comment_id=1)
 	post = session.query(Post).filter_by(post_pk=post_pk).one()
 	post.comment_count += 1
 	session.add(new_comment)
@@ -227,9 +230,9 @@ def create_db():
 	Base.metadata.drop_all(engine)
 	Base.metadata.create_all(engine)
 	print 'db created!'
-	data_loader.load_users()
-	data_loader.load_posts()
-	data_loader.load_comments()
+	#data_loader.load_users()
+	#data_loader.load_posts()
+	#data_loader.load_comments()
 	print 'db created!'
 
 if __name__ == "__main__":
