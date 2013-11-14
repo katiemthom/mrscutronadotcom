@@ -3,8 +3,12 @@
 <body>
 <button id='test'>Bold</button>
 <br>
-<form><textarea id='post-editor'> </textarea>
+<form><textarea id='post-editor'> 
+</textarea>
 <div id='show-preview'>
+	{% filter markdown %}
+	**bold**
+	{% endfilter %}
 <script type="text/javascript" src="/static/js/jquery.js"></script>
 <script src="/static/js/jquery.selection.js"></script>
 <script type="text/javascript" src="/static/js/addpost.js"></script>
