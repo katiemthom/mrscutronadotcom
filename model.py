@@ -177,7 +177,7 @@ def count_all_posts(user_id):
 
 def add_post(author_id,content,title):
 	last = session.query(Post).order_by(desc(Post.post_pk)).first()
-	if not last:
+	if last:
 		new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=last.post_pk+1, title=title)
 	else:
 		new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=1, title=title)
