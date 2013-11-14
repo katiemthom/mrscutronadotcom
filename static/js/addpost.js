@@ -2,6 +2,11 @@ $('#bold').click(function() {
 	$('#post_content').selection('replace', {text: '**'+$('#post_content').selection()+'**'});
 });
 
+$('#italic').click(function() {
+	$('#post_content').selection('replace', {text: '*'+$('#post_content').selection()+'*'});
+});
+
+
 setInterval(function() {
 	$.ajax({
 		type: 'POST',
