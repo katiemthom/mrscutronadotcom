@@ -6,6 +6,9 @@ $('#italic').click(function() {
 	$('#post_content').selection('replace', {text: '*'+$('#post_content').selection()+'*'});
 });
 
+$('#header').click(function() {
+	$('#post_content').selection('replace', {text: '###'+$('#post_content').selection()});
+});
 
 setInterval(function() {
 	$.ajax({
