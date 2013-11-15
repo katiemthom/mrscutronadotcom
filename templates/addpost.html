@@ -2,7 +2,7 @@
 {% block body %}
 
 <!-- DIALOG ***************** -->
-<div id='dialog-link' class='well'>
+<div id='dialog-link' class='well' title="Add a Link">
 	<p>Enter the information for your link:</p>
 	<br>
 	<input class='form-control' id='link-url' placeholder='Link url'></input>
@@ -67,7 +67,7 @@
 <script type="text/javascript">
 $('#dialog-link').dialog({
 	autoOpen: false,
-	height: 300,
+	height: 350,
 	wight: 350,
 	model: true,
 	buttons: {
@@ -79,10 +79,6 @@ $('#dialog-link').dialog({
 				+")");
 			$(this).dialog('close');
 		},
-	    Close: function() {
-        	allFields.val( "" ).removeClass( "ui-state-error" );
-        	$(this).dialog('close');
-      	}
 	}
 });
 $('#link').click(function() {

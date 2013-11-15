@@ -8922,7 +8922,7 @@ $.widget( "ui.dialog", {
 			.addClass("ui-dialog-content ui-widget-content")
 			.appendTo( this.uiDialog );
 
-		// this._createTitlebar();
+		this._createTitlebar();
 		this._createButtonPane();
 
 		if ( this.options.draggable && $.fn.draggable ) {
@@ -9167,6 +9167,7 @@ $.widget( "ui.dialog", {
 				text: false
 			})
 			.addClass("ui-dialog-titlebar-close")
+			.addClass("btn btn-default")
 			.appendTo( this.uiDialogTitlebar );
 		this._on( this.uiDialogTitlebarClose, {
 			click: function( event ) {
@@ -12608,10 +12609,10 @@ $.widget( "ui.tooltip", {
 			}
 		};
 		if ( !event || event.type === "mouseover" ) {
-			events.mouseleave = "close";
+			events.mouseleave = "Close";
 		}
 		if ( !event || event.type === "focusin" ) {
-			events.focusout = "close";
+			events.focusout = "Close";
 		}
 		this._on( true, target, events );
 	},

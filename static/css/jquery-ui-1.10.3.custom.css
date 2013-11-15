@@ -61,6 +61,11 @@
 	cursor: default !important;
 }
 
+.ui-state-hover {
+	color: #333333;
+  	text-decoration: none;
+}
+
 
 /* Icons
 ----------------------------------*/
@@ -68,7 +73,7 @@
 /* states and images */
 .ui-icon {
 	display: block;
-	text-indent: -99999px;
+	text-indent: 0px;
 	overflow: hidden;
 	background-repeat: no-repeat;
 }
@@ -195,7 +200,7 @@
 .ui-button {
 	display: inline-block;
 	position: relative;
-	padding: 0;
+	padding: 2px;
 	line-height: normal;
 	margin-right: .1em;
 	cursor: pointer;
@@ -208,7 +213,8 @@
 .ui-button:visited,
 .ui-button:hover,
 .ui-button:active {
-	text-decoration: none;
+	color: #333333;
+  	text-decoration: none;
 }
 /* to make room for the icon, a width needs to be set here */
 .ui-button-icon-only {
@@ -227,16 +233,36 @@ button.ui-button-icons-only {
 
 /* button text element */
 .ui-button .ui-button-text {
-	display: block;
-	line-height: normal;
+	color: #333333;
+  	background-color: #ffffff;
+  	border-color: #cccccc;
+  	display: inline-block;
+  	padding: 6px 12px;
+  	margin-bottom: 0;
+  	font-size: 14px;
+  	font-weight: normal;
+  	line-height: 1.428571429;
+  	text-align: center;
+  	white-space: nowrap;
+  	vertical-align: middle;
+  	cursor: pointer;
+  	border: 1px solid transparent;
+  	border-radius: 4px;
+  	-webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+       -o-user-select: none;
+          user-select: none;
 }
+
+
 .ui-button-text-only .ui-button-text {
 	padding: .4em 1em;
 }
 .ui-button-icon-only .ui-button-text,
 .ui-button-icons-only .ui-button-text {
 	padding: .4em;
-	text-indent: -9999999px;
+
 }
 .ui-button-text-icon-primary .ui-button-text,
 .ui-button-text-icons .ui-button-text {
@@ -478,6 +504,7 @@ button.ui-button::-moz-focus-inner {
 }
 .ui-dialog .ui-dialog-titlebar {
 	padding: .4em 1em;
+	margin-bottom: 2em;
 	position: relative;
 }
 .ui-dialog .ui-dialog-title {
@@ -492,10 +519,10 @@ button.ui-button::-moz-focus-inner {
 	position: absolute;
 	right: .3em;
 	top: 50%;
-	width: 21px;
+	width: 60px;
 	margin: -10px 0 0 0;
 	padding: 1px;
-	height: 20px;
+	height: 35px;
 }
 .ui-dialog .ui-dialog-content {
 	position: relative;
