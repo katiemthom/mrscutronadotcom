@@ -20,6 +20,9 @@
 		<button class='btn btn-default'>Search</button>
 		</form>	
 
+		{% for message in get_flashed_messages() %}
+        	<div class="alert alert-warning">{{message}}</div>
+    	{% endfor %}
 		</div>
 
 	</div>

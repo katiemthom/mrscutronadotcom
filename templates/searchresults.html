@@ -17,7 +17,7 @@
     		<img class="media-object" src="{{user.profile_picture}}" height='64px' width='64px' alt="...">
   		</a>
   		<div class="media-body">
-    		<a href="{{url_for('show_blog', author_id=user.user_id)}}">
+    		<a href="{{url_for('show_blog', author_id=post.user.user_id)}}">
     		<h4 class="media-heading">{{post.user.first_name}} {{post.user.last_name}}</h4></a>
     		<small>{{post.user.email}}</small>
 		</div>
@@ -28,6 +28,14 @@
 	<a href="{{url_for('show_blog', author_id=user.user_id)}}">Go to full blog >></a>
 </div>
 {% endfor %}
+
+
+{% for user in no_posts %}
+<div class='well' id='search-results'>
+	<div class="alert alert-warning">{{user.first_name}} {{user.last_name}} has no posts!</div>
+</div>
+{% endfor %}
+
 
 </div>
 {% endblock %}
