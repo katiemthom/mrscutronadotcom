@@ -70,7 +70,7 @@ def process_login():
 		flash('Incorrect username or password')
 		return render_template('index.html')
 	login_user(user)
-	return redirect(url_for('show_notes'))
+	return redirect(url_for('index'))
 
 @app.route('/logout')
 @login_required
