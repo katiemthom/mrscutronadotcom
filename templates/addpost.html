@@ -2,9 +2,12 @@
 {% block body %}
 
 <!-- DIALOG ***************** -->
-<div id='dialog-link' title='Link'>
-	<input id='link-url' placeholder='Link url'></input>
-	<input id='link-name' placeholder='How you would like the link to appear in your post'></input>
+<div id='dialog-link' class='well'>
+	<p>Enter the information for your link:</p>
+	<br>
+	<input class='form-control' id='link-url' placeholder='Link url'></input>
+	<br>
+	<input class='form-control' id='link-name' placeholder='Link title'></input>
 </div>
 <!-- DIALOG ***************** -->
 
@@ -75,7 +78,11 @@ $('#dialog-link').dialog({
 				+ $('#link-url').val()
 				+")");
 			$(this).dialog('close');
-		}
+		},
+	    Close: function() {
+        	allFields.val( "" ).removeClass( "ui-state-error" );
+        	$(this).dialog('close');
+      	}
 	}
 });
 $('#link').click(function() {

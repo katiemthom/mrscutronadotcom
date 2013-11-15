@@ -8922,7 +8922,7 @@ $.widget( "ui.dialog", {
 			.addClass("ui-dialog-content ui-widget-content")
 			.appendTo( this.uiDialog );
 
-		this._createTitlebar();
+		// this._createTitlebar();
 		this._createButtonPane();
 
 		if ( this.options.draggable && $.fn.draggable ) {
