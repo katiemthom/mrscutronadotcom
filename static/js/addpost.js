@@ -10,6 +10,10 @@ $('#header').click(function() {
 	$('#post_content').selection('replace', {text: '###'+$('#post_content').selection()});
 });
 
+$('#link').click(function() {
+	$('#post_content').selection('replace', {text: '[replace]('+$('#post_content').selection()+')'});
+});
+
 setInterval(function() {
 	$.ajax({
 		type: 'POST',
