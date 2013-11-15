@@ -249,25 +249,25 @@ def delete_comment(comment_pk):
 ########## end comment views ##########
 
 ########## test views ##########
-# @app.route('/test', defaults={'post_pk':None})
-# @app.route('/test/<int:post_pk>')
-# def test(post_pk):
-# 	# if !post_pk create new
-# 	# else update content and send new content
-# 	return render_template('test.html')
+@app.route('/testdatabase', methods=['POST'])
+def check_db():
+	try:
+		session.info()
+		return jsonify({'up': True}) 
+	except sqlalchemy.exc.OperationalError:
+		return jsonify({'up': False})
+	else:
+		return jsonify({'up': False})  
+	
+
 @app.route('/test')
 def show_mark():
-	#content = "this should be **bold**"
 	return render_template('test.html')
 
 @app.route('/testajax', methods=['POST'])
 def test_ajax():
 	content = request.form.get('hello')
-	# return jsonify({
-	# 	'returnme': =})
-	# content = "this should be **bold**"
 	return render_template('testajax.html', content=content)
-	# return redirect(url_for('show_mark'))
 
 @app.route('/signup')
 def sign_up():
