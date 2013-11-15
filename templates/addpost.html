@@ -2,8 +2,9 @@
 {% block body %}
 
 <!-- DIALOG ***************** -->
-<div id='dialog-link'>
-	<input placeholder='How you would like the link to appear in your post'></input>
+<div id='dialog-link' title='Link'>
+	<input id='link-url' placeholder='Link url'></input>
+	<input id='link-name' placeholder='How you would like the link to appear in your post'></input>
 </div>
 <!-- DIALOG ***************** -->
 
@@ -66,6 +67,16 @@ $('#dialog-link').dialog({
 	height: 300,
 	wight: 350,
 	model: true,
+	buttons: {
+		'Add Link': function() {
+			$('#post_content').append("["
+				+ $('#link-name').val()
+				+"]("
+				+ $('#link-url').val()
+				+")");
+			$(this).dialog('close');
+		}
+	}
 });
 $('#link').click(function() {
 	$('#dialog-link').dialog('open');
