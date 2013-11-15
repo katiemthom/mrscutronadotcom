@@ -11,7 +11,26 @@ import os
 import config 
 import bcrypt 
 import datetime
+# import sqlalchemy
+# import sqlalchemy.interfaces
+# import _mysql_exceptions
 ########### END IMPORT ###########
+
+########## Listener Setup ########## 
+# class MyListener(sqlalchemy.interfaces.PoolListener):
+# 	def __init__(self):
+# 		self.retried = False
+# 	def checkout(self, dbapi_con, con_record, con_proxy):
+# 		try:
+# 			dbapi_con.cursor().execute('select now()')
+# 		except _mysql_exceptions.OperationalError:
+# 			if self.retried:
+# 				self.retried = False
+# 				raise
+# 			self.retried = True
+# 			raise sqlalchemy.exc.DisconnectionError
+# listeners=[MyListener()]
+########## end Listener Setup ########## 
 
 ########### SESSION ###########
 engine = create_engine(config.DB_URI, echo=False)
