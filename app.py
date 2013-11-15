@@ -38,7 +38,8 @@ app.jinja_env.globals['url_for_other_page'] = url_for_other_page
 
 ########## Date Formatter ########## 
 def format_date(dt):
-	return dt.strftime('%B %d, %Y %I:%M %p')
+	# return dt.strftime('%B %d, %Y %I:%M %p')
+	return dt.strftime('%Y-%m-%d %H:%M UTC')
 app.jinja_env.globals['format_date'] = format_date
 ########## End Date Formatter ########## 
 

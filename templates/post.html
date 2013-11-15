@@ -5,7 +5,7 @@
 
 <!-- **************** HEADER **************** -->
 	<div class="page-header">
-		<h1>{{post.title}}</h1><small>{{format_date(post.timestamp)}} by {{post.user.first_name}} {{post.user.last_name}}</small>
+		<h1>{{post.title}}</h1><small><span id='date'>{{format_date(post.timestamp)}}</span> by {{post.user.first_name}} {{post.user.last_name}}</small>
 	</div>
 <!-- **************** END HEADER **************** -->
 
@@ -35,7 +35,7 @@
 				<small>
 					{% if comment.version_id == 1%}
 						
-						{{format_date(comment.timestamp)}}
+						<span id='date'>{{format_date(comment.timestamp)}}</span>
 						
 					{% endif %}
 					{% if comment.version_id > 1%}

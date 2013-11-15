@@ -20,7 +20,7 @@
 		<h1>{{post.title}}</h1>
 		{% if post.version_id == 1%}
 		<small>
-		created on {{format_date(post.timestamp)}}
+		created on <span id="date">{{format_date(post.timestamp)}}</span>
 		</small>
 		{% endif %}
 		{% if post.version_id > 1%}
