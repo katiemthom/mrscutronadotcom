@@ -187,7 +187,7 @@ def get_featured_posts():
 	return session.query(Post).filter_by(is_deleted=False).order_by(desc(Post.comment_count)).limit(3).all()
 
 def get_recent_posts():
-	return session.query(Post).filter_by(is_deleted=False).order_by(desc(Post.timestamp)).limit(5).all()
+	return session.query(Post).filter_by(is_deleted=False).order_by(desc(Post.timestamp)).limit(6).all()
 
 def get_post_by_pk(post_pk): 
 	return session.query(Post).filter_by(post_pk=post_pk).one()
