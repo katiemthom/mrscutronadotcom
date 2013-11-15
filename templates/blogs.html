@@ -18,7 +18,7 @@
 					<h1>{{featured_posts[0].title}}</h1>
 					<p>{{featured_posts[0].user.first_name}} {{featured_posts[0].user.last_name}}</p>
 					<p>
-						<a class="btn btn-lg btn-default" href="{{url_for('show_blog', author_id=featured_posts[0].user_id)}}" role="button">View Post</a>
+						<a class="btn btn-lg btn-default" href="{{url_for('show_post', post_pk=featured_posts[0].post_pk)}}" role="button">View Post</a>
 					</p>
 				</div>
 			</div>
@@ -30,7 +30,7 @@
 					<h1>{{featured_posts[1].title}}</h1>
 					<p>{{featured_posts[1].user.first_name}} {{featured_posts[1].user.last_name}}</p>
 					<p>
-						<a class="btn btn-lg btn-default" href="{{url_for('show_blog', author_id=featured_posts[1].user_id)}}" role="button">View Post</a>
+						<a class="btn btn-lg btn-default" href="{{url_for('show_post', post_pk=featured_posts[0].post_pk)}}" role="button">View Post</a>
 					</p>
 				</div>
 			</div>
@@ -42,7 +42,7 @@
 					<h1>{{featured_posts[2].title}}</h1>
 					<p>{{featured_posts[2].user.first_name}} {{featured_posts[2].user.last_name}}</p>
 					<p>
-						<a class="btn btn-lg btn-default" href="{{url_for('show_blog', author_id=featured_posts[2].user_id)}}" role="button">View Post</a>
+						<a class="btn btn-lg btn-default" href="{{url_for('show_post', post_pk=featured_posts[0].post_pk)}}" role="button">View Post</a>
 					</p>
 				</div>
 			</div>

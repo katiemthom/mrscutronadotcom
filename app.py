@@ -131,8 +131,6 @@ def show_blog(author_id, page):
 
 @app.route('/search')
 def search():
-	# run db query
-	# return results
 	return render_template('search.html', user=current_user)
 
 @app.route('/search', methods=['POST'])
