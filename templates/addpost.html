@@ -1,5 +1,12 @@
 {% extends 'master.html' %}
 {% block body %}
+
+<!-- DIALOG ***************** -->
+<div id='dialog-link'>
+	<input placeholder='How you would like the link to appear in your post'></input>
+</div>
+<!-- DIALOG ***************** -->
+
 <div class='container'>
 	<div class="page-header">
 		<h1>Add Post</h1>
@@ -51,4 +58,18 @@
 {% block javascript %}
 <script src="/static/js/jquery.selection.js"></script>
 <script type="text/javascript" src="/static/js/addpost.js"></script>
+<!-- DIALOG ***************** -->
+<script type="text/javascript" src='/static/js/jquery-ui-1.10.3.custom.js'></script>
+<script type="text/javascript">
+$('#dialog-link').dialog({
+	autoOpen: false,
+	height: 300,
+	wight: 350,
+	model: true,
+});
+$('#link').click(function() {
+	$('#dialog-link').dialog('open');
+});
+</script>
+<!-- DIALOG ***************** -->
 {% endblock %}
