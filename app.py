@@ -4,6 +4,7 @@ from flask.ext.login import LoginManager, login_required, login_user, current_us
 from model import User, session
 from flask.ext.mail import Message, Mail 
 from flaskext.markdown import Markdown
+from werkzeug import secure_filename
 
 import model
 import os 
@@ -16,6 +17,16 @@ app = Flask(__name__)
 app.config.from_object(config)
 Markdown(app)
 ########## end Flask Setup ##########
+
+########## File Upload Setup ##########
+UPLOAD_FOLDER = '/static/profile_pics'
+ALLOWED_EXTENSIONS = set(['png','jpg','jpeg','gif'])
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+def allowed_file(filename):
+	return '.' in filename and \
+		filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS
+########## end File Upload Setup ##########
 
 ########## Mail Setup ##########
 mail = Mail()
@@ -52,6 +63,20 @@ login_manager.login_view = 'index'
 def load_user(user_id):
 	return model.get_user_by_id(user_id)
 ########## end Login Manager to make login easier ##########
+
+########## signin and signup views ##########
+@app.route('/uploadpic', methods=['GET', 'POST'])
+def upload_img():
+	if request.method == 'POST':
+		file = request.files['file']
+		if file and allowed_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+			print filename
+			return render_template('upload_pic.html')
+	else: 
+		return render_template('upload_pic.html')
+
 
 ########## main views ##########
 @app.route('/')
