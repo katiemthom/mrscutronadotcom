@@ -166,23 +166,26 @@ def process_search():
 		flash("You didn't search for anything silly.")
 		return render_template('search.html', user=current_user)
 	else:
-		search_term = form.search_term.data
-		user_ids = model.search_user(search_term)
-		if user_ids == []:
-			flash("Oh no!  That person doesn't exist.")
-			return render_template('search.html', user=current_user)
 		posts = []
 		ids_no_posts = []
-		for user_id in user_ids:
-			post = model.get_last_post(user_id)
-			if post:
-				posts.append(post)
-			else: 
-				ids_no_posts.append(user_id)
+		search_terms = form.search_term.data.split()
+		for search_term in search_terms:
+			user_ids = model.search_user(search_term)
+			if user_ids == []:
+				flash("Oh no!  That person doesn't exist.")
+				return render_template('search.html', user=current_user)
+			for user_id in user_ids:
+				post = model.get_last_post(user_id)
+				if post:
+					posts.append(post)
+				else: 
+					ids_no_posts.append(user_id)
 		users_no_posts = []
 		for user_id in ids_no_posts:
 			user = model.get_user_by_id(user_id)
 			users_no_posts.append(user)
+		posts = list(set(posts))
+		users_no_posts = list(set(users_no_posts))
 		return render_template('searchresults.html', user=current_user, posts=posts, no_posts=users_no_posts)
 ########## end blog views ##########
 
