@@ -321,6 +321,11 @@ def process_sign_up():
 		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
 		login_user(new_user)
 		return render_template('index.html',user=current_user)
+
+@app.route('/d3test')
+def show_d3():
+	return render_template('d3test.html')
+
 ########## end test views ##########
 
 if __name__ == "__main__":
