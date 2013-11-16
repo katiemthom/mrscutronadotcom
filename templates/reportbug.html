@@ -7,8 +7,14 @@
 		<p><input type='textarea' class='form-control' name='bug' placeholder='Describe the bug is as much detail as you can...'></input></p>
 		<p><button type="submit" class="btn">Send</button></p>
 	</form>
-	{% for message in get_flashed_messages() %}
-    	<div class="flash">{{ message }}</div>
-  	{% endfor %}
+	{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+		{% for category, message in messages%}
+			<div class="alert alert-{{category}}">{{message}}</div>
+  		{% endfor %}
+  		{% endif %}
+  	{% endwith %}
+
+  	
 </div>	
 {% endblock %}

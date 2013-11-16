@@ -123,15 +123,16 @@ def report_bug():
 def send_bug():
 	form = forms.ContactForm(request.form)
 	if form.validate() == False: 
-		flash('All fields are required.')
-		return render_template('reportbug.html')
+		flash('All fields are required.','warning')
+		return render_template('reportbug.html',  user=current_user)
 	else:
 		page = form.page.data
 		bug = form.bug.data
 		msg = Message('bug report', sender='bugs@mrscutrona.com', recipients=['katiemthom@gmail.com'])
 		msg.body = "Page: %s Body: %s" % (page,bug)
 		mail.send(msg)
-		return redirect('/reportbug')
+		flash('Message sent!','success')
+		return render_template('reportbug.html', user=current_user)
 
 @app.route('/mygrades')
 @login_required
