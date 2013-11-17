@@ -77,18 +77,23 @@ class Comment(Base):
 
 class Assignment(Base): 
 	__tablename__ = 'assignments'
-	id = Column(Integer, primary_key = True)
-	assigned_date = Column(Date)
-	due_date = Column(Date)
+	assignment_pk = Column(BigInteger, primary_key = True)
+	assigned_on = Column(DateTime, nullable = False)
+	due_on = Column(DateTime, nullable = False)
 	link = Column(String(120), nullable = True)
-	description = Column(Text)
-	max_points = Column(Integer)
-	category = Column(String)
+	description = Column(Text, nullable = True)
+	max_points = Column(Integer, nullable = False, default=5)
+	category = Column(String, nullable = False)
+	group = Column(Integer, nullable = False, default=0)
+	version_id = Column(Integer, nullable = False, default=1)
+	assignment_id = Column(BigInteger, nullable = False)
+	is_deleted = Column(Boolean, nullable = False, default = False)
+	title = Column(String(120), nullable = False)
 
 class Grade(Base):
 	__tablename__ = 'grades'
 	id = Column(Integer, primary_key = True)
-	assignment_id = Column(Integer, ForeignKey('assignments.id'))
+	assignment_id = Column(Integer, ForeignKey('assignments.assignment_pk'))
 	value = Column(Float)
 	user_id = Column(Integer, ForeignKey('users.user_id'))
 	user = relationship("User", backref='grades')
@@ -203,6 +208,20 @@ def get_last_post(user_id):
 def get_grades_by_user_id(user_id):
 	return session.query(Grade).filter_by(user_id=user_id).all()
 ########### END FUNCTIONS WITH GRADES ###########
+
+########### FUNCTIONS WITH ASSIGNMENTS ###########
+def add_assignment(assigned_on,due_on,link,description,max_points,category,group,title):
+	#set assignment id see add comment below
+	last = session.query(Assignment).order_by(desc(Assignment.assignment_pk)).first()
+	if last: 
+		assignment_id = last.assignment_pk + 1
+	else: 
+		assignment_id = 1
+	new_assignment = Assignment(assigned_on=assigned_on,due_on=due_on,link=link,description=description,max_points=max_points,category=category,group=group,title=title,assignment_id=assignment_id)
+	session.add(new_assignment)
+	session.commit()
+	return new_assignment)
+########### END FUNCTIONS WITH ASSIGNMENTS ###########
 
 ########### FUNCTIONS WITH COMMENTS ###########
 def add_comment(author_id,post_pk,content):
