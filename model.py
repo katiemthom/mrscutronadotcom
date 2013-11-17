@@ -11,26 +11,7 @@ import os
 import config 
 import bcrypt 
 import datetime
-# import sqlalchemy
-# import sqlalchemy.interfaces
-# import _mysql_exceptions
 ########### END IMPORT ###########
-
-########## Listener Setup ########## 
-# class MyListener(sqlalchemy.interfaces.PoolListener):
-# 	def __init__(self):
-# 		self.retried = False
-# 	def checkout(self, dbapi_con, con_record, con_proxy):
-# 		try:
-# 			dbapi_con.cursor().execute('select now()')
-# 		except _mysql_exceptions.OperationalError:
-# 			if self.retried:
-# 				self.retried = False
-# 				raise
-# 			self.retried = True
-# 			raise sqlalchemy.exc.DisconnectionError
-# listeners=[MyListener()]
-########## end Listener Setup ########## 
 
 ########### SESSION ###########
 engine = create_engine(config.DB_URI, echo=False)
@@ -38,7 +19,6 @@ session = scoped_session(sessionmaker(bind=engine,autocommit=False,autoflush=Fal
 ########### END SESSION ###########
 
 ########### CLASS DEFINITIONS ###########
-
 Base = declarative_base()
 Base.query = session.query_property 
 
@@ -152,9 +132,7 @@ class Pagination(object):
 				yield num
 				last = num 
 ########### END CLASS DEFINITIONS ###########
-########### END CLASS DEFINITIONS ###########
 
-########### FUNCTIONS ###########
 ########### FUNCTIONS ###########
 
 ########### USER FUNCTIONS ###########
@@ -175,7 +153,6 @@ def search_user(search_term):
 		user_ids.append(result[0])
 	return user_ids
 ########### END USER FUNCTIONS ###########
-
 
 ########### FUNCTIONS WITH NOTES ###########
 def get_notes(): 
@@ -255,17 +232,13 @@ def get_comment_by_pk(comment_pk):
 	return session.query(Comment).filter_by(comment_pk=comment_pk).first()	
 ########### END FUNCTIONS WITH COMMENTS ###########
 
-########### FUNCTIONS ###########
+########### END FUNCTIONS ###########
+
 def main(): 
 	pass
 
 def create_db():
-	# Base.metadata.drop_all(engine)
 	Base.metadata.create_all(engine)
-	print 'db created!'
-	#data_loader.load_users()
-	#data_loader.load_posts()
-	#data_loader.load_comments()
 	print 'db created!'
 
 if __name__ == "__main__":

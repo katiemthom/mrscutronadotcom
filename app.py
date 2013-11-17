@@ -307,7 +307,7 @@ def show_mark():
 def test_ajax():
 	content = request.form.get('hello')
 	title = request.form.get('title')
-	return render_template('testajax.html', content=content, title=title)
+	return render_template('filtermarkdown.html', content=content, title=title)
 
 @app.route('/signup')
 def sign_up():
