@@ -1,0 +1,102 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<div class='container'>
+
+	<!-- ***************** HEADER ***************** -->
+	<div class="page-header">
+		<h1>Add Assignment</h1>
+	</div>
+	<!-- ***************** END HEADER ***************** -->
+
+	<!-- ***************** ADD ASSIGNMENT WELL ***************** -->
+	<div class="well" id="add-assignment-well">
+
+		<!-- ***************** HEADER ***************** -->
+		<div class="page-header">
+			<h2>Enter Assignment Information</h2>
+		</div>
+		<!-- ***************** END HEADER ***************** -->
+
+		<!-- ***************** FLASHED MESSAGES ***************** -->
+		{% for message in get_flashed_messages() %}
+	        <div class="alert alert-warning">{{message}}</div>
+	    {% endfor %}
+	    <!-- ***************** END FLASHED MESSAGES ***************** -->
+
+		<!-- ***************** ADD ASSIGNMENT FORM ***************** --> 
+		<form action='{{url_for("add_assignment")}}' method='post'>
+			
+			<p><input id='title' type='text' class='form-control' name='title' placeholder='Title'></input></p>
+
+			<p><select class='form-control' name='category' id='category'>
+			<option>Category</option>
+			<option value='CWH'>CWH</option>
+			<option value='MK'>MK</option>
+			<option value='AK'>AK</option>
+			</select></p>
+
+			<p><input id='assignment-link' type='text' class='form-control' name='assignment_link' placeholder='Link'></input></p>	
+
+			<p><textarea id='assignment-description' class='form-control' name='assignment_description' placeholder='Description'></textarea></p>
+
+			<p><input id='datepicker' type='text' class='form-control' name='assigned_on' placeholder='Assigned On'></input></p>		
+
+			<p><input id='datepicker2' type='text' class='form-control' name='due_on' placeholder='Due On'></input></p>	
+			
+			<p><input id='max-points' class='form-control' name='max_points' placeholder='Max Points'></input></p>
+
+			<p><select class='form-control' name='group' id='group'>
+			<option>Group</option>
+			<option value='0'>0</option>
+			<option value='1'>1</option>
+			<option value='2'>2</option>
+			<option value='3'>3</option>
+			<option value='4'>4</option>
+			</select></p>
+			
+			<br><p><input class="btn btn-default" type='submit' id="add_post_submit"></input></p>
+		
+		</form>
+		<!-- ***************** END ADD ASSIGNMENT FORM ***************** -->
+
+	</div>
+	<!-- ***************** END POST EDITOR WELL ***************** -->
+
+</div>
+
+{% endblock %}
+
+<!-- **************** SCRIPTS **************** -->
+{% block javascript %}
+
+<!-- **************** DATEPICKER **************** -->
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<script>
+jQuery(function($){
+  $("#datepicker").datepicker({
+        dateFormat: "dd-mm-yy",
+        onSelect: function(dateText, inst) {
+          var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
+          var dateText1 = $.datepicker.formatDate("D, d M yy", date, inst.settings);
+          date.setDate(date.getDate() + 7);
+          var dateText2 = $.datepicker.formatDate("D, d M yy", date, inst.settings);
+          $("#dateoutput").html("Chosen date is <b>" + dateText1 + "</b>; chosen date + 7 days yields <b>" + dateText2 + "</b>");
+        }
+      });
+    $("#datepicker2").datepicker({
+        dateFormat: "dd-mm-yy",
+        onSelect: function(dateText, inst) {
+          var date = $.datepicker.parseDate(inst.settings.dateFormat || $.datepicker._defaults.dateFormat, dateText, inst.settings);
+          var dateText1 = $.datepicker.formatDate("D, d M yy", date, inst.settings);
+          date.setDate(date.getDate() + 7);
+          var dateText2 = $.datepicker.formatDate("D, d M yy", date, inst.settings);
+          $("#dateoutput").html("Chosen date is <b>" + dateText1 + "</b>; chosen date + 7 days yields <b>" + dateText2 + "</b>");
+        }
+      });
+});
+</script>
+<!-- **************** END DATEPICKER **************** -->
+{% endblock %}

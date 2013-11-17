@@ -77,12 +77,6 @@ def upload_img():
 	else: 
 		return render_template('upload_pic.html')
 
-
-########## main views ##########
-@app.route('/')
-def index():
-	return render_template('index.html', user = current_user)
-
 @app.route('/', methods=['POST'])
 def process_login(): 
 	form = forms.LoginForm(request.form)
@@ -103,7 +97,19 @@ def process_login():
 def logout():
 	logout_user()
 	return redirect(url_for('index'))
+########## end signin and signup views ##########
+
+########## main views ##########
+@app.route('/')
+def index():
+	return render_template('index.html', user = current_user)
 ########## end main views ##########
+
+########## assignment views ##########
+@app.route('/addassignment')
+def add_assignment():
+	return render_template('addassignment.html', user=current_user)
+########## end assignment views ##########
 
 ########## other views ##########
 @app.route('/notes')
