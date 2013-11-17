@@ -4,6 +4,12 @@
 	
 }
 
+#model {
+	width: 20em;
+	float: left;
+	margin-right: 20px;
+}
+
 #signup_well {
 	width: 30em;
 }

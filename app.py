@@ -337,6 +337,10 @@ def process_sign_up():
 def show_d3():
 	return render_template('d3test.html')
 
+@app.route('/datamodels')
+def show_models():
+	return render_template('datamodels.html', user=current_user)
+
 ########## end test views ##########
 
 if __name__ == "__main__":

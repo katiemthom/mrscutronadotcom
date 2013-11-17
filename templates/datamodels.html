@@ -1,0 +1,51 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<!-- ***** ASSIGNMENT ***** -->
+<div class="panel panel-info" id='model'>
+	<div class="panel-heading">
+		<h3 class="panel-title">Assignment</h3>
+	</div>
+	<div class="panel-body">
+		<p>assignment_pk (bigint, primary key)</p>
+		<p>assigned_on (datetime)</p>
+		<p>due_on (datetime)</p>
+		<p>link (string)</p>
+		<p>description (text)</p>
+		<p>max_points (int)</p>
+		<p>category (string)</p>
+		<p>group (int)</p>
+		<p>version_id (int)</p>
+		<p>assignment_id (bigint)</p>
+		<p>is_deleted (bool)</p>
+		<p>title (string)</p>
+	</div>
+</div>
+
+<div class="panel panel-info" id='model'>
+	<div class="panel-body">
+		<p> has many >>> </p>
+		<br><br>
+		<p> <<< has one </p>
+	</div>
+</div>
+
+<!-- ***** GRADE ***** -->
+<div class="panel panel-info" id='model'>
+	<div class="panel-heading">
+		<h3 class="panel-title">Grade</h3>
+	</div>
+	<div class="panel-body">
+		<p>grade_pk (bigint, primary key)</p>
+		<p>assignment_pk (foreign key)</p>
+		<p>value (int)</p>
+		<p>user_id (foreign key)</p>
+		<p>note (text)</p>
+		<p>weight (int)</p>
+		<p>version_id (int)</p>
+		<p>is_deleted (bool)</p>
+	</div>
+</div>
+
+
+{% endblock %}
