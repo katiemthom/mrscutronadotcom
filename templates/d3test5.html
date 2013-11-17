@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>D3 Test</title>
+        <style type="text/css">
+        div.bar {
+            display: inline-block;
+            width: 20px;
+            height: 75px;   /* We'll override this later */
+            background-color: teal;
+            margin-right: 2px;
+        }
+        </style>
+    </head>
+    <body>
+        <script type="text/javascript" src="/static/d3/d3.v3.js"></script>
+        <script type="text/javascript">
+            //Data points
+            var dataset = [ 100, 200, 300, 400, 500 ];
+            
+            //Create a linear scale
+            var scale = d3.scale.linear();
+            //Set the input range
+            scale.domain([100, 500]);
+            //Set the output domain
+            scale.range([10, 350]);
+
+            // scale(100);  //Returns 10
+            // scale(300);  //Returns 180
+            // scale(500);  //Returns 350
+
+
+        </script>
+    </body>
+</html> 

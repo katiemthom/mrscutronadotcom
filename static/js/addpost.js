@@ -17,8 +17,8 @@ $('#header').click(function() {
 setInterval(function() {
 	$.ajax({
 		type: 'POST',
-		url: '/testajax',
-		data: {'hello': $('#post_content').val()},
+		url: '/addpostajax',
+		data: {'hello': $('#post_content').val(), 'title': $('#post_title').val()},
 		}).done(function(result) {
 			$('#preview').html(result);
 		});}

@@ -1,12 +1,18 @@
 {% extends 'master.html' %}
 {% block body %}
+
 <div class='container'>
+
+	<!-- ********** REPORT BUG FORM ********** -->
 	<form action='{{url_for('report_bug')}}' method=post>
 		<br>
 		<p><input class='form-control' name='page' placeholder='What page is the bug on?'></input></p>
 		<p><input type='textarea' class='form-control' name='bug' placeholder='Describe the bug is as much detail as you can...'></input></p>
 		<p><button type="submit" class="btn">Send</button></p>
 	</form>
+	<!-- ********** END REPORT BUG FORM ********** -->
+
+	<!-- ********** FLASHED MESSAGES ********** -->
 	{% with messages = get_flashed_messages(with_categories=true) %}
 		{% if messages %}
 		{% for category, message in messages%}
@@ -14,7 +20,8 @@
   		{% endfor %}
   		{% endif %}
   	{% endwith %}
-
+  	<!-- ********** END FLASHED MESSAGES ********** -->
   	
 </div>	
+
 {% endblock %}

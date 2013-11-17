@@ -4,46 +4,112 @@
         <meta charset="utf-8">
         <title>D3 Test</title>
         <style type="text/css">
-        div.bar {
-            display: inline-block;
-            width: 20px;
-            height: 75px;   /* We'll override this later */
-            background-color: teal;
-            margin-right: 2px;
+        /*styles for axis class*/
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
         }
-        </style>
+
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+    </style>
     </head>
     <body>
         <script type="text/javascript" src="/static/d3/d3.v3.js"></script>
         <script type="text/javascript">
-            //Width and height
-            var w = 500;
-            var h = 50;
+
+            //Dynamic, random dataset
+            var dataset = [];
+            var numDataPoints = 50;
+            var xRange = Math.random() * 1000;
+            var yRange = Math.random() * 1000;
+            for (var i = 0; i < numDataPoints; i++) {
+                var newNumber1 = Math.round(Math.random() * xRange);
+                var newNumber2 = Math.round(Math.random() * yRange);
+                dataset.push([newNumber1, newNumber2]);
+            }
             
+            //SVG Constants
+            var w = 500; //w=width
+            var h = 300; //h=height
+            var padding = 30;
+
+            //Create scale function for x-axis
+            var xScale = d3.scale.linear()
+                           .domain([0, d3.max(dataset, function(d) {
+                                return d[0]; })
+                           ])
+                           .range([padding, w - padding * 2]);
+
+            //Create scale function for y-axis
+            var yScale = d3.scale.linear()
+                                 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+                                 .range([h - padding, padding]);
+
+            //Create scale function for r
+            var rScale = d3.scale.linear()
+                                 .domain([0, d3.max(dataset, function(d) { return d[1]; })])
+                                 .range([2, 5]);
+
+            
+            //Create generic axis function
+            var xAxis = d3.svg.axis();
+            //Tell axis what scale to operate on
+            xAxis.scale(xScale)
+                    .orient("bottom")
+                    .ticks(5);
+
+            //Define Y axis
+            var yAxis = d3.svg.axis()
+                            .scale(yScale)
+                            .orient("left")
+                            .ticks(5);
+
             //Create SVG element
             var svg = d3.select("body")
                 .append("svg")
                 .attr("width", w)
                 .attr("height", h);
 
-            var dataset = [ 5, 10, 15, 20, 25 ];
-            var circles = svg.selectAll("circle")
-                            .data(dataset)
-                            .enter()
-                            .append("circle");
-
-            circles.attr("cx", function(d, i) {
-                    return (i * 50) + 25;
+            //Create a circle for every data point
+            svg.selectAll("circle")
+                .data(dataset)
+                .enter()
+                .append("circle")
+                //Set scaled center (cx,cy) corresponding to 
+                //[x,y] and radius 5
+                .attr("cx", function(d) {
+                    return xScale(d[0]);
                 })
-                .attr("cy", h/2)
+                .attr("cy", function(d) {
+                    return yScale(d[1]);
+                })
+                //.attr("r", 5);
+                //Set r depending on the y value
                 .attr("r", function(d) {
-                    return d;
-                })
-                .attr("fill", "yellow")
-                .attr("stroke", "orange")
-                .attr("stroke-width", function(d) {
-                    return d/2;
+                    return rScale(d[1]);
                 });
+
+                //Add axis
+                //Append group element that will
+                //contain all axis elements
+                svg.append("g")
+                //Assign "axis" class
+                    .attr("class","axis") 
+                    .attr("transform", "translate(0," + (h - padding) + ")")
+                    .call(xAxis);
+
+                //Add y axis
+                svg.append("g")
+                    .attr("class","axis")
+                    .attr("transform", "translate(" + padding + ",0)")
+                    .call(yAxis);
+
+
         </script>
     </body>
 </html> 

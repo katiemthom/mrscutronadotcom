@@ -297,10 +297,11 @@ def check_db():
 def show_mark():
 	return render_template('test.html')
 
-@app.route('/testajax', methods=['POST'])
+@app.route('/addpostajax', methods=['POST'])
 def test_ajax():
 	content = request.form.get('hello')
-	return render_template('testajax.html', content=content)
+	title = request.form.get('title')
+	return render_template('testajax.html', content=content, title=title)
 
 @app.route('/signup')
 def sign_up():

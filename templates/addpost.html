@@ -1,7 +1,7 @@
 {% extends 'master.html' %}
 {% block body %}
 
-<!-- DIALOG ***************** -->
+<!-- ***************** DIALOG ***************** -->
 <div id='dialog-link' class='well' title="Add a Link">
 	<p>Enter the information for your link:</p>
 	<br>
@@ -9,12 +9,17 @@
 	<br>
 	<input class='form-control' id='link-name' placeholder='Link title'></input>
 </div>
-<!-- DIALOG ***************** -->
+<!-- ***************** END DIALOG ***************** -->
 
 <div class='container'>
+
+	<!-- ***************** HEADER ***************** -->
 	<div class="page-header">
 		<h1>Add Post</h1>
 	</div>
+	<!-- ***************** END HEADER ***************** -->
+
+	<!-- ***************** POST EDITOR WELL ***************** -->
 	<div class="well" id="add_post_well">
 	<div class="page-header">
 		<h2>Post Editor</h2>
@@ -40,29 +45,27 @@
 		</p>
 	</form>
 	</div>
+	<!-- ***************** END POST EDITOR WELL ***************** -->
 
-
-
+	<!-- ***************** POST PREVIEW WELL ***************** -->
 	<div class="well" id="add_post_well">
 	<div class="page-header">
 		<h2>Post Preview</h2>
 	</div>
 	<div id="preview">
-	 
 	</div>
-    
+	</div>
+	<!-- ***************** END POST PREVIEW WELL ***************** -->
 
-	</div>
-</div>	
+</div>
+
 {% endblock %}
-
-
 
 <!-- **************** SCRIPTS **************** -->
 {% block javascript %}
 <script src="/static/js/jquery.selection.js"></script>
 <script type="text/javascript" src="/static/js/addpost.js"></script>
-<!-- DIALOG ***************** -->
+<!-- ***************** DIALOG ***************** -->
 <script type="text/javascript" src='/static/js/jquery-ui-1.10.3.custom.js'></script>
 <script type="text/javascript">
 $('#dialog-link').dialog({
@@ -85,5 +88,5 @@ $('#link').click(function() {
 	$('#dialog-link').dialog('open');
 });
 </script>
-<!-- DIALOG ***************** -->
+<!-- ***************** END DIALOG ***************** -->
 {% endblock %}
