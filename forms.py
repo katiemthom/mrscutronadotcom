@@ -1,4 +1,7 @@
-from wtforms import Form, TextField, TextAreaField, SubmitField, PasswordField, validators, FileField, SelectField
+from wtforms import TextField, TextAreaField, SubmitField, PasswordField, validators
+from wtforms import SelectField
+from flask_wtf import Form
+from flask_wtf.file import FileField
 
 class LoginForm(Form): 
 	email = TextField('Email', [validators.Required(), validators.Email()])

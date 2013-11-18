@@ -23,12 +23,13 @@ Markdown(app)
 ########## File Upload Setup ##########
 UPLOAD_FOLDER = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades'
 UPLOAD_FOLDER_PICS = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/profile_pics'
-ALLOWED_EXTENSIONS = set(['csv'])
+ALLOWED_EXTENSIONS = set(['txt','csv'])
 ALLOWED_EXTENSIONS_PICS = set(['png','jpg','jpeg','gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_FOLDER_PICS'] = UPLOAD_FOLDER_PICS
 
 def allowed_file(filename):
+	print "checking allowed"
 	return '.' in filename and \
 		filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS
 
@@ -77,11 +78,11 @@ def load_user(user_id):
 @app.route('/uploadgrades', methods=['GET', 'POST'])
 def upload_img():
 	if request.method == 'POST':
-		form = forms.UploadGradesForm(request.form)
+		form = forms.UploadGradesForm()
 		if not form.validate():
 			flash('You forgot to choose a file or you choose a file with an extension that is not allowed.','warning')
-		return render_template('uploadgrades.html', user=current_user)
-		file = request.files['file']
+			return render_template('uploadgrades.html', user=current_user)
+		file = request.files['csv_file']
 		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
@@ -111,13 +112,11 @@ def process_login():
 def logout():
 	logout_user()
 	return redirect(url_for('index'))
-########## end signin and signup views ##########
 
-########## main views ##########
 @app.route('/')
 def index():
 	return render_template('index.html', user = current_user)
-########## end main views ##########
+########## end signin and signup views ##########
 
 ########## assignment views ##########
 @app.route('/addassignment', methods=['GET','POST'])
@@ -175,12 +174,6 @@ def send_bug():
 		mail.send(msg)
 		flash('Message sent!','success')
 		return render_template('reportbug.html', user=current_user)
-
-@app.route('/mygrades')
-@login_required
-def show_grades():
-	grades = model.get_grades_by_user_id(current_user.id)
-	return render_template('mygrades.html',grades=grades,user=current_user)
 ########## end other views ##########
 
 ########## blog views ##########
@@ -323,6 +316,12 @@ def delete_comment(comment_pk):
 	return redirect(url_for("show_post",post_pk=comment.post_pk))
 ########## end comment views ##########
 
+########## grade views ##########
+@app.route('/grades')
+def show_grades():
+	return render_template('grades.html', user = current_user)
+########## end grade views ##########
+
 ########## test views ##########
 @app.route('/testdatabase', methods=['POST'])
 def check_db():
@@ -357,19 +356,20 @@ def process_sign_up():
 	email = form.email.data
 	password = form.password.data
 	validate_password = form.validate_password.data
-	file = request.files['file']
-	if file and allowed_img_file(file.filename):
-		filename = secure_filename(file.filename)
-		file.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
-		profile_pic =  "/static/profile_pics/" + filename
 	period = form.period.data
 	school_id = form.school_id.data
 	if password != validate_password:
 		flash('Passwords do not match.')
 		return render_template('signup.html', user=current_user, first=first_name
 			, last=last_name,email=email)
-	else:
+	file = request.files['file']
+	if file and allowed_img_file(file.filename):
+		filename = secure_filename(file.filename)
+		file.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+		profile_pic =  "/static/profile_pics/" + filename
 		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id),profile_pic)
+	else:
+		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
 		login_user(new_user)
 		return render_template('index.html',user=current_user)
 

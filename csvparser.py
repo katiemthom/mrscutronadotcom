@@ -33,7 +33,6 @@ def load_grade_csv(csv_file):
                 value = float(data[3][1:-1])
                 user = model.get_user_by_school_id(student_id)
                 user_id = user.user_id
-                # user_id = 1
                 assignment = model.get_assignment_by_title(title)
                 assignment_pk = assignment.assignment_pk
                 grade = model.add_grade(assignment_pk,value,user_id)

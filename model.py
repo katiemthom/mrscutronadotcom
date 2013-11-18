@@ -148,7 +148,7 @@ class Pagination(object):
 def get_user_by_id(user_id):
 	return session.query(User).get(user_id)
 
-def create_user(first_name,last_name,email,password,period,school_id,profile_picture,salt="salt"):
+def create_user(first_name,last_name,email,password,period,school_id,profile_picture=None,salt="salt"):
 	new_user = User(first_name=first_name,last_name=last_name,email=email,password=password,period=period,school_id=school_id,profile_picture=profile_picture,salt=salt)
 	new_user.setpw(password)
 	session.add(new_user)
@@ -218,6 +218,31 @@ def get_grades_by_user_id(user_id):
 def add_grade(assignment_pk, value, user_id):
 	new_grade = Grade(assignment_pk = assignment_pk, value = value, user_id = user_id)
 	return new_grade
+
+def calc_grade(user_id):
+	grades = get_grades_by_user_id(user_id)
+	cwh_max = 0
+	cwh_val = 0
+	ak_max = 0
+	ak_val = 0
+	mk_max = 0
+	mk_val = 0
+	for grade in grades:
+		category = grade.assignment.category
+		if category == "CWH":
+			cwh_max += grade.assignment.max_points
+			cwh_val += grade.value
+		if category == "MK":
+			mk_max += grade.assignment.max_points
+			mk_val += grade.value
+		if category == "AK":
+			ak_max += grade.assignment.max_points
+			ak_val += grade.value
+	cwh_final = (cwh_val/cwh_max) * .15
+	ak_final = (ak_val/ak_max) * .45
+	mk_final = (mk_val/mk_max) * .4
+	return (cwh_final, ak_final, mk_final)
+
 ########### END FUNCTIONS WITH GRADES ###########
 
 ########### FUNCTIONS WITH ASSIGNMENTS ###########
