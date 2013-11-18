@@ -19,9 +19,13 @@
 		<!-- ***************** END HEADER ***************** -->
 
 		<!-- ***************** FLASHED MESSAGES ***************** -->
-		{% for message in get_flashed_messages() %}
-	        <div class="alert alert-warning">{{message}}</div>
-	    {% endfor %}
+		{% with messages = get_flashed_messages(with_categories=true) %}
+			{% if messages %}
+			{% for category, message in messages%}
+				<div class="alert alert-{{category}}">{{message}}</div>
+	  		{% endfor %}
+	  		{% endif %}
+	  	{% endwith %}
 	    <!-- ***************** END FLASHED MESSAGES ***************** -->
 
 		<!-- ***************** ADD ASSIGNMENT FORM ***************** --> 
@@ -36,9 +40,9 @@
 			<option value='AK'>AK</option>
 			</select></p>
 
-			<p><input id='assignment-link' type='text' class='form-control' name='assignment_link' placeholder='Link'></input></p>	
+			<p><input id='assignment-link' type='text' class='form-control' name='link' placeholder='Link'></input></p>	
 
-			<p><textarea id='assignment-description' class='form-control' name='assignment_description' placeholder='Description'></textarea></p>
+			<p><textarea id='assignment-description' class='form-control' name='description' placeholder='Description'></textarea></p>
 
 			<p><input id='datepicker' type='text' class='form-control' name='assigned_on' placeholder='Assigned On'></input></p>		
 
@@ -61,7 +65,7 @@
 		<!-- ***************** END ADD ASSIGNMENT FORM ***************** -->
 
 	</div>
-	<!-- ***************** END POST EDITOR WELL ***************** -->
+	<!-- ***************** END ADD ASSIGNMENT WELL ***************** -->
 
 </div>
 

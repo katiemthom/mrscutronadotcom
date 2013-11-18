@@ -10,6 +10,7 @@ import model
 import os 
 import config
 import forms 
+import datetime
 ########## end Import ##########
 
 ########## Flask Setup ##########
@@ -19,8 +20,8 @@ Markdown(app)
 ########## end Flask Setup ##########
 
 ########## File Upload Setup ##########
-UPLOAD_FOLDER = '/static/profile_pics'
-ALLOWED_EXTENSIONS = set(['png','jpg','jpeg','gif'])
+UPLOAD_FOLDER = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades'
+ALLOWED_EXTENSIONS = set(['png','jpg','jpeg','gif','csv'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 def allowed_file(filename):
@@ -65,7 +66,7 @@ def load_user(user_id):
 ########## end Login Manager to make login easier ##########
 
 ########## signin and signup views ##########
-@app.route('/uploadpic', methods=['GET', 'POST'])
+@app.route('/uploadgrades', methods=['GET', 'POST'])
 def upload_img():
 	if request.method == 'POST':
 		file = request.files['file']
@@ -73,9 +74,9 @@ def upload_img():
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			print filename
-			return render_template('upload_pic.html')
+			return render_template('uploadgrades.html', user=current_user)
 	else: 
-		return render_template('upload_pic.html')
+		return render_template('uploadgrades.html', user=current_user)
 
 @app.route('/', methods=['POST'])
 def process_login(): 
@@ -106,9 +107,31 @@ def index():
 ########## end main views ##########
 
 ########## assignment views ##########
-@app.route('/addassignment')
+@app.route('/addassignment', methods=['GET','POST'])
 def add_assignment():
-	return render_template('addassignment.html', user=current_user)
+	if request.method == 'POST':
+		form = forms.AddAssignmentForm(request.form)
+		if form.validate() == False: 
+			flash('All fields are required.','warning')
+			return render_template('addassignment.html',  user=current_user)
+		else:
+			assigned_on = form.assigned_on.data
+			assigned_on_split = assigned_on.split('-')
+			assigned_on = datetime.datetime(int(assigned_on_split[2]),int(assigned_on_split[1]),int(assigned_on_split[0]))
+			due_on = form.due_on.data
+			due_on_split = due_on.split('-')
+			due_on = datetime.datetime(int(due_on_split[2]),int(due_on_split[1]),int(due_on_split[0]))
+			link = form.link.data
+			description = form.description.data
+			max_points = form.max_points.data
+			category = form.category.data
+			group = form.group.data
+			title = form.title.data
+			new_assignment = model.add_assignment(assigned_on,due_on,link,description,max_points,category,group,title)
+			flash('Assignment added!','success')
+			return render_template('addassignment.html', user=current_user)
+	else:
+		return render_template('addassignment.html', user=current_user)
 ########## end assignment views ##########
 
 ########## other views ##########
@@ -321,7 +344,7 @@ def process_sign_up():
 	email = form.email.data
 	password = form.password.data
 	validate_password = form.validate_password.data
-	profile_picture = form.profile_picture.data
+	# profile_picture = form.profile_picture.data
 	period = form.period.data
 	school_id = form.school_id.data
 	if password != validate_password:

@@ -92,10 +92,14 @@ class Assignment(Base):
 
 class Grade(Base):
 	__tablename__ = 'grades'
-	id = Column(Integer, primary_key = True)
-	assignment_id = Column(Integer, ForeignKey('assignments.assignment_pk'))
-	value = Column(Float)
-	user_id = Column(Integer, ForeignKey('users.user_id'))
+	grade_pk = Column(BigInteger, primary_key = True)
+	assignment_pk = Column(BigInteger, ForeignKey('assignments.assignment_pk'), nullable = False)
+	value = Column(Float, nullable = False)
+	user_id = Column(BigInteger, ForeignKey('users.user_id'), nullable = False)
+	note = Column(Text, nullable = True)
+	weight = Column(Float, nullable = False, default = 1)
+	version_id = Column(Integer, nullable = False, default = 1)
+	is_deleted = Column(Boolean, nullable = False, default = False)
 	user = relationship("User", backref='grades')
 	assignment = relationship("Assignment", backref='grades')
 
@@ -157,6 +161,9 @@ def search_user(search_term):
 	for result in results:
 		user_ids.append(result[0])
 	return user_ids
+
+def get_user_by_school_id(school_id):
+	return session.query(User).get(school_id)
 ########### END USER FUNCTIONS ###########
 
 ########### FUNCTIONS WITH NOTES ###########
@@ -207,6 +214,10 @@ def get_last_post(user_id):
 ########### FUNCTIONS WITH GRADES ###########
 def get_grades_by_user_id(user_id):
 	return session.query(Grade).filter_by(user_id=user_id).all()
+
+def add_grade(assignment_pk, value, user_id):
+	new_grade = Grade(assignment_pk = assignment_pk, value = value, user_id = user_id)
+	return new_grade
 ########### END FUNCTIONS WITH GRADES ###########
 
 ########### FUNCTIONS WITH ASSIGNMENTS ###########
@@ -220,7 +231,7 @@ def add_assignment(assigned_on,due_on,link,description,max_points,category,group
 	new_assignment = Assignment(assigned_on=assigned_on,due_on=due_on,link=link,description=description,max_points=max_points,category=category,group=group,title=title,assignment_id=assignment_id)
 	session.add(new_assignment)
 	session.commit()
-	return new_assignment)
+	return new_assignment
 ########### END FUNCTIONS WITH ASSIGNMENTS ###########
 
 ########### FUNCTIONS WITH COMMENTS ###########

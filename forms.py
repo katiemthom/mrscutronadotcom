@@ -29,15 +29,15 @@ class SignupForm(Form):
 	validate_password = TextField('Validate', [validators.Required()])
 	school_id = TextField('SchoolId', [validators.Required()])
 	period = SelectField('Class Period', choices=[('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
-	profile_picture = FileField('Image File')
+	# profile_picture = FileField('Image File')
 
 class AddAssignmentForm(Form):
 	assigned_on = TextField("Assigned On", [validators.Required()])
 	due_on = TextField("Due On", [validators.Required()])
-	assignment_title = TextField("Assignment Title", [validators.Required()])
+	title = TextField("Assignment Title", [validators.Required()])
 	category = SelectField('Category', choices=[('CWH','CWH'),('MK','MK'),('AK','AK')])
-	assignment_link = TextField('Assignment Link')
-	assignment_description = TextField('Assignment Description')
+	link = TextField('Assignment Link')
+	description = TextField('Assignment Description')
 	max_points = TextField('Max Points', [validators.Required()])
 	group = SelectField('Group', choices=[('0','0'),('1','1'),('2','2'),('3','3'),('4','4')])
 	
