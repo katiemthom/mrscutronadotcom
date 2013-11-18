@@ -221,6 +221,7 @@ def add_grade(assignment_pk, value, user_id):
 
 def calc_grade(user_id):
 	grades = get_grades_by_user_id(user_id)
+	print grades
 	cwh_max = 0
 	cwh_val = 0
 	ak_max = 0
@@ -238,9 +239,18 @@ def calc_grade(user_id):
 		if category == "AK":
 			ak_max += grade.assignment.max_points
 			ak_val += grade.value
-	cwh_final = (cwh_val/cwh_max) * .15
-	ak_final = (ak_val/ak_max) * .45
-	mk_final = (mk_val/mk_max) * .4
+	if cwh_max == 0:
+		cwh_final = .15
+	else: 
+		cwh_final = (cwh_val/cwh_max) * .15
+	if ak_max == 0:
+		ak_final = .45
+	else: 
+		ak_final = (ak_val/ak_max) * .45
+	if mk_max == 0:
+		mk_final = .4
+	else: 
+		mk_final = (mk_val/mk_max) * .4
 	return (cwh_final, ak_final, mk_final)
 
 ########### END FUNCTIONS WITH GRADES ###########
