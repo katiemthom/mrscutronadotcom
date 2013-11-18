@@ -11,6 +11,7 @@ import os
 import config
 import forms 
 import datetime
+import csvparser
 ########## end Import ##########
 
 ########## Flask Setup ##########
@@ -69,11 +70,16 @@ def load_user(user_id):
 @app.route('/uploadgrades', methods=['GET', 'POST'])
 def upload_img():
 	if request.method == 'POST':
+		form = forms.UploadGradesForm(request.form)
+		if not form.validate():
+			flash('You forgot to choose a file or you choose a file with an extension that is not allowed.','warning')
+		return render_template('uploadgrades.html', user=current_user)
 		file = request.files['file']
 		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			print filename
+			csvparser.load_grade_csv(filename)
+			flash('Grades uploaded!','success')
 			return render_template('uploadgrades.html', user=current_user)
 	else: 
 		return render_template('uploadgrades.html', user=current_user)

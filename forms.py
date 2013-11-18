@@ -40,4 +40,7 @@ class AddAssignmentForm(Form):
 	description = TextField('Assignment Description')
 	max_points = TextField('Max Points', [validators.Required()])
 	group = SelectField('Group', choices=[('0','0'),('1','1'),('2','2'),('3','3'),('4','4')])
+
+class UploadGradesForm(Form):
+	csv_file = FileField("CSV", [validators.Required()])
 	
