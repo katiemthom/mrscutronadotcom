@@ -29,7 +29,7 @@ class SignupForm(Form):
 	validate_password = TextField('Validate', [validators.Required()])
 	school_id = TextField('SchoolId', [validators.Required()])
 	period = SelectField('Class Period', choices=[('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
-	# profile_picture = FileField('Image File')
+	profile_picture = FileField('Image File')
 
 class AddAssignmentForm(Form):
 	assigned_on = TextField("Assigned On", [validators.Required()])

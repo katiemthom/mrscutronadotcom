@@ -32,7 +32,7 @@ class User(Base, UserMixin):
     period = Column(Integer, nullable=False)
     salt = Column(String(64), nullable=False)
     is_banned = Column(Boolean, nullable=False, default=False)
-    profile_picture = Column(String(64), nullable=True, default='http://katiemthom.com/cat_ph.jpeg')
+    profile_picture = Column(String(200), nullable=True, default='http://katiemthom.com/cat_ph.jpeg')
     school_id = Column(Integer, nullable=False)
 
     def get_id(self):
@@ -148,8 +148,8 @@ class Pagination(object):
 def get_user_by_id(user_id):
 	return session.query(User).get(user_id)
 
-def create_user(first_name,last_name,email,password,period,school_id,salt="salt"):
-	new_user = User(first_name=first_name,last_name=last_name,email=email,password=password,period=period,school_id=school_id,salt=salt)
+def create_user(first_name,last_name,email,password,period,school_id,profile_picture,salt="salt"):
+	new_user = User(first_name=first_name,last_name=last_name,email=email,password=password,period=period,school_id=school_id,profile_picture=profile_picture,salt=salt)
 	new_user.setpw(password)
 	session.add(new_user)
 	session.commit()

@@ -22,12 +22,19 @@ Markdown(app)
 
 ########## File Upload Setup ##########
 UPLOAD_FOLDER = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades'
-ALLOWED_EXTENSIONS = set(['png','jpg','jpeg','gif','csv'])
+UPLOAD_FOLDER_PICS = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/profile_pics'
+ALLOWED_EXTENSIONS = set(['csv'])
+ALLOWED_EXTENSIONS_PICS = set(['png','jpg','jpeg','gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER_PICS'] = UPLOAD_FOLDER_PICS
 
 def allowed_file(filename):
 	return '.' in filename and \
 		filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS
+
+def allowed_img_file(filename):
+	return '.' in filename and \
+		filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS_PICS
 ########## end File Upload Setup ##########
 
 ########## Mail Setup ##########
@@ -350,7 +357,11 @@ def process_sign_up():
 	email = form.email.data
 	password = form.password.data
 	validate_password = form.validate_password.data
-	# profile_picture = form.profile_picture.data
+	file = request.files['file']
+	if file and allowed_img_file(file.filename):
+		filename = secure_filename(file.filename)
+		file.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+		profile_pic =  "/static/profile_pics/" + filename
 	period = form.period.data
 	school_id = form.school_id.data
 	if password != validate_password:
@@ -358,7 +369,7 @@ def process_sign_up():
 		return render_template('signup.html', user=current_user, first=first_name
 			, last=last_name,email=email)
 	else:
-		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
+		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id),profile_pic)
 		login_user(new_user)
 		return render_template('index.html',user=current_user)
 
