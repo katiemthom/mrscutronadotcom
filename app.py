@@ -319,7 +319,8 @@ def delete_comment(comment_pk):
 ########## grade views ##########
 @app.route('/grades')
 def show_grades():
-	return render_template('grades.html', user = current_user)
+	grades = model.calc_grade(8)
+	return render_template('grades.html', user = current_user, ak_grade=grades[1])
 ########## end grade views ##########
 
 ########## test views ##########
