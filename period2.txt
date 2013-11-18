@@ -1,0 +1,26 @@
+3523,Bess, Xavier,xavier_bess@es-cat.org 
+3623,Brown, Quinntara,Quinntara_Brown@es-cat.org
+3584,Campos, Oscar,Oscar_Campos@es-cat.org
+3637,Cursi, Jeremy,Jeremy_Cursi@es-cat.org
+4701,Edwards, Malik,Malik_Edwards@es-cat.org
+3572,Escobar, Denisse,Denisse_Escobar@es-cat.org
+2284,Guerra, Christopher,Christopher_Guerra@es-cat.org
+3606,Hampton, Tianna,Tianna_Hampton@es-cat.org
+3612,Kennedy, Blake,Blake_Kennedy@es-cat.org
+3310,Loggins, Jeremy,Jeremy_Loggins@es-cat.org
+3556,Martinez, Jordin,Jordin_Martinez@es-cat.org
+3569,Medina-Guzman, Marcos,Marcos_Medina-Guzman@es-cat.org
+3618,Melton, Ryan,Ryan_Melton@es-cat.org
+4206,Monzon, Keila,Keila_Monzon@es-cat.org
+4138,Mosley-Wise, Ramses,Ramses_Mosley-Wise@es-cat.org
+3601,Nasser, Mohammed,Mohammed_Nasser@es-cat.org
+3574,Padilla, Sergio,Sergio_Padilla@es-cat.org
+3619,Petrillo, Athena,Athena_Petrillo@es-cat.org
+3553,Radford, Eugenia,Eugenia_Radford@es-cat.org
+3609,Ramos, West Madison,west_ramos@es-cat.org
+3086,Ruiz, Abraham,Abraham_Ruiz@es-cat.org
+3513,Saldana, Carlos,Carlos_Saldana@es-cat.org
+3533,Sanders, Dajanique,Dajanique_Sanders@es-cat.org
+3634,Siu, Roy, Roy_Siu@es-cat.org
+3629,Villagomez, Elizabethann,Elizabethann_Villagomez@es-cat.org
+3520,Wade, Michaela,Michaela_Wade@es-cat.org

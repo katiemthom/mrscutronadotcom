@@ -163,7 +163,7 @@ def search_user(search_term):
 	return user_ids
 
 def get_user_by_school_id(school_id):
-	return session.query(User).get(school_id)
+	return session.query(User).filter_by(school_id=school_id).one()
 ########### END USER FUNCTIONS ###########
 
 ########### FUNCTIONS WITH NOTES ###########
@@ -232,6 +232,9 @@ def add_assignment(assigned_on,due_on,link,description,max_points,category,group
 	session.add(new_assignment)
 	session.commit()
 	return new_assignment
+
+def get_assignment_by_title(title):
+	return session.query(Assignment).filter_by(title=title).one()
 ########### END FUNCTIONS WITH ASSIGNMENTS ###########
 
 ########### FUNCTIONS WITH COMMENTS ###########
