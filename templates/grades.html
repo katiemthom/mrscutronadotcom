@@ -3,7 +3,30 @@
 <style>
 
 .chart rect {
+  fill: transparent;
+  stroke: black;
+}
+
+
+
+#ind1 {
+  fill: red;
+  stroke: none;
+}
+
+#ind2 {
   fill: blue;
+  stroke: none;
+}
+
+#ind3 {
+  fill: green;
+  stroke: none;
+}
+
+#ind0 {
+  fill: yellow;
+  stroke: none;
 }
 
 .chart text {
@@ -103,5 +126,65 @@ chart.selectAll(".bar")
     .attr("y", function(d) { return y(d.value); })
     .attr('height', function(d) { return height - y(d.value); })
     .attr("width", x.rangeBand());
+
+// ***************** Student grades *****************
+var data2 = [
+  {name: "CWH",    value:  10},
+  {name: "AK",    value:  30},
+  {name: "MK",     value: 35},
+  {name: "Total",   value: 75}
+];
+
+// ***************** Use the same margin, height, and width *****************
+var margin = {top: 20, right: 30, bottom: 30, left: 40},
+    width = 960 - margin.left - margin.right,
+    height = 500 - margin.top - margin.bottom;
+
+// ***************** Use the same scales ***************** 
+var x = d3.scale.ordinal()
+    .domain(data.map(function(d) { return d.name; }))
+    .rangeRoundBands([0, width], 0.1);
+
+var y = d3.scale.linear()
+    .range([height, 0])
+    .domain([0, d3.max(data, function(d) { return d.value; })]);
+
+//  ***************** Axis are unnecessary *****************
+// var xAxis = d3.svg.axis()
+//     .scale(x)
+//     .orient("bottom");
+
+// var yAxis = d3.svg.axis()
+//     .scale(y)
+//     .orient('left')
+
+// ***************** Chart 2 *****************
+var chart = d3.select(".chart")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+// ***************** Take out Axis *****************
+// chart.append("g")
+//     .attr("class", "x axis")
+//     .attr("transform", "translate(0," + height + ")")
+//     .call(xAxis);
+
+// chart.append("g")
+//     .attr("class", "y axis")
+//     .call(yAxis);
+
+chart.selectAll(".bar")
+    .data(data2)
+    .enter().append("rect")
+    .attr("class", "bar")
+    .attr("id", function(d, i) { return "ind" + i; })
+    .attr("x", function(d) { return x(d.name) + 1; })
+    .attr("y", function(d) { return y(d.value); })
+    .attr('height', function(d) { return height - y(d.value); })
+    .attr("width", x.rangeBand() - 2);
+
+
 </script>
 {% endblock %}
