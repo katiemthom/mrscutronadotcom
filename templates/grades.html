@@ -1,79 +1,9 @@
 {% extends 'master.html' %}
-{% block head %}
-<style>
 
-.chart rect {
-  fill: transparent;
-  stroke: black;
-}
+    {% block head %}
+        <link rel="stylesheet" type="text/css" href="/static/css/grades.css">
+    {% endblock %}
 
-
-
-#ind1 {
-  fill: red;
-  stroke: none;
-}
-
-#ind2 {
-  fill: blue;
-  stroke: none;
-}
-
-#ind3 {
-  fill: green;
-  stroke: none;
-}
-
-#ind0 {
-  fill: yellow;
-  stroke: none;
-}
-
-.chart text {
-  fill: black;
-  font: 10px sans-serif;
-  text-anchor: end;
-}
-
-.axis text {
-  font: 10px sans-serif;
-}
-
-.axis path,
-.axis line {
-  fill: none;
-  stroke: #000;
-  shape-rendering: crispEdges;
-}
-
-.tipsy { font-size: 10px; position: absolute; padding: 5px; z-index: 100000; }
-  .tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
-
-  /* Rounded corners */
-  .tipsy-inner { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
-  
-  /* Uncomment for shadow */
-  /*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
-  
-  .tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
-  
-  /* Rules to colour arrows */
-  .tipsy-arrow-n { border-bottom-color: #000; }
-  .tipsy-arrow-s { border-top-color: #000; }
-  .tipsy-arrow-e { border-left-color: #000; }
-  .tipsy-arrow-w { border-right-color: #000; }
-  
-  .tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
-    .tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
-    .tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
-  .tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
-    .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
-    .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
-  .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
-  .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
-
-</style>
-{% endblock %}
 {% block body %}
 
 <div class="container">
@@ -98,11 +28,19 @@
 </div>
 
 {% endblock %}
+
+<!-- ***************** SCRIPTS ***************** -->
 {% block javascript %}
+
 <script type="text/javascript" src="/static/d3/d3.v3.js"></script>
 <script type="text/javascript" src="/static/jquery.tipsy.js"></script>
+
+<!-- ***************** D3 CHART ***************** -->
 <script type="text/javascript">
 
+// ***************** MAX FOR CATEGORY BARS *****************
+
+// MAX VALUES FOR GRADE CATEGORIES
 var data = [
   {name: "CWH",    value:  15},
   {name: "AK",    value:  45},
@@ -110,10 +48,12 @@ var data = [
   {name: "Total",   value: 100}
 ];
 
+// SVG SIZE VARIABLES
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
+// SCALE FUNCTIONS 
 var x = d3.scale.ordinal()
     .domain(data.map(function(d) { return d.name; }))
     .rangeRoundBands([0, width], 0.1);
@@ -122,6 +62,7 @@ var y = d3.scale.linear()
     .range([height, 0])
     .domain([0, d3.max(data, function(d) { return d.value; })]);
 
+// CREATE AXES 
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
@@ -130,12 +71,14 @@ var yAxis = d3.svg.axis()
     .scale(y)
     .orient('left')
 
+// ADD THE CHART AREA 
 var chart = d3.select(".chart")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// ADD AXES 
 chart.append("g")
     .attr("class", "x axis")
     .attr("transform", "translate(0," + height + ")")
@@ -145,6 +88,7 @@ chart.append("g")
     .attr("class", "y axis")
     .call(yAxis);
 
+// ADD BARS 
 chart.selectAll(".bar")
     .data(data)
     .enter().append("rect")
@@ -154,14 +98,9 @@ chart.selectAll(".bar")
     .attr('height', function(d) { return height - y(d.value); })
     .attr("width", x.rangeBand());
 
-// ***************** Student grades *****************
-// var data2 = [
-//   {name: "CWH",    value:  10},
-//   {name: "AK",    value:  30},
-//   {name: "MK",     value: 35},
-//   {name: "Total",   value: 75}
-// ];
+// ***************** STUDENT GRADE BARS *****************
 
+// DATA SETUP
 var cwhGrade = {{grades[0]}} * 100;
 var akGrade = {{grades[1]}} * 100;
 var mkGrade = {{grades[2]}} * 100;
@@ -170,32 +109,28 @@ var totalGrade = cwhGrade + akGrade + mkGrade;
 // var mkValues = new Array(akGrade);
 // var akValues = new Array(mkGrade);
 // var totalValues = new Array(cwhGrade, akGrade, mkGrade);
-var cwhValues = cwhGrade;
-var mkValues = mkGrade;
-var akValues = akGrade;
-var totalValues = totalGrade;
-
-// var data2 = [
-//     {name: "CWH", value: cwhGrade},
-//     {name: "AK", value: akGrade},
-//     {name: "MK", value: mkGrade},
-//     {name: "Total", value: totalGrade}
-// ];
 
 var data2 = [
-    {name: "CWH", value: cwhValues },
-    {name: "AK", value: akValues },
-    {name: "MK", value: mkValues },
-    {name: "Total", value: totalValues }
+    {name: "CWH", v: cwhGrade},
+    {name: "AK", v: akGrade},
+    {name: "MK", v: mkGrade},
+    {name: "Total", v: totalGrade}
 ];
 
-function sum (arr) {
-    sum = 0;
-    for (i = 0; i < arr.length; i++) {
-        sum += arr[i];
-    }
-    return sum;
-}
+// var data2 = [
+//     {name: "CWH", value: cwhValues },
+//     {name: "AK", value: akValues },
+//     {name: "MK", value: mkValues },
+//     {name: "Total", value: totalValues }
+// ];
+
+// function sum (arr) {
+//     sum = 0;
+//     for (i = 0; i < arr.length; i++) {
+//         sum += arr[i];
+//     }
+//     return sum;
+// }
 
 // ***************** Use the same margin, height, and width *****************
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
@@ -207,19 +142,10 @@ var x = d3.scale.ordinal()
     .domain(data.map(function(d) { return d.name; }))
     .rangeRoundBands([0, width], 0.1);
 
-// I did change this for values instead of value 
+// DO NOT CHANGE D.VALUE THIS IS D AS IN DATA NOT DATA 2
 var y = d3.scale.linear()
     .range([height, 0])
     .domain([0, d3.max(data, function(d) { return d.value; })]);
-
-//  ***************** Axis are unnecessary *****************
-// var xAxis = d3.svg.axis()
-//     .scale(x)
-//     .orient("bottom");
-
-// var yAxis = d3.svg.axis()
-//     .scale(y)
-//     .orient('left')
 
 // ***************** Chart 2 *****************
 var chart = d3.select(".chart")
@@ -228,35 +154,28 @@ var chart = d3.select(".chart")
     .append("g:g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// ***************** Take out Axis *****************
-// chart.append("g")
-//     .attr("class", "x axis")
-//     .attr("transform", "translate(0," + height + ")")
-//     .call(xAxis);
-
-// chart.append("g")
-//     .attr("class", "y axis")
-//     .call(yAxis);
-
+// ADD BARS
 chart.selectAll(".bar")
     .data(data2)
     .enter().append("g:rect")
     .attr("class", "bar")
     .attr("id", function(d, i) { return "ind" + i; })
     .attr("x", function(d) { return x(d.name) + 1; })
-    .attr("y", function(d) { return y(d.value); })
-    .attr('height', function(d) { return height - y(d.value); })
+    .attr("y", function(d) { return y(d.v); })
+    .attr('height', function(d) { return height - y(d.v); })
     .attr("width", x.rangeBand() - 2);
 
+// ADD TOOLTIPS
 $('g rect').tipsy({
     gravity: 'w',
     html: true,
     title: function() {
         var d = this.__data__;
-        return "Your " + d.name + " grade is " + d.value + "%.";
+        return "Your " + d.name + " grade is " + d.v + "%.";
     }
 });
 
 
 </script>
 {% endblock %}
+<!-- ***************** END SCRIPTS ***************** -->
