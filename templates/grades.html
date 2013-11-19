@@ -46,6 +46,32 @@
   shape-rendering: crispEdges;
 }
 
+.tipsy { font-size: 10px; position: absolute; padding: 5px; z-index: 100000; }
+  .tipsy-inner { background-color: #000; color: #FFF; max-width: 200px; padding: 5px 8px 4px 8px; text-align: center; }
+
+  /* Rounded corners */
+  .tipsy-inner { border-radius: 3px; -moz-border-radius: 3px; -webkit-border-radius: 3px; }
+  
+  /* Uncomment for shadow */
+  /*.tipsy-inner { box-shadow: 0 0 5px #000000; -webkit-box-shadow: 0 0 5px #000000; -moz-box-shadow: 0 0 5px #000000; }*/
+  
+  .tipsy-arrow { position: absolute; width: 0; height: 0; line-height: 0; border: 5px dashed #000; }
+  
+  /* Rules to colour arrows */
+  .tipsy-arrow-n { border-bottom-color: #000; }
+  .tipsy-arrow-s { border-top-color: #000; }
+  .tipsy-arrow-e { border-left-color: #000; }
+  .tipsy-arrow-w { border-right-color: #000; }
+  
+  .tipsy-n .tipsy-arrow { top: 0px; left: 50%; margin-left: -5px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-nw .tipsy-arrow { top: 0; left: 10px; border-bottom-style: solid; border-top: none; border-left-color: transparent; border-right-color: transparent;}
+    .tipsy-ne .tipsy-arrow { top: 0; right: 10px; border-bottom-style: solid; border-top: none;  border-left-color: transparent; border-right-color: transparent;}
+  .tipsy-s .tipsy-arrow { bottom: 0; left: 50%; margin-left: -5px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-sw .tipsy-arrow { bottom: 0; left: 10px; border-top-style: solid; border-bottom: none;  border-left-color: transparent; border-right-color: transparent; }
+    .tipsy-se .tipsy-arrow { bottom: 0; right: 10px; border-top-style: solid; border-bottom: none; border-left-color: transparent; border-right-color: transparent; }
+  .tipsy-e .tipsy-arrow { right: 0; top: 50%; margin-top: -5px; border-left-style: solid; border-right: none; border-top-color: transparent; border-bottom-color: transparent; }
+  .tipsy-w .tipsy-arrow { left: 0; top: 50%; margin-top: -5px; border-right-style: solid; border-left: none; border-top-color: transparent; border-bottom-color: transparent; }
+
 </style>
 {% endblock %}
 {% block body %}
@@ -74,6 +100,7 @@
 {% endblock %}
 {% block javascript %}
 <script type="text/javascript" src="/static/d3/d3.v3.js"></script>
+<script type="text/javascript" src="/static/jquery.tipsy.js"></script>
 <script type="text/javascript">
 
 var data = [
@@ -135,12 +162,40 @@ chart.selectAll(".bar")
 //   {name: "Total",   value: 75}
 // ];
 
+var cwhGrade = {{grades[0]}} * 100;
+var akGrade = {{grades[1]}} * 100;
+var mkGrade = {{grades[2]}} * 100;
+var totalGrade = cwhGrade + akGrade + mkGrade;
+// var cwhValues = new Array(cwhGrade);
+// var mkValues = new Array(akGrade);
+// var akValues = new Array(mkGrade);
+// var totalValues = new Array(cwhGrade, akGrade, mkGrade);
+var cwhValues = cwhGrade;
+var mkValues = mkGrade;
+var akValues = akGrade;
+var totalValues = totalGrade;
+
+// var data2 = [
+//     {name: "CWH", value: cwhGrade},
+//     {name: "AK", value: akGrade},
+//     {name: "MK", value: mkGrade},
+//     {name: "Total", value: totalGrade}
+// ];
+
 var data2 = [
-  {name: "CWH", value: {{grades[0]}}*100},
-   {name: "AK", value: {{grades[1]}}*100},
-   {name: "MK", value: {{grades[2]}}*100},
-   {name: "Total", value: {{grades[0]}}*100+{{grades[1]}}*100+{{grades[2]}}*100,
-}];
+    {name: "CWH", value: cwhValues },
+    {name: "AK", value: akValues },
+    {name: "MK", value: mkValues },
+    {name: "Total", value: totalValues }
+];
+
+function sum (arr) {
+    sum = 0;
+    for (i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
 
 // ***************** Use the same margin, height, and width *****************
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
@@ -152,6 +207,7 @@ var x = d3.scale.ordinal()
     .domain(data.map(function(d) { return d.name; }))
     .rangeRoundBands([0, width], 0.1);
 
+// I did change this for values instead of value 
 var y = d3.scale.linear()
     .range([height, 0])
     .domain([0, d3.max(data, function(d) { return d.value; })]);
@@ -169,7 +225,7 @@ var y = d3.scale.linear()
 var chart = d3.select(".chart")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .append("g")
+    .append("g:g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 // ***************** Take out Axis *****************
@@ -184,13 +240,22 @@ var chart = d3.select(".chart")
 
 chart.selectAll(".bar")
     .data(data2)
-    .enter().append("rect")
+    .enter().append("g:rect")
     .attr("class", "bar")
     .attr("id", function(d, i) { return "ind" + i; })
     .attr("x", function(d) { return x(d.name) + 1; })
     .attr("y", function(d) { return y(d.value); })
     .attr('height', function(d) { return height - y(d.value); })
     .attr("width", x.rangeBand() - 2);
+
+$('g rect').tipsy({
+    gravity: 'w',
+    html: true,
+    title: function() {
+        var d = this.__data__;
+        return "Your " + d.name + " grade is " + d.value + "%.";
+    }
+});
 
 
 </script>
