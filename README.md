@@ -33,7 +33,9 @@ Students will be able to view how their class stacks up against the rest through
 Build Instructions
 ==================
 
-To run the postgres server: download and run postgres.app (for mac).
+To run the postgres server: download and run [postgres.app](http://postgresapp.com/) (for mac). 
+
+Follow the instructions to set up postgres app.  
 
 In the project directory, create a virtualenv and install the requirements via pip: 
 
@@ -42,6 +44,11 @@ $ pip install -r requirements.txt
 Start the virtual env: 
 
 $ . env/bin/activate
+
+Create the db: 
+
+$ python -i model.py
+$ create_db()
 
 Run the app: 
 
