@@ -128,12 +128,19 @@ chart.selectAll(".bar")
     .attr("width", x.rangeBand());
 
 // ***************** Student grades *****************
+// var data2 = [
+//   {name: "CWH",    value:  10},
+//   {name: "AK",    value:  30},
+//   {name: "MK",     value: 35},
+//   {name: "Total",   value: 75}
+// ];
+
 var data2 = [
-  {name: "CWH",    value:  10},
-  {name: "AK",    value:  30},
-  {name: "MK",     value: 35},
-  {name: "Total",   value: 75}
-];
+  {name: "CWH", value: {{grades[0]}}*100},
+   {name: "AK", value: {{grades[1]}}*100},
+   {name: "MK", value: {{grades[2]}}*100},
+   {name: "Total", value: {{grades[0]}}*100+{{grades[1]}}*100+{{grades[2]}}*100,
+}];
 
 // ***************** Use the same margin, height, and width *****************
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
