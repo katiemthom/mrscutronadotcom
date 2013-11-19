@@ -5,6 +5,7 @@ from model import User, session
 from flask.ext.mail import Message, Mail 
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
+from flask.ext.admin import Admin, BaseView, expose
 
 import model
 import os 
@@ -19,6 +20,13 @@ app = Flask(__name__)
 app.config.from_object(config)
 Markdown(app)
 ########## end Flask Setup ##########
+
+########## Admin Views ##########
+admin = Admin(app)
+
+class MyView(BaseView):
+	pass
+########## end Admin Views ##########
 
 ########## File Upload Setup ##########
 UPLOAD_FOLDER = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades'
