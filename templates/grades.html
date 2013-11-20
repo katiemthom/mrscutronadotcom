@@ -65,7 +65,9 @@ var yAxis = d3.svg.axis()
 var svg = d3.select(".chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
+    .attr("class", "a")
   .append("g")
+    .attr("class", "b")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("/static/data.csv", function(error, data) {
@@ -97,60 +99,57 @@ d3.csv("/static/data.csv", function(error, data) {
 
   var Category = svg.selectAll(".Category")
       .data(data)
-    .enter().append("g")
-      .attr("class", "g")
+    .enter().append("g:g")
+      .attr("class", "c")
       .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
 
   Category.selectAll("rect")
       .data(function(d) { return d.ages; })
-    .enter().append("rect")
+    .enter().append("g:rect")
+      .attr("class","d")
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.y1); })
       .attr("height", function(d) { return y(d.y0) - y(d.y1); })
       .style("fill", function(d) { return color(d.name); });
 
+  d3.csv("/static/data2.csv", function(error, data) {
+    color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Category"; }));
 
+    data.forEach(function(d) {
+      var y0 = 0;
+      d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+      d.total = d.ages[d.ages.length - 1].y1;
+    });
 
+    var max = svg.selectAll(".max")
+        .data(data)
+      .enter().append("g")
+        .attr("class", "g")
+        .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
 
+    max.selectAll("rect")
+        .data(function(d) { return d.ages; })
+      .enter().append("rect")
+        .attr("width", x.rangeBand())
+        .attr("y", function(d) { return y(d.y1); })
+        .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+        .style("stroke", "black")
+        .style("fill", "transparent");
 
-d3.csv("/static/data2.csv", function(error, data) {
-  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Category"; }));
-
-  data.forEach(function(d) {
-    var y0 = 0;
-    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
-    d.total = d.ages[d.ages.length - 1].y1;
   });
 
-  // x.domain(data.map(function(d) { return d.Category; }));
-  // y.domain([0, d3.max(data, function(d) { return d.total; })]);
-
-  var max = svg.selectAll(".max")
-      .data(data)
-    .enter().append("g")
-      .attr("class", "g")
-      .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
-
-  max.selectAll("rect")
-      .data(function(d) { return d.ages; })
-    .enter().append("rect")
-      .attr("width", x.rangeBand())
-      .attr("y", function(d) { return y(d.y1); })
-      .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-      .style("stroke", "black")
-      .style("fill", "transparent");
 
 });
 
-
-
-
-
-
-});
-
-
-
+</script>
+<script type="text/javascript">
+$('g rect').tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+          return 'Hi there!'; 
+        }
+      });
 </script>
 {% endblock %}
 <!-- ***************** END SCRIPTS ***************** -->
