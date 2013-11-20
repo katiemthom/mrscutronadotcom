@@ -40,187 +40,115 @@
 
 // ***************** MAX FOR CATEGORY BARS *****************
 
-// MAX VALUES FOR GRADE CATEGORIES
-var data = [
-  {name: "CWH",    value:  15},
-  {name: "AK",    value:  45},
-  {name: "MK",     value: 40},
-  {name: "Total",   value: 100}
-];
-
-// SVG SIZE VARIABLES
-var margin = {top: 20, right: 30, bottom: 30, left: 40},
+var margin = {top: 20, right: 20, bottom: 30, left: 40},
     width = 960 - margin.left - margin.right,
     height = 500 - margin.top - margin.bottom;
 
-// SCALE FUNCTIONS 
 var x = d3.scale.ordinal()
-    .domain(data.map(function(d) { return d.name; }))
-    .rangeRoundBands([0, width], 0.1);
+    .rangeRoundBands([0, width], .1);
 
 var y = d3.scale.linear()
-    .range([height, 0])
-    .domain([0, d3.max(data, function(d) { return d.value; })]);
+    .rangeRound([height, 0]);
 
-// CREATE AXES 
+var color = d3.scale.ordinal()
+    .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]);
+
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom");
 
 var yAxis = d3.svg.axis()
     .scale(y)
-    .orient('left')
+    .orient("left")
+    .tickFormat(d3.format(".2s"));
 
-// ADD THE CHART AREA 
-var chart = d3.select(".chart")
+var svg = d3.select(".chart").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-    .append("g")
+  .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-// ADD AXES 
-chart.append("g")
-    .attr("class", "x axis")
-    .attr("transform", "translate(0," + height + ")")
-    .call(xAxis);
+d3.csv("/static/data.csv", function(error, data) {
+  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Category"; }));
 
-chart.append("g")
-    .attr("class", "y axis")
-    .call(yAxis);
+  data.forEach(function(d) {
+    var y0 = 0;
+    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+    d.total = d.ages[d.ages.length - 1].y1;
+  });
 
-// ADD BARS 
-chart.selectAll(".bar")
-    .data(data)
+  x.domain(data.map(function(d) { return d.Category; }));
+  y.domain([0, d3.max(data, function(d) { return d.total; })]);
+
+  svg.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Percent");
+
+  var Category = svg.selectAll(".Category")
+      .data(data)
+    .enter().append("g")
+      .attr("class", "g")
+      .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
+
+  Category.selectAll("rect")
+      .data(function(d) { return d.ages; })
     .enter().append("rect")
-    .attr("class", "bar")
-    .attr("x", function(d) { return x(d.name); })
-    .attr("y", function(d) { return y(d.value); })
-    .attr('height', function(d) { return height - y(d.value); })
-    .attr("width", x.rangeBand());
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.y1); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+      .style("fill", function(d) { return color(d.name); });
 
-// ***************** STUDENT GRADE BARS *****************
 
-// DATA SETUP
-var cwhGrade = {{grades[0]}} * 100;
-var akGrade = {{grades[1]}} * 100;
-var mkGrade = {{grades[2]}} * 100;
-var totalGrade = cwhGrade + akGrade + mkGrade;
-var cwhValues = [cwhGrade]
-var mkValues = [mkGrade]
-var akValues = [akGrade]
-var totalValues = new Array(cwhGrade, akGrade, mkGrade);
 
-var data2 = [
-    {name: "CWH", sum: cwhGrade, v1: cwhGrade, v2: 0, v3: 0 },
-    {name: "AK", sum: akGrade, v1: akGrade, v2: 0, v3: 0 },
-    {name: "MK", sum: mkGrade, v1: mkGrade, v2: 0, v3: 0},
-    {name: "Total", sum: totalGrade, v1: cwhGrade, v2: akGrade, v3: mkGrade}
-];
 
-// var data2 = [
-//     {name: "CWH", values: cwhValues, sum: cwhGrade },
-//     {name: "AK", values: akValues, sum: akGrade },
-//     {name: "MK", values: mkValues, sum: mkGrade },
-//     {name: "Total", values: totalValues, sum: totalGrade }
-// ];
 
-function sum (arr) {
-    sum = 0;
-    for (i = 0; i < arr.length; i++) {
-        sum += arr[i];
-    }
-    return sum;
-}
+d3.csv("/static/data2.csv", function(error, data) {
+  color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Category"; }));
 
-// ***************** Use the same margin, height, and width *****************
-var margin = {top: 20, right: 30, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+  data.forEach(function(d) {
+    var y0 = 0;
+    d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+    d.total = d.ages[d.ages.length - 1].y1;
+  });
 
-// ***************** Use the same scales ***************** 
-var x = d3.scale.ordinal()
-    .domain(data.map(function(d) { return d.name; }))
-    .rangeRoundBands([0, width], 0.1);
+  // x.domain(data.map(function(d) { return d.Category; }));
+  // y.domain([0, d3.max(data, function(d) { return d.total; })]);
 
-// DO NOT CHANGE D.VALUE THIS IS D AS IN DATA NOT DATA 2
-var y = d3.scale.linear()
-    .rangeRound([height, 0])
-    .domain([0, d3.max(data, function(d) { return d.value; })]);
+  var max = svg.selectAll(".max")
+      .data(data)
+    .enter().append("g")
+      .attr("class", "g")
+      .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
 
-// ***************** Chart 2 *****************
-var chart = d3.select(".chart")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g:g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+  max.selectAll("rect")
+      .data(function(d) { return d.ages; })
+    .enter().append("rect")
+      .attr("width", x.rangeBand())
+      .attr("y", function(d) { return y(d.y1); })
+      .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+      .style("stroke", "black")
+      .style("fill", "transparent");
 
-// ADD BARS
-chart.selectAll(".bar")
-    .data(data2)
-    .enter().append("g:rect")
-    .attr("class", "bar")
-    .attr("id", function(d, i) { return "ind" + i; })
-    .attr("x", function(d) { return x(d.name) + .5; })
-    .attr("y", function(d) { return y(d.v1) + .5; })
-    .attr('height', function(d) { return height - 1 - y(d.v1); })
-    .attr("width", x.rangeBand() - 1);
-
-// ADD BARS
-chart.selectAll(".bar2")
-    .data(data2)
-    .enter().append("g:rect")
-    .attr("class", "bar")
-    .attr("id", "second")
-    .attr("x", function(d) { return x(d.name) + .5; })
-    .attr("y", function(d) { 
-        if (d.v2 > 0) {
-            return y(d.v2 + d.v1) + 2.5 ; 
-        } else {
-            return 0;
-        };
-        
-    })
-    .attr('height', function(d) { 
-        if (d.v2 > 0) {
-            return height - 1 - y(d.v2) ; 
-        } else {
-            return 0;
-        };
-    })
-    .attr("width", x.rangeBand() - 1);
-
-// ADD BARS
-chart.selectAll(".bar3")
-    .data(data2)
-    .enter().append("g:rect")
-    .attr("class", "bar")
-    .attr("id", "third")
-    .attr("x", function(d) { return x(d.name) + .5; })
-    .attr("y", function(d) { 
-        if (d.v3 > 0) {
-            return y(d.v3 + d.v2 + d.v1) + 3.5 ;
-        } else {
-            return 0;
-        };
-    })        
-    .attr('height', function(d) { 
-        if (d.v3 > 0) {
-            return height - 1 - y(d.v3); 
-        } else {
-            return 0;
-        };
-    })
-    .attr("width", x.rangeBand() - 1);
-
-// ADD TOOLTIPS
-$('g rect').tipsy({
-    gravity: 'w',
-    html: true,
-    title: function() {
-        var d = this.__data__;
-        return "Your " + d.name + " grade is " + d.sum + "%.";
-    }
 });
+
+
+
+
+
+
+});
+
 
 
 </script>

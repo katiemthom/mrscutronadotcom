@@ -1,4 +1,9 @@
 .chart rect {
+/*  fill: transparent;
+  stroke: black;*/
+}
+
+.bar {
   fill: transparent;
   stroke: black;
 }
