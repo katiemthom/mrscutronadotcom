@@ -1,0 +1,22 @@
+
+chart.selectAll(".bar3")
+    .data(data2)
+    .enter().append("g:rect")
+    .attr("class", "bar")
+    .attr("id", "third")
+    .attr("x", function(d) { return x(d.name) + .5; })
+    .attr("y", function(d) { 
+        if (d.v3 > 0) {
+            return y(d.v3 + d.v2 + d.v1) + 3.5 ;
+        } else {
+            return 0;
+        };
+    })        
+    .attr('height', function(d) { 
+        if (d.v3 > 0) {
+            return height - 1 - y(d.v3); 
+        } else {
+            return 0;
+        };
+    })
+    .attr("width", x.rangeBand() - 1);

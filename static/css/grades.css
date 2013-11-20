@@ -3,7 +3,15 @@
   stroke: black;
 }
 
+#second {
+  fill: red;
+  stroke: none;
+}
 
+#third {
+  fill: blue;
+  stroke: none;
+}
 
 #ind1 {
   fill: red;
@@ -16,7 +24,7 @@
 }
 
 #ind3 {
-  fill: green;
+  fill: yellow;
   stroke: none;
 }
 

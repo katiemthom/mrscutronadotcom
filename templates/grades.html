@@ -105,32 +105,32 @@ var cwhGrade = {{grades[0]}} * 100;
 var akGrade = {{grades[1]}} * 100;
 var mkGrade = {{grades[2]}} * 100;
 var totalGrade = cwhGrade + akGrade + mkGrade;
-// var cwhValues = new Array(cwhGrade);
-// var mkValues = new Array(akGrade);
-// var akValues = new Array(mkGrade);
-// var totalValues = new Array(cwhGrade, akGrade, mkGrade);
+var cwhValues = [cwhGrade]
+var mkValues = [mkGrade]
+var akValues = [akGrade]
+var totalValues = new Array(cwhGrade, akGrade, mkGrade);
 
 var data2 = [
-    {name: "CWH", v: cwhGrade},
-    {name: "AK", v: akGrade},
-    {name: "MK", v: mkGrade},
-    {name: "Total", v: totalGrade}
+    {name: "CWH", sum: cwhGrade, v1: cwhGrade, v2: 0, v3: 0 },
+    {name: "AK", sum: akGrade, v1: akGrade, v2: 0, v3: 0 },
+    {name: "MK", sum: mkGrade, v1: mkGrade, v2: 0, v3: 0},
+    {name: "Total", sum: totalGrade, v1: cwhGrade, v2: akGrade, v3: mkGrade}
 ];
 
 // var data2 = [
-//     {name: "CWH", value: cwhValues },
-//     {name: "AK", value: akValues },
-//     {name: "MK", value: mkValues },
-//     {name: "Total", value: totalValues }
+//     {name: "CWH", values: cwhValues, sum: cwhGrade },
+//     {name: "AK", values: akValues, sum: akGrade },
+//     {name: "MK", values: mkValues, sum: mkGrade },
+//     {name: "Total", values: totalValues, sum: totalGrade }
 // ];
 
-// function sum (arr) {
-//     sum = 0;
-//     for (i = 0; i < arr.length; i++) {
-//         sum += arr[i];
-//     }
-//     return sum;
-// }
+function sum (arr) {
+    sum = 0;
+    for (i = 0; i < arr.length; i++) {
+        sum += arr[i];
+    }
+    return sum;
+}
 
 // ***************** Use the same margin, height, and width *****************
 var margin = {top: 20, right: 30, bottom: 30, left: 40},
@@ -144,7 +144,7 @@ var x = d3.scale.ordinal()
 
 // DO NOT CHANGE D.VALUE THIS IS D AS IN DATA NOT DATA 2
 var y = d3.scale.linear()
-    .range([height, 0])
+    .rangeRound([height, 0])
     .domain([0, d3.max(data, function(d) { return d.value; })]);
 
 // ***************** Chart 2 *****************
@@ -160,10 +160,57 @@ chart.selectAll(".bar")
     .enter().append("g:rect")
     .attr("class", "bar")
     .attr("id", function(d, i) { return "ind" + i; })
-    .attr("x", function(d) { return x(d.name) + 1; })
-    .attr("y", function(d) { return y(d.v); })
-    .attr('height', function(d) { return height - y(d.v); })
-    .attr("width", x.rangeBand() - 2);
+    .attr("x", function(d) { return x(d.name) + .5; })
+    .attr("y", function(d) { return y(d.v1) + .5; })
+    .attr('height', function(d) { return height - 1 - y(d.v1); })
+    .attr("width", x.rangeBand() - 1);
+
+// ADD BARS
+chart.selectAll(".bar2")
+    .data(data2)
+    .enter().append("g:rect")
+    .attr("class", "bar")
+    .attr("id", "second")
+    .attr("x", function(d) { return x(d.name) + .5; })
+    .attr("y", function(d) { 
+        if (d.v2 > 0) {
+            return y(d.v2 + d.v1) + 2.5 ; 
+        } else {
+            return 0;
+        };
+        
+    })
+    .attr('height', function(d) { 
+        if (d.v2 > 0) {
+            return height - 1 - y(d.v2) ; 
+        } else {
+            return 0;
+        };
+    })
+    .attr("width", x.rangeBand() - 1);
+
+// ADD BARS
+chart.selectAll(".bar3")
+    .data(data2)
+    .enter().append("g:rect")
+    .attr("class", "bar")
+    .attr("id", "third")
+    .attr("x", function(d) { return x(d.name) + .5; })
+    .attr("y", function(d) { 
+        if (d.v3 > 0) {
+            return y(d.v3 + d.v2 + d.v1) + 3.5 ;
+        } else {
+            return 0;
+        };
+    })        
+    .attr('height', function(d) { 
+        if (d.v3 > 0) {
+            return height - 1 - y(d.v3); 
+        } else {
+            return 0;
+        };
+    })
+    .attr("width", x.rangeBand() - 1);
 
 // ADD TOOLTIPS
 $('g rect').tipsy({
@@ -171,7 +218,7 @@ $('g rect').tipsy({
     html: true,
     title: function() {
         var d = this.__data__;
-        return "Your " + d.name + " grade is " + d.v + "%.";
+        return "Your " + d.name + " grade is " + d.sum + "%.";
     }
 });
 
