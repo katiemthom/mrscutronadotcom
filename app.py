@@ -6,7 +6,10 @@ from flask.ext.mail import Message, Mail
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
 from flask.ext.admin import Admin, BaseView, expose
+from flask.ext.admin.contrib.sqla import ModelView
+from flask.ext.admin.contrib.fileadmin import FileAdmin
 
+import os.path as op
 import model
 import os 
 import config
@@ -22,10 +25,19 @@ Markdown(app)
 ########## end Flask Setup ##########
 
 ########## Admin Views ##########
-admin = Admin(app)
-
 class MyView(BaseView):
-	pass
+	@expose('/')
+	def index(self):
+		return self.render('index.html')
+
+	def is_accessible(self):
+		return current_user.user_id == 32
+
+admin = Admin(app)
+admin.add_view(MyView(name="Upload Grades"))
+admin.add_view(ModelView(User, model.session))
+path = op.join(op.dirname(__file__), 'static')
+admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
 ########## end Admin Views ##########
 
 ########## File Upload Setup ##########
@@ -111,7 +123,7 @@ def process_login():
 	user = session.query(User).filter_by(email=email).first()
 	if not user or not user.authenticate(password):
 		flash('Incorrect username or password')
-		return render_template('index.html')
+		return render_template('index.html',  user = current_user)
 	login_user(user)
 	return redirect(url_for('index'))
 
@@ -380,7 +392,7 @@ def process_sign_up():
 	else:
 		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
 		login_user(new_user)
-		return render_template('index.html',user=current_user)
+	return render_template('index.html',user=current_user)
 
 @app.route('/d3test')
 def show_d3():
