@@ -73,6 +73,45 @@ var svg = d3.select(".chart").append("svg")
     .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+
+
+    // ***************** ADD MAX GRADE DATA (OUTLINES) *****************
+    // loads category max values
+    // csv loader callback function  
+    d3.csv("/static/data2.csv", function(error, data) {
+      color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Category"; }));
+
+      // creates an object for each row in the data set 
+      data.forEach(function(d) {
+        var y0 = 0;
+        d.cats = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+        d.total = d.cats[d.cats.length - 1].y1;
+      });
+
+
+    // creates domains for x and y scaling functions 
+    x.domain(data.map(function(d) { return d.Category; }));
+    y.domain([0, d3.max(data, function(d) { return d.total; })]);
+
+      // creates a g element to add the outline bar
+      var max = svg.selectAll(".max")
+          .data(data)
+          .enter().append("g")
+          .attr("class", "g")
+          .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
+
+      // creates the outline 
+      max.selectAll("rect")
+          .data(function(d) { return d.cats; })
+          .enter().append("rect")
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.y1); })
+          .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+          .style("stroke", "black")
+          .style("fill", "transparent");
+
+
+
 // ***************** ADD STUDENT GRADE DATA (COLORED BANDS) *****************
 // csv loader callback function 
 d3.csv("/static/data.csv", function(error, data) {
@@ -82,13 +121,10 @@ d3.csv("/static/data.csv", function(error, data) {
     // cats = categories 
     data.forEach(function(d) {
       var y0 = 0;
-      d.cats = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+      d.cats = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name], y2: d}; });
       d.total = d.cats[d.cats.length - 1].y1;
     });
 
-    // creates domains for x and y scaling functions 
-    x.domain(data.map(function(d) { return d.Category; }));
-    y.domain([0, d3.max(data, function(d) { return d.total; })]);
 
     // adds x and y axes
     svg.append("g")
@@ -122,35 +158,7 @@ d3.csv("/static/data.csv", function(error, data) {
         .attr("height", function(d) { return y(d.y0) - y(d.y1); })
         .style("fill", function(d) { return color(d.name); });
 
-    // ***************** ADD MAX GRADE DATA (OUTLINES) *****************
-    // loads category max values
-    // csv loader callback function  
-    d3.csv("/static/data2.csv", function(error, data) {
-      color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Category"; }));
 
-      // creates an object for each row in the data set 
-      data.forEach(function(d) {
-        var y0 = 0;
-        d.cats = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
-        d.total = d.cats[d.cats.length - 1].y1;
-      });
-
-      // creates a g element to add the outline bar
-      var max = svg.selectAll(".max")
-          .data(data)
-          .enter().append("g")
-          .attr("class", "g")
-          .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
-
-      // creates the outline 
-      max.selectAll("rect")
-          .data(function(d) { return d.cats; })
-          .enter().append("rect")
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.y1); })
-          .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-          .style("stroke", "black")
-          .style("fill", "transparent");
 
       // adds tooltips to elements that are both g and rect elements 
       $('g rect').tipsy({ 
@@ -158,9 +166,11 @@ d3.csv("/static/data.csv", function(error, data) {
         html: true, 
         title: function() {
           d = this.__data__;
-          return 'Hi there! My name is ' + d.name ; 
-        }
-      });
+          if (d.y2.total) {
+            return 'Hi there! My d is ' + d.y2.total ;
+          }
+      }
+    });
       
 
     });
