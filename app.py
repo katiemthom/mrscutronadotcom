@@ -6,8 +6,10 @@ from flask.ext.mail import Message, Mail
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
 from flask.ext.admin import Admin, BaseView, expose
-from flask.ext.admin.contrib.sqla import ModelView
-from flask.ext.admin.contrib.fileadmin import FileAdmin
+# from flask.ext.admin.contrib.sqla import ModelView
+# from flask.ext.admin.contrib.fileadmin import FileAdmin
+# from flask.ext import login 
+# from flask.ext.principal import Principal, Permission, RoleNeed
 
 import os.path as op
 import model
@@ -24,20 +26,38 @@ app.config.from_object(config)
 Markdown(app)
 ########## end Flask Setup ##########
 
+########## Flask-Principal Setup ##########
+# principals = Principal(app)
+# admin_permission = Permission(RoleNeed('admin'))
+########## end Flask-Principal Setup ##########
+
 ########## Admin Views ##########
 class MyView(BaseView):
+	def is_accessible(self):
+		print "is_accessible is called!"
+		return True
+
 	@expose('/')
 	def index(self):
 		return self.render('index.html')
 
-	def is_accessible(self):
-		return current_user.user_id == 32
+	# @expose('/test/')
+	# def test(self):
+	# 	print "testing!"
+	# 	return self.render('test.html')
 
-admin = Admin(app)
-admin.add_view(MyView(name="Upload Grades"))
-admin.add_view(ModelView(User, model.session))
-path = op.join(op.dirname(__file__), 'static')
-admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
+	# def is_accessible(self):
+	# 	print "is_accessible is called!"
+	# 	return True
+		# return login.current_user.is_admin()
+
+admin = Admin(app, name='My App')
+# admin.add_view(MyView(endpoint='test',name='test'))
+
+# admin.add_view(MyView(name="Upload Grades"))
+# admin.add_view(ModelView(User, model.session))
+# path = op.join(op.dirname(__file__), 'static')
+# admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
 ########## end Admin Views ##########
 
 ########## File Upload Setup ##########
@@ -355,9 +375,9 @@ def check_db():
 		return jsonify({'up': False})  
 	
 
-@app.route('/test')
-def show_mark():
-	return render_template('test.html')
+# @app.route('/test')
+# def show_mark():
+# 	return render_template('test.html')
 
 @app.route('/addpostajax', methods=['POST'])
 def test_ajax():

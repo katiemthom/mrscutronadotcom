@@ -99,13 +99,13 @@ d3.csv("/static/data.csv", function(error, data) {
 
   var Category = svg.selectAll(".Category")
       .data(data)
-    .enter().append("g:g")
+    .enter().append("g")
       .attr("class", "c")
       .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
 
   Category.selectAll("rect")
       .data(function(d) { return d.ages; })
-    .enter().append("g:rect")
+    .enter().append("rect")
       .attr("class","d")
       .attr("width", x.rangeBand())
       .attr("y", function(d) { return y(d.y1); })
@@ -129,27 +129,36 @@ d3.csv("/static/data.csv", function(error, data) {
 
     max.selectAll("rect")
         .data(function(d) { return d.ages; })
-      .enter().append("rect")
+      .enter().append("g:rect")
+        .attr('id', function(d,i) {return d.y1;})
         .attr("width", x.rangeBand())
         .attr("y", function(d) { return y(d.y1); })
         .attr("height", function(d) { return y(d.y0) - y(d.y1); })
         .style("stroke", "black")
         .style("fill", "transparent");
 
-  });
-
-
-});
-
-</script>
-<script type="text/javascript">
-$('g rect').tipsy({ 
+      $('g rect').tipsy({ 
         gravity: 'w', 
         html: true, 
         title: function() {
           return 'Hi there!'; 
         }
       });
+  });
+
+});
+
+$(document).ready(function(){
+  $('g rect').tipsy({ 
+        gravity: 'w', 
+        html: true, 
+        title: function() {
+          return 'Hi there!'; 
+        }
+  });
+
+});
+
 </script>
 {% endblock %}
 <!-- ***************** END SCRIPTS ***************** -->

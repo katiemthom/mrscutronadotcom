@@ -46,4 +46,9 @@ class AddAssignmentForm(Form):
 
 class UploadGradesForm(Form):
 	csv_file = FileField("CSV", [validators.Required()])
+
+class AdminLoginForm(Form):
+	email = TextField('Email', [validators.Required(), validators.Email()])
+	password = PasswordField('Password', [validators.Required()])
+
 	

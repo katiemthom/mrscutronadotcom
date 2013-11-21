@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+
+{% block body %}
+
+<div class="container">
+
+	<!-- ***************** HEADER ***************** -->
+	<div class="page-header">
+		<h1>Admin Login</h1>
+	</div>
+	<!-- ***************** END HEADER ***************** -->
+
+	<!-- ********** ADMIN LOGIN FORM ********** -->
+	<form action='{{url_for('admin_login')}}' method='post'>
+		<br>
+		<p><input class='form-control' name='email' placeholder='Email'></input></p>
+		<p><input class='form-control' type='password' name='password' placeholder='Password'></input></p>
+		<p><button type="submit" class="btn btn-default">Submit</button></p>
+	</form>
+	<!-- ********** END ADMIN LOGIN FORM ********** -->
+
+	<!-- ********** FLASHED MESSAGES ********** -->
+	{% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+		{% for category, message in messages%}
+			<div class="alert alert-{{category}}">{{message}}</div>
+  		{% endfor %}
+  		{% endif %}
+  	{% endwith %}
+  	<!-- ********** END FLASHED MESSAGES ********** -->
+
+
+</div>
+
+{% endblock %}
