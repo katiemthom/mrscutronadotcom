@@ -45,10 +45,11 @@ Start the virtual env:
 
 $ . env/bin/activate
 
-Create the db: 
+Open model.py in interactive mode and create the db: 
 
 $ python -i model.py
-$ create_db()
+
+\>>> create_db()
 
 Run the app: 
 
