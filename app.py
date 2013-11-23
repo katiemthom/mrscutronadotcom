@@ -5,7 +5,7 @@ from model import User, session
 from flask.ext.mail import Message, Mail 
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
-from flask.ext.admin import Admin, BaseView, expose
+from flask.ext import admin 
 # from flask.ext.admin.contrib.sqla import ModelView
 # from flask.ext.admin.contrib.fileadmin import FileAdmin
 # from flask.ext import login 
@@ -32,26 +32,82 @@ Markdown(app)
 ########## end Flask-Principal Setup ##########
 
 ########## Admin Views ##########
-class MyView(BaseView):
-	def is_accessible(self):
-		print "is_accessible is called!"
-		return True
-
-	@expose('/')
+class UploadGradesView(admin.BaseView):
+	@admin.expose('/')
 	def index(self):
-		return self.render('index.html')
+		return self.render('myadmin.html')
 
-	# @expose('/test/')
-	# def test(self):
-	# 	print "testing!"
-	# 	return self.render('test.html')
+	def is_accessible(self):
+		try:
+			is_admin = current_user.user_id == 32
+			if is_admin:
+				return True
+			else:
+				flash('You don\'t have permission to access the administrative settings!', 'warning')
+		except:
+			flash('You don\'t have permission to access administrative settings!', 'warning')
 
-	# def is_accessible(self):
-	# 	print "is_accessible is called!"
-	# 	return True
-		# return login.current_user.is_admin()
+class AnotherAdminView(admin.BaseView):
 
-admin = Admin(app, name='My App')
+	@admin.expose('/')
+	def index(self):
+		return self.render('anotheradmin.html')
+
+	def is_accessible(self):
+		try:
+			is_admin = current_user.user_id == 32
+			if is_admin:
+				return True
+		except:
+			pass
+
+	@admin.expose('/test/')
+	def test(self):
+		return self.render('test.html')
+
+class AddAssignmentsView(admin.BaseView):
+
+	@admin.expose('/', methods=['GET','POST'])
+	def index(self):
+		if request.method == 'POST':
+			form = forms.AddAssignmentForm(request.form)
+			if form.validate() == False: 
+				flash('All fields are required.','warning')
+				return self.render('adminaddassignment.html',  user=current_user)
+			else:
+				assigned_on = form.assigned_on.data
+				assigned_on_split = assigned_on.split('-')
+				assigned_on = datetime.datetime(int(assigned_on_split[2]),int(assigned_on_split[1]),int(assigned_on_split[0]))
+				due_on = form.due_on.data
+				due_on_split = due_on.split('-')
+				due_on = datetime.datetime(int(due_on_split[2]),int(due_on_split[1]),int(due_on_split[0]))
+				link = form.link.data
+				description = form.description.data
+				max_points = form.max_points.data
+				category = form.category.data
+				group = form.group.data
+				title = form.title.data
+				new_assignment = model.add_assignment(assigned_on,due_on,link,description,max_points,category,group,title)
+				flash('Assignment added!','success')
+				return self.render('adminaddassignment.html', user=current_user)
+		else:
+			return self.render('adminaddassignment.html', user=current_user)
+
+	def is_accessible(self):
+		try:
+			is_admin = current_user.user_id == 32
+			if is_admin:
+				return True
+		except:
+			pass
+
+
+
+
+admin = admin.Admin()
+admin.add_view(UploadGradesView(category='Grades'))
+admin.add_view(AddAssignmentsView(category='Assignments'))
+admin.init_app(app)
 # admin.add_view(MyView(endpoint='test',name='test'))
 
 # admin.add_view(MyView(name="Upload Grades"))
@@ -165,7 +221,7 @@ def add_assignment():
 		form = forms.AddAssignmentForm(request.form)
 		if form.validate() == False: 
 			flash('All fields are required.','warning')
-			return render_template('addassignment.html',  user=current_user)
+			return render_template('adminaddassignment.html',  user=current_user)
 		else:
 			assigned_on = form.assigned_on.data
 			assigned_on_split = assigned_on.split('-')
@@ -181,9 +237,9 @@ def add_assignment():
 			title = form.title.data
 			new_assignment = model.add_assignment(assigned_on,due_on,link,description,max_points,category,group,title)
 			flash('Assignment added!','success')
-			return render_template('addassignment.html', user=current_user)
+			return render_template('adminaddassignment.html', user=current_user)
 	else:
-		return render_template('addassignment.html', user=current_user)
+		return render_template('adminaddassignment.html', user=current_user)
 ########## end assignment views ##########
 
 ########## other views ##########
@@ -375,9 +431,9 @@ def check_db():
 		return jsonify({'up': False})  
 	
 
-# @app.route('/test')
-# def show_mark():
-# 	return render_template('test.html')
+@app.route('/test')
+def show_mark():
+	return render_template('test2.html', user=current_user)
 
 @app.route('/addpostajax', methods=['POST'])
 def test_ajax():

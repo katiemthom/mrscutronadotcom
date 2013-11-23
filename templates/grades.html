@@ -2,6 +2,7 @@
 
     {% block head %}
         <link rel="stylesheet" type="text/css" href="/static/css/grades.css">
+        <link rel="stylesheet" type="text/css" href="/static/css/colorbox.css">
     {% endblock %}
 
 {% block body %}
@@ -25,6 +26,19 @@
 	<svg class="chart"></svg>
 	<!-- ***************** END GRADES SVG ***************** -->
 
+  <!-- This contains the hidden content for inline calls -->
+  <div style='display:none'>
+    <div id='inline_content' style='padding:10px; background:#fff;'>
+    <p><strong>This content comes from a hidden element on this page.</strong></p>
+    <p>The inline option preserves bound JavaScript events and changes, and it puts the content back where it came from when it is closed.</p>
+    <p><a id="click" href="#" style='padding:5px; background:#ccc;'>Click me, it will be preserved!</a></p>
+    
+    <p><strong>If you try to open a new Colorbox while it is already open, it will update itself with the new content.</strong></p>
+    <p>Updating Content Example:<br />
+    <a class="ajax" href="/static/content/ajax.html">Click here to load new content</a></p>
+    </div>
+  </div>
+
 </div>
 
 {% endblock %}
@@ -32,152 +46,86 @@
 <!-- ***************** SCRIPTS ***************** -->
 {% block javascript %}
 
-<script type="text/javascript" src="/static/d3/d3.v3.js"></script>
-<script type="text/javascript" src="/static/jquery.tipsy.js"></script>
-
+<script type="text/javascript" src="/static/js/d3/d3.v3.js"></script>
+<script type="text/javascript" src="/static/js/jquery.tipsy.js"></script>
 <!-- ***************** D3 CHART ***************** -->
-<script type="text/javascript">
-
-// ***************** D3 SETUP *****************
-
-// Set variables for width and height of SVG (with margin)
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
-
-// x and y scaling functions 
-var x = d3.scale.ordinal()
-    .rangeRoundBands([0, width], .1);
-
-var y = d3.scale.linear()
-    .rangeRound([height, 0]);
-
-// color scaling function
-var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888"]);
-
-// define x and y axes 
-var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left")
-    .tickFormat(d3.format(".2s"));
-
-// create svg 'canvas'
-var svg = d3.select(".chart").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+<script type="text/javascript" src="/static/js/gradeschart.js"></script>
 
 
 
-    // ***************** ADD MAX GRADE DATA (OUTLINES) *****************
-    // loads category max values
-    // csv loader callback function  
-    d3.csv("/static/data2.csv", function(error, data) {
-      color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Category"; }));
+<script src="/static/js/jquery.colorbox.js"></script>
 
-      // creates an object for each row in the data set 
-      data.forEach(function(d) {
-        var y0 = 0;
-        d.cats = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
-        d.total = d.cats[d.cats.length - 1].y1;
-      });
-
-
-    // creates domains for x and y scaling functions 
-    x.domain(data.map(function(d) { return d.Category; }));
-    y.domain([0, d3.max(data, function(d) { return d.total; })]);
-
-      // creates a g element to add the outline bar
-      var max = svg.selectAll(".max")
-          .data(data)
-          .enter().append("g")
-          .attr("class", "g")
-          .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
-
-      // creates the outline 
-      max.selectAll("rect")
-          .data(function(d) { return d.cats; })
-          .enter().append("rect")
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.y1); })
-          .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-          .style("stroke", "black")
-          .style("fill", "transparent");
-
-
-
-// ***************** ADD STUDENT GRADE DATA (COLORED BANDS) *****************
-// csv loader callback function 
-d3.csv("/static/data.csv", function(error, data) {
-    color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Category"; }));
-
-    // name = category 
-    // cats = categories 
-    data.forEach(function(d) {
-      var y0 = 0;
-      d.cats = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name], y2: d}; });
-      d.total = d.cats[d.cats.length - 1].y1;
+<script>
+  $(document).ready(function(){
+    //Examples of how to assign the Colorbox event to elements
+    $(".group1").colorbox({rel:'group1'});
+    $(".group2").colorbox({rel:'group2', transition:"fade"});
+    $(".group3").colorbox({rel:'group3', transition:"none", width:"75%", height:"75%"});
+    $(".group4").colorbox({rel:'group4', slideshow:true});
+    $(".ajax").colorbox();
+    $(".youtube").colorbox({iframe:true, innerWidth:640, innerHeight:390});
+    $(".vimeo").colorbox({iframe:true, innerWidth:500, innerHeight:409});
+    $(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+    $(".inline").colorbox({inline:true, width:"50%"});
+    $(".callbacks").colorbox({
+      onOpen:function(){ alert('onOpen: colorbox is about to open'); },
+      onLoad:function(){ alert('onLoad: colorbox has started to load the targeted content'); },
+      onComplete:function(){ alert('onComplete: colorbox has displayed the loaded content'); },
+      onCleanup:function(){ alert('onCleanup: colorbox has begun the close process'); },
+      onClosed:function(){ alert('onClosed: colorbox has completely closed'); }
     });
 
-
-    // adds x and y axes
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
-        .call(xAxis);
-
-    svg.append("g")
-        .attr("class", "y axis")
-        .call(yAxis)
-      .append("text")
-        .attr("transform", "rotate(-90)")
-        .attr("y", 6)
-        .attr("dy", ".71em")
-        .style("text-anchor", "end")
-        .text("Percent");
-
-    // creates g element for each bar 
-    var Category = svg.selectAll(".Category")
-        .data(data)
-      .enter().append("g")
-        .attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
-
-    // creates colored rect for each bar 
-    Category.selectAll("rect")
-        .data(function(d) { return d.cats; })
-      .enter().append("g:rect")
-        .attr("class","d")
-        .attr("width", x.rangeBand())
-        .attr("y", function(d) { return y(d.y1); })
-        .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-        .style("fill", function(d) { return color(d.name); });
-
-
-
-      // adds tooltips to elements that are both g and rect elements 
-      $('g rect').tipsy({ 
-        gravity: 'w', 
-        html: true, 
-        title: function() {
-          d = this.__data__;
-          if (d.y2.total) {
-            return 'Hi there! My d is ' + d.y2.total ;
-          }
-      }
+    $('.non-retina').colorbox({rel:'group5', transition:'none'})
+    $('.retina').colorbox({rel:'group5', transition:'none', retinaImage:true, retinaUrl:true});
+    
+    //Example of preserving a JavaScript event for inline calls.
+    $("#click").click(function(){ 
+      $('#click').css({"background-color":"#f00", "color":"#fff", "cursor":"inherit"}).text("Open this window again and this message will still be here.");
+      return false;
     });
-      
+  });
 
-    });
+
+
+$('.ajax').bind('click', function() {
+  $.colorbox({href:$(this).attr('href'), open:true});
+  return false;
 });
 
-
-
 </script>
+
+
+
+
+
+<!-- // // ***************** AJAX CALL FOR DATA *****************
+// $.ajax({
+//     type: "GET",
+//         url: "/gradeinfo"
+//     }).done(function( msg ) {
+//         // for now I will store these in variables
+//         // cwh
+//         var cwhGrade = msg['cwh_grade'];
+//         // var cwhMax = msg['cwh_max'];
+//         // var cwhTop = msg['cwh_top'];
+//         // var cwhBottom = msg['cwh_bottom'];
+//         // // mk
+//         // var mkGrade = msg['mk_grade'];
+//         // var mkMax = msg['mk_max'];
+//         // var mkTop = msg['mk_top'];
+//         // var mkBottom = msg['mk_bottom'];
+//         // // ak
+//         // var akGrade = msg['ak_grade'];
+//         // var akMax = msg['ak_max'];
+//         // var akTop = msg['ak_top'];
+//         // var akBottom = msg['ak_bottom'];
+//         // // total
+//         // var totalGrade = msg['total_grade'];
+//         // var totalMax = msg['total_max'];
+//         // var totalTop = msg['total_top'];
+//         // var totalBottom = msg['total_bottom'];
+//         });  -->
+
+
 {% endblock %}
 <!-- ***************** END SCRIPTS ***************** -->

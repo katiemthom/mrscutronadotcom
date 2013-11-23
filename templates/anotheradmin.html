@@ -1,0 +1,12 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+    Hello World from AnotherMyAdmin!<br/>
+    <a href="{{ url_for('.test') }}">Click me to go to test view</a>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+		{% if messages %}
+		{% for category, message in messages%}
+			<div class="alert alert-{{category}}">{{message}}</div>
+  		{% endfor %}
+  		{% endif %}
+  	{% endwith %}
+{% endblock %}

@@ -39,19 +39,19 @@
 }
 
 .chart text {
-  fill: black;
+  fill: white;
   font: 10px sans-serif;
   text-anchor: end;
 }
 
 .axis text {
-  font: 10px sans-serif;
+  font: 10px sans-serif white;
 }
 
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke: white;
   shape-rendering: crispEdges;
 }
 
