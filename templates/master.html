@@ -45,6 +45,7 @@
 		<ul class="dropdown-menu">
 <!-- 			<li><a href="/blogs">featured and recent</a></li>
 			<li><a href="/search">search by student</a></li> -->
+			<li><a href="{{url_for('show_grades')}}">compare classes</a></li>
 			{% if user.is_active() %}
 			<li><a href="{{url_for('show_grades')}}">my grade</a></li>
 			{% endif %}
