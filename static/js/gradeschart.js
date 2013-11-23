@@ -119,17 +119,22 @@ d3.csv("/static/data.csv", function(error, data) {
         .style("fill", function(d) { return color(d.name); });
 
       // adds tooltips to elements that are both g and rect elements 
-      $('g rect').tipsy({ 
-        gravity: 'w', 
-        html: true, 
-        title: function() {
-          d = this.__data__;
-          if (d.y2.total) {
-            return 'Hi there! My d is ' + d.y2.total ;
-          }
-      }
-    });
+    //   $('g rect').tipsy({ 
+    //     gravity: 'w', 
+    //     html: true, 
+    //     title: function() {
+    //       d = this.__data__;
+    //       if (d.y2.total) {
+    //         return 'Hi there! My d is ' + d.y2.total ;
+    //       }
+    //   }
+    // });
+    
 
+      $('.ajax').on('click', function() {
+        $.colorbox({href:$(this).attr('href'), open:true});
+        return false;
+      });
 
     });
 
