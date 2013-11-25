@@ -415,8 +415,23 @@ def delete_comment(comment_pk):
 ########## grade views ##########
 @app.route('/grades')
 def show_grades():
-	grades = model.calc_grade(8)
-	return render_template('grades.html', user = current_user, grades=grades)
+	# make work for general user_id 
+	return render_template('grades.html', user = current_user)
+
+@app.route('/gradeinfo')
+def calc_grade():
+	# make work for general user_id 
+	grades = model.calc_grade(32)
+	filename = "/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/gradesbyuser/data_32"
+	csvname = "/static/gradesbyuser/data_32"
+	f = open(filename,'w+')
+	f.write("Category,CWH,AK,MK\n")
+	f.write("CWH,"+str(grades[0])+",0,0\n")
+	f.write("AK,0,"+str(grades[1])+",0\n")
+	f.write("MK,0,0,"+str(grades[2])+"\n")
+	f.write("TOTAL,"+str(grades[0])+","+str(grades[1])+","+str(grades[2])+"\n")
+	f.close()
+	return jsonify({'grades_file': csvname})
 ########## end grade views ##########
 
 ########## test views ##########

@@ -67,7 +67,9 @@
 			</ul>
 		</li>
 
+		{% if not user.is_active() %}
 		<li><a href="/signup">sign up</a></li>
+		{% endif %}
 
 		<li class="dropdown">
 

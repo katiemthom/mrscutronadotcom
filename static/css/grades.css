@@ -6,6 +6,14 @@
   text-anchor: end;
 }
 
+.cwh-graph text {
+  fill: #99D500;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  /*font: 10px sans-serif;*/
+  text-anchor: end;
+}
+
 .axis text {
   font-family: 'Open Sans', sans-serif;
   color: #99D500;

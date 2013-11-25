@@ -220,6 +220,8 @@ def get_grades_by_user_id(user_id):
 
 def add_grade(assignment_pk, value, user_id):
 	new_grade = Grade(assignment_pk = assignment_pk, value = value, user_id = user_id)
+	session.add(new_grade)
+	session.commit()
 	return new_grade
 
 def calc_grade(user_id):
@@ -243,17 +245,17 @@ def calc_grade(user_id):
 			ak_max += grade.assignment.max_points
 			ak_val += grade.value
 	if cwh_max == 0:
-		cwh_final = .15
+		cwh_final = .15 * 100
 	else: 
-		cwh_final = (cwh_val/cwh_max) * .15
+		cwh_final = (cwh_val/cwh_max) * .15 * 100
 	if ak_max == 0:
-		ak_final = .45
+		ak_final = .45 * 100
 	else: 
-		ak_final = (ak_val/ak_max) * .45
+		ak_final = (ak_val/ak_max) * .45 * 100
 	if mk_max == 0:
-		mk_final = .4
+		mk_final = .4 * 100
 	else: 
-		mk_final = (mk_val/mk_max) * .4
+		mk_final = (mk_val/mk_max) * .4 * 100
 	return (cwh_final, ak_final, mk_final)
 
 ########### END FUNCTIONS WITH GRADES ###########

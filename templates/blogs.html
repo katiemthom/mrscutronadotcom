@@ -60,7 +60,7 @@
 		<div class='well' id='search-results'>
 		    <div class="media">
 				<a class="pull-left" href="{{url_for('show_blog', author_id=post.user.user_id)}}">
-		    		<img class="media-object" src="{{post.user.profile_picture}}" height='64px' width='64px' alt="...">
+		    		<img class="media-object" src="{{post.user.profile_picture}}">
 		  		</a>
 		  		<div class="media-body">
 		    		<a href="{{url_for('show_blog', author_id=post.user.user_id)}}">

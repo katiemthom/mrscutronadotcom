@@ -5253,7 +5253,10 @@ a.thumbnail:focus {
 
 .media,
 .media .media {
-  margin-top: 15px;
+  margin-top: 10px;
+  padding-left: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .media:first-child {
@@ -5262,6 +5265,14 @@ a.thumbnail:focus {
 
 .media-object {
   display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 100px;
+  -webkit-border-radius: 100px;
+  -moz-border-radius: 100px;
+  box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
+  -moz-box-shadow: 0 0 8px rgba(0, 0, 0, .8);
 }
 
 .media-heading {
