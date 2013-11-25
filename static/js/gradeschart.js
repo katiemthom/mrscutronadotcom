@@ -117,8 +117,7 @@ d3.csv("/static/data.csv", function(error, data) {
         .attr("width", x.rangeBand())
         .attr("y", function(d) { return y(d.y1); })
         .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-        .style("fill", function(d) { return color(d.name); })
-        .on("mouseover", function() { d3.select(d3.event.target).classed("highlight", true); });
+        .style("fill", function(d) { return color(d.name); });
 
       // adds tooltips to elements that are both g and rect elements 
     //   $('g rect').tipsy({ 

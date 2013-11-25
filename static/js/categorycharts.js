@@ -2,18 +2,26 @@ var cwhData = [
 	{'title': 'homework 1', score: 4, 'maxScore': 5, date: '2011-01-01'},
 	{'title': 'homework 1', score: 3, 'maxScore': 5, date: '2011-01-02'},
 	{'title': 'homework 1', score: 2.5, 'maxScore': 5, date: '2011-01-03'},
+  {'title': 'homework 1', score: 1, 'maxScore': 5, date: '2011-01-04'},
+  {'title': 'homework 1', score: 5, 'maxScore': 5, date: '2011-01-05'},
+  {'title': 'homework 1', score: 0, 'maxScore': 5, date: '2011-01-06'},
+  {'title': 'homework 1', score: .33, 'maxScore': 5, date: '2011-01-07'},
+  {'title': 'homework 1', score: 4.33, 'maxScore': 5, date: '2011-01-08'},
+  {'title': 'homework 1', score: 2.67, 'maxScore': 5, date: '2011-01-09'},
 ]
 
 //Width and height
 var cwhMargin = {top: 20, right: 20, bottom: 30, left: 40},
-    cwhWidth = 500,
+    cwhWidth = 700,
     cwhHeight = 300,
     chartWidth = cwhWidth - cwhMargin.left - cwhMargin.right,
     chartHeight = cwhHeight - cwhMargin.top - cwhMargin.bottom,
+    barPadding = 41, 
     parseDate = d3.time.format("%Y-%m-%d").parse;
 
+
 var x_domain = d3.extent(cwhData, function(d) { return parseDate(d.date); }),
-    y_domain = [0, d3.max(cwhData, function(d) { return d.score; })];
+    y_domain = [0, 5];
 
 var  date_format = d3.time.format("%d %b");
 
@@ -29,8 +37,8 @@ var cwhY = d3.scale.linear()
     .range([chartHeight, 0]);
     
 var cwhX = d3.time.scale()
-    .domain(x_domain)
-    .range([0, chartWidth]);
+    .range([0, chartWidth])
+    .domain(x_domain);
 
 // define the y axis
 var cwhYAxis = d3.svg.axis()
@@ -42,9 +50,9 @@ var cwhYAxis = d3.svg.axis()
 var cwhXAxis = d3.svg.axis()
     .orient("bottom")
     .scale(cwhX)
-    .ticks(d3.time.days(x_domain[0], x_domain[1]).length)
+    .ticks(d3.time.days(x_domain[0], x_domain[1]).length/3)
     .tickFormat(date_format);
-  
+
 vis.append("g")
 .attr("class", "axis")
 .attr("transform", "translate("+cwhMargin.left+"," + cwhMargin.top + ")")
@@ -55,7 +63,7 @@ vis.append("g")
 
 vis.append("g")
 .attr("class", "xaxis axis")  
-.attr("transform", "translate(" +cwhMargin.left+ "," + (cwhMargin.top + chartHeight) + ")")
+.attr("transform", "translate(" + cwhMargin.left + "," + (cwhMargin.top + chartHeight) + ")")
 .call(cwhXAxis);
 
 vis.selectAll("rect")
@@ -63,14 +71,15 @@ vis.selectAll("rect")
    .enter()
    .append("rect")
    .attr("x", function(d, i) {
-   		return i * (chartWidth / cwhData.length);
+   		return i * (chartWidth / cwhData.length) + barPadding;
    })
    .attr("y", function(d) {
-   		return chartHeight - (d.score * 4);
+   		return cwhY(d.score) + cwhMargin.top;
    })
-   .attr("width", chartWidth / cwhData.length)
+   .attr("width", chartWidth / cwhData.length - barPadding)
+
    .attr("height", function(d) {
-   		return d.score * 4;
+   		return cwhHeight - cwhMargin.bottom - cwhMargin.top - cwhY(d.score) - 1;
    })
    .attr("fill", function(d) {
 		return "rgb(0, 0, " + (d.score * 50) + ")";
