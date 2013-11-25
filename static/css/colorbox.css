@@ -22,14 +22,14 @@
 */
 #cboxOverlay{background:#333;}
 #colorbox{outline:0;}
-    #cboxContent{margin-top:32px; overflow:visible; background:#000; }
+    #cboxContent{margin-top:32px; overflow:visible; background:#000; color:#99D500;}
         .cboxIframe{background:#fff;}
         #cboxError{padding:50px; border:1px solid #ccc;}
-        #cboxLoadedContent{background:#000; padding:10px; }
+        #cboxLoadedContent{background:#000; padding:10px; color:#99D500;}
         #cboxLoadingGraphic{background:url(/static/images/loading.gif) no-repeat center center;}
         #cboxLoadingOverlay{background:#000;}
-        #cboxTitle{position:absolute; top:-22px; left:0; color:#000;}
-        #cboxCurrent{position:absolute; top:-22px; right:205px; text-indent:-9999px;}
+        #cboxTitle{position:absolute; top:-22px; left:0; color:#99D500;}
+        #cboxCurrent{position:absolute; top:-22px; right:205px; text-indent:-9999px; color:#99D500;}
 
         /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
         #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; text-indent:-9999px; width:20px; height:20px; position:absolute; top:-20px; background:url(/static/images/controls.png) no-repeat 0 0;}
