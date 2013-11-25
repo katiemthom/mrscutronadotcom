@@ -18,3 +18,31 @@
   stroke: white;
   shape-rendering: crispEdges;
 }
+
+.highlight {
+  background-color: orange;
+  fill: orange;
+}
+
+.chart {
+float: left;
+margin-right: 30px;
+width: 400px;
+}
+
+.cwh-graph {
+  width: 600px;
+  float: left;
+}
+
+.axis text {
+  font-family: 'Open Sans', sans-serif;
+  color: #99D500;
+  text-transform: uppercase;
+}
+
+.vis text {
+  font-family: 'Open Sans', sans-serif;
+  color: #99D500;
+  text-transform: uppercase;
+}

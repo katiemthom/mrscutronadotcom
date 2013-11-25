@@ -14,9 +14,7 @@
 }
 </style>
 
-<div id='cat-graph' style="height:100%; width:100%;">
-
-
+<div id='cwh-graph' style="height:100%; width:100%;">
 
 </div>
 
@@ -43,7 +41,7 @@ var x_domain = d3.extent(data, function(d) { return parseDate(d.date); }),
 var  date_format = d3.time.format("%d %b");
 
 //Create SVG element
-var vis = d3.select("#cat-graph")
+var vis = d3.select("#cwh-graph")
 			.append("svg:svg")
 			.attr("class","vis")
 			.attr("width", width)
