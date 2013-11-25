@@ -1,8 +1,8 @@
 // ***************** D3 SETUP *****************
 // Set variables for width and height of SVG (with margin)
 var margin = {top: 20, right: 20, bottom: 30, left: 40},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 400 - margin.left - margin.right,
+    height = 150 - margin.top - margin.bottom;
 
 // x and y scaling functions 
 var x = d3.scale.ordinal()
@@ -23,7 +23,8 @@ var xAxis = d3.svg.axis()
 var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left")
-    .tickFormat(d3.format(".2s"));
+    .tickFormat(d3.format(".2s"))
+    .ticks(2);
 
 // create svg 'canvas'
 var svg = d3.select(".chart").append("svg")

@@ -327,6 +327,7 @@ textarea {
 a {
   color: #99D500;
   text-decoration: none;
+  text-transform: uppercase;
 }
 
 a:hover,
