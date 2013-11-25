@@ -13,7 +13,7 @@ var y = d3.scale.linear()
 
 // color scaling function
 var color = d3.scale.ordinal()
-    .range(["#98abc5", "#8a89a6", "#7b6888"]);
+    .range(["#707070", "#ADADAD", "#FFFFFF"]);
 
 // define x and y axes 
 var xAxis = d3.svg.axis()

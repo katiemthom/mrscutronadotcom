@@ -301,11 +301,11 @@ html {
 
 /*BODY BODY BODY BODY */
 body {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Open Sans', sans-serif;
+  color: #fff;
   font-size: 14px;
   line-height: 1.428571429;
-  color: #333333;
-  background-color: rgba(0, 0, 0, 1);
+  background-color: #333;
 }
 
 input,
@@ -325,13 +325,13 @@ textarea {
 }
 
 a {
-  color: #428bca;
+  color: #99D500;
   text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #2a6496;
+  color: #000;
   text-decoration: underline;
 }
 
@@ -392,6 +392,8 @@ hr {
 
 p {
   margin: 0 0 10px;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 13px; 
 }
 
 .lead {
@@ -463,7 +465,8 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: rgba(255,255,255,0.43);
   font-weight: 500;
   line-height: 1.1;
 }
@@ -502,7 +505,9 @@ h6 {
 h1,
 .h1 {
   font-size: 36px;
-  font-family: 'Quando', serif;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #99D500;
+  font-weight: bold;
 }
 
 h2,
@@ -551,8 +556,7 @@ h4 small,
 .page-header {
   padding-bottom: 9px;
   margin: 40px 0 20px;
-  border-bottom: 1px solid #eeeeee;
-  font-family: 'Quando', serif;
+  /*border-bottom: 1px solid #000;*/
 }
 
 ul,
@@ -1992,6 +1996,9 @@ textarea.input-lg {
 }
 
 .btn {
+  font-family: 'Open Sans', sans-serif;
+  color: #99D500;
+  text-transform: uppercase;
   display: inline-block;
   padding: 6px 12px;
   margin-bottom: 0;
@@ -2031,6 +2038,10 @@ textarea.input-lg {
           box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
 
+.btn.btn-default {
+  color: #99D500;
+}
+
 .btn.disabled,
 .btn[disabled],
 fieldset[disabled] .btn {
@@ -2043,9 +2054,10 @@ fieldset[disabled] .btn {
 }
 
 .btn-default {
-  color: #333333;
-  background-color: #ffffff;
-  border-color: #cccccc;
+  color: #99D500;
+  /*background-color: #ffffff;*/
+  color: #333;
+  border-color: rgba(255,255,255,0.43);
 }
 
 .btn-default:hover,
@@ -2053,8 +2065,8 @@ fieldset[disabled] .btn {
 .btn-default:active,
 .btn-default.active,
 .open .dropdown-toggle.btn-default {
-  color: #333333;
-  background-color: #ebebeb;
+  color: #000;
+  background-color: rgba(153,213,0,0.5);
   border-color: #adadad;
 }
 
@@ -3238,7 +3250,9 @@ input[type="button"].btn-block {
   margin: 2px 0 0;
   font-size: 14px;
   list-style: none;
-  background-color: #ffffff;
+  /*background-color: #ffffff;*/
+/*  background-color: rgba(66,136,235,0.3);*/
+  background-color: #99D500;
   border: 1px solid #cccccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-radius: 4px;
@@ -3265,7 +3279,9 @@ input[type="button"].btn-block {
   clear: both;
   font-weight: normal;
   line-height: 1.428571429;
-  color: #333333;
+  /*color: #333333;
+*/  
+  color: black;
   white-space: nowrap;
 }
 
@@ -3273,7 +3289,7 @@ input[type="button"].btn-block {
 .dropdown-menu > li > a:focus {
   color: #ffffff;
   text-decoration: none;
-  background-color: #428bca;
+  background-color: transparent;
 }
 
 .dropdown-menu > .active > a,
@@ -3302,6 +3318,7 @@ input[type="button"].btn-block {
 
 .open > .dropdown-menu {
   display: block;
+  background-color: rgba(153,213,0,.5);
 }
 
 .open > a {
@@ -3639,6 +3656,8 @@ input[type="button"].btn-block {
 .input-group .form-control {
   width: 100%;
   margin-bottom: 0;
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
 }
 
 .input-group-lg > .form-control,
@@ -3649,6 +3668,8 @@ input[type="button"].btn-block {
   font-size: 18px;
   line-height: 1.33;
   border-radius: 6px;
+  font-family: 'Open Sans', sans-serif;
+   text-transform: uppercase;
 }
 
 select.input-group-lg > .form-control,
@@ -4021,7 +4042,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   z-index: 1000;
   min-height: 50px;
   margin-bottom: 20px;
-  border: 1px solid transparent;
+  /*border: 1px solid transparent;*/
 }
 
 .navbar:before,
@@ -4054,6 +4075,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-header:after {
   display: table;
   content: " ";
+  color: #99D500;
 }
 
 .navbar-header:after {
@@ -4077,12 +4099,13 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-collapse {
+  background-color: #333;
   max-height: 340px;
   padding-right: 15px;
   padding-left: 15px;
   overflow-x: visible;
   border-top: 1px solid transparent;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
   -webkit-overflow-scrolling: touch;
 }
 
@@ -4188,9 +4211,10 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-brand {
   float: left;
   padding: 15px 15px;
-  font-size: 18px;
+  font-size: 20px;
   line-height: 20px;
-  font-family: 'Quando', serif;
+  font-family: 'Source Sans Pro', sans-serif;
+  color: #99D500;
 }
 
 .navbar-brand:hover,
@@ -4214,6 +4238,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
   background-color: transparent;
   border: 1px solid transparent;
   border-radius: 4px;
+  color: #99D500;
 }
 
 .navbar-toggle .icon-bar {
@@ -4249,13 +4274,16 @@ textarea.input-group-sm > .input-group-btn > .btn {
     float: none;
     width: auto;
     margin-top: 0;
-    background-color: transparent;
+   /* background-color: transparent;*/
+/*    background-color: #99D500;
+    opacity: .3;*/
     border: 0;
     box-shadow: none;
   }
   .navbar-nav .open .dropdown-menu > li > a,
   .navbar-nav .open .dropdown-menu .dropdown-header {
     padding: 5px 15px 5px 25px;
+    background-color: rgba(66,136,235,0.3);
   }
   .navbar-nav .open .dropdown-menu > li > a {
     line-height: 20px;
@@ -4273,6 +4301,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
   .navbar-nav > li {
     float: left;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
   }
   .navbar-nav > li > a {
     padding-top: 15px;
@@ -4292,6 +4322,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-form {
+  font-family: 'Open Sans', sans-serif;
+  text-transform: uppercase;
   padding: 10px 15px;
   margin-top: 8px;
   margin-right: -15px;
@@ -4311,6 +4343,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
   }
   .navbar-form .form-control {
     display: inline-block;
+    font-family: 'Open Sans', sans-serif;
+    text-transform: uppercase;
   }
   .navbar-form .radio,
   .navbar-form .checkbox {
@@ -4381,31 +4415,31 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default {
-  background-color: #f8f8f8;
-  border-color: #e7e7e7;
+  background-color: #333;
 }
 
 .navbar-default .navbar-brand {
-  color: #777777;
+  /*color: #777777;*/
+  color: #99D500;
 }
 
 .navbar-default .navbar-brand:hover,
 .navbar-default .navbar-brand:focus {
-  color: #5e5e5e;
+  color: rgba(255,255,255,.43);
   background-color: transparent;
 }
 
 .navbar-default .navbar-text {
-  color: #777777;
+  color: #99D500;
 }
 
 .navbar-default .navbar-nav > li > a {
-  color: #777777;
+  color: #99D500;
 }
 
 .navbar-default .navbar-nav > li > a:hover,
 .navbar-default .navbar-nav > li > a:focus {
-  color: #333333;
+  color: rgba(255,255,255,.43);
   background-color: transparent;
 }
 
@@ -4424,7 +4458,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-default .navbar-toggle {
-  border-color: #dddddd;
+  /*border-color: #dddddd;*/
 }
 
 .navbar-default .navbar-toggle:hover,
@@ -4438,7 +4472,8 @@ textarea.input-group-sm > .input-group-btn > .btn {
 
 .navbar-default .navbar-collapse,
 .navbar-default .navbar-form {
-  border-color: #e6e6e6;
+  /*border-color: #e6e6e6;*/
+  border-bottom: 1px solid #99D500;
 }
 
 .navbar-default .navbar-nav > .dropdown > a:hover .caret,
@@ -4450,8 +4485,9 @@ textarea.input-group-sm > .input-group-btn > .btn {
 .navbar-default .navbar-nav > .open > a,
 .navbar-default .navbar-nav > .open > a:hover,
 .navbar-default .navbar-nav > .open > a:focus {
-  color: #555555;
-  background-color: #e7e7e7;
+  color: rgba(255,255,255,.43);
+  /*background-color: #e7e7e7;*/
+  background-color: transparent;
 }
 
 .navbar-default .navbar-nav > .open > a .caret,
@@ -4503,7 +4539,7 @@ textarea.input-group-sm > .input-group-btn > .btn {
 }
 
 .navbar-inverse .navbar-brand {
-  color: #999999;
+  color: #99D500;
 }
 
 .navbar-inverse .navbar-brand:hover,

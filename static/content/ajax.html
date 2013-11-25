@@ -2,15 +2,15 @@
 <style type="text/css">
 			div.bar {
 				display: inline-block;
-				width: 20px;
+				width: 15px;
 				height: 75px;	/* Gets overriden by D3-assigned height below */
-				margin-right: 2px;
+				margin-right: 10px;
 				background-color: teal;
 			}
 </style>		
 		
 
-<div id='homer' style="right center no-repeat #ececec; height:400px; width:500px; padding:30px 10px;">
+<div id='cat-graph' style="height:100%; width:100%;">
 
 
 
@@ -19,15 +19,21 @@
 
 <script type="text/javascript">
 
-var dataset = [ 5, 10, 15, 20, 25 ];
+var dataset = [
+	{'title': 'homework 1', score: 4, 'maxScore': 5, 'dueOn': 'November'},
+	{'title': 'homework 1', score: 3, 'maxScore': 5, 'dueOn': 'November'},
+	{'title': 'homework 1', score: 2.5, 'maxScore': 5, 'dueOn': 'November'},
+]
 
-d3.select("#homer").selectAll("div")
+// var dataset = [ 5, 10, 15, 20, 25 ];
+
+d3.select("#cat-graph").selectAll("div")
 	.data(dataset)
 	.enter()
 	.append("div")
 	.attr("class", "bar")
 	.style("height", function(d) {
-		var barHeight = d * 5;
+		var barHeight = d.score * 5;
 		return barHeight + "px";
 	})
 			
