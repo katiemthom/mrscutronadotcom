@@ -8,7 +8,7 @@
 	<h1>
 		the mathematical musings of {{posts[0].user.first_name}} {{posts[0].user.last_name}}
 		{% if user.user_id == posts[0].user.user_id %}
-		<a href='{{url_for("add_post")}}'><button type="button" class="btn btn-default">Add Post</button></a>
+		<a href='{{url_for("add_post")}}' type="button" class="btn btn-default">Add Post</a>
 		{% endif %}
 	</h1>
 	</div>
@@ -34,8 +34,8 @@
 	</div>
 	<p><a href="{{url_for('show_post', post_pk=post.post_pk)}}">{{ post.comment_count }} Comments</a></p>
 	{% if user.user_id == posts[0].user.user_id %}
-	<a href='{{url_for("edit_post", post_pk=post.post_pk)}}'><button type="button" class="btn btn-default">Edit Post</button></a>
-	<a href='{{url_for("delete_post", post_pk=post.post_pk)}}'><button type="button" class="btn btn-default">Delete Post</button></a>
+	<a href='{{url_for("edit_post", post_pk=post.post_pk)}}' type="button" class="btn btn-default">Edit Post</a>
+	<a href='{{url_for("delete_post", post_pk=post.post_pk)}}' type="button" class="btn btn-default">Delete Post</a>
 	{% endif %}
 	{% endfor %}
 

@@ -63,13 +63,11 @@
 		    		<img class="media-object" src="{{post.user.profile_picture}}">
 		  		</a>
 		  		<div class="media-body">
-		    		<a href="{{url_for('show_blog', author_id=post.user.user_id)}}">
-		    		<h4 class="media-heading">{{post.user.first_name}} {{post.user.last_name}}</h4></a>
+		    		<a href="{{url_for('show_blog', author_id=post.user.user_id)}}"><h3 class="post-title-media">{{post.title}}</h3></a>
+		    		<h4 class="media-heading">{{post.user.first_name}} {{post.user.last_name}}</h4>
 		    		<small>{{post.user.email}}</small>
 				</div>
 			</div>
-
-			<h4>{{post.title}}</h4>
 			{% filter markdown %}{{post.content}}{% endfilter %}
 			<a href="{{url_for('show_blog', author_id=post.user.user_id)}}">Go to full blog >></a>
 		</div>

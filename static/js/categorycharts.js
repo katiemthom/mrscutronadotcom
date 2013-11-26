@@ -1,14 +1,17 @@
 function show_cwh() {
     var cwhData = [
-      {'title': 'homework 1', score: 4, 'maxScore': 5, date: '2011-01-01', pk: 1},
-      {'title': 'homework 1', score: 3, 'maxScore': 5, date: '2011-01-02', pk: 2},
-      {'title': 'homework 1', score: 2.5, 'maxScore': 5, date: '2011-01-03', pk: 3},
-      {'title': 'homework 1', score: 1, 'maxScore': 5, date: '2011-01-04', pk: 4},
-      {'title': 'homework 1', score: 5, 'maxScore': 5, date: '2011-01-05', pk: 5},
-      {'title': 'homework 1', score: 0, 'maxScore': 5, date: '2011-01-06', pk: 6},
-      {'title': 'homework 1', score: .33, 'maxScore': 5, date: '2011-01-07', pk: 7},
-      {'title': 'homework 1', score: 4.33, 'maxScore': 5, date: '2011-01-08', pk: 8},
-      {'title': 'homework 1', score: 2.67, 'maxScore': 5, date: '2011-01-09', pk: 9},
+      {aTitle: 'homework 1', score: 4, 'maxScore': 5, date: '2011-01-01', pk: 1},
+      {aTitle: 'homework 1', score: 3, 'maxScore': 5, date: '2011-01-02', pk: 2},
+      {aTitle: 'homework 1', score: 2.5, 'maxScore': 5, date: '2011-01-03', pk: 3},
+      {aTitle: 'homework 1', score: 1, 'maxScore': 5, date: '2011-01-04', pk: 4},
+      {aTitle: 'homework 1', score: 5, 'maxScore': 5, date: '2011-01-05', pk: 5},
+      {aTitle: 'homework 1', score: 0, 'maxScore': 5, date: '2011-01-06', pk: 6},
+      {aTitle: 'homework 1', score: .33, 'maxScore': 5, date: '2011-01-07', pk: 7},
+      {aTitle: 'homework 1', score: 4.33, 'maxScore': 5, date: '2011-01-08', pk: 8},
+      {aTitle: 'homework 1', score: 2.67, 'maxScore': 5, date: '2011-01-09', pk: 9},
+      {aTitle: 'homework 2', score: 0, 'maxScore': 5, date: '2011-01-10', pk: 10},
+      {aTitle: 'homework 3', score: .33, 'maxScore': 5, date: '2011-01-11', pk: 11},
+      {aTitle: 'homework 4', score: 4.33, 'maxScore': 5, date: '2011-01-12', pk: 12},
     ]
 
     //Width and height
@@ -17,7 +20,7 @@ function show_cwh() {
         cwhHeight = 300,
         chartWidth = cwhWidth - cwhMargin.left - cwhMargin.right,
         chartHeight = cwhHeight - cwhMargin.top - cwhMargin.bottom,
-        barPadding = 41, 
+        barPadding = 10, 
         parseDate = d3.time.format("%Y-%m-%d").parse;
 
 
@@ -73,19 +76,37 @@ function show_cwh() {
        .append("rect")
        .attr("id",function(d) { return String("grade" + d.pk); })
        .attr("x", function(d, i) {
-          return i * (chartWidth / cwhData.length) + barPadding;
+          return i * (chartWidth / cwhData.length) + 41;
        })
        .attr("y", function(d) {
-          return cwhY(d.score) + cwhMargin.top;
+            if (d.score == 0) {
+                return cwhY(0.08) + cwhMargin.top
+            } else {
+                return cwhY(d.score) + cwhMargin.top;
+            }
        })
        .attr("width", chartWidth / cwhData.length - barPadding)
 
        .attr("height", function(d) {
-          return cwhHeight - cwhMargin.bottom - cwhMargin.top - cwhY(d.score) - 1;
+            if (d.score == 0) {
+                return cwhHeight - cwhMargin.bottom - cwhMargin.top - cwhY(0.08) - 1
+            } else {
+                return cwhHeight - cwhMargin.bottom - cwhMargin.top - cwhY(d.score) - 1;
+            }
        })
        .attr("fill", "#707070")
-       .on("mouseover", function(){d3.select(this).style("fill", "#ADADAD");})
-       .on("mouseout", function(){d3.select(this).style("fill", "#707070");});
+       .on("mouseover", function(d){
+            d3.select(this).style("fill", "#ADADAD");
+            $('#assignment_title').append(d.aTitle);
+            $('#assignment_score').append(d.score);
+            $('#assignment_due_on').append(d.date);
+        })
+       .on("mouseout", function(){
+            d3.select(this).style("fill", "#707070");
+            $('#assignment_title').html("");
+            $('#assignment_score').html("");
+            $('#assignment_due_on').html("");
+        });
 }
 
 
@@ -98,11 +119,11 @@ $(document).ready(function() {
         show_cwh();
     });
 
-    $("rect").hover(function() {
-
-    });
-
 });
 
+
+function show_details() {
+    $(".testdiv").append('<h1>Assignment Details</h1><br><br><p class="larger">Assignment Title: <span id="assignment_title"></span></p><p class="larger">Score: <span id="assignment_score"></span></p><p class="larger">Due Date: <span id="assignment_due_on"></span></p>');
+}
 
 

@@ -1,8 +1,12 @@
 .well{
 	border-radius: 0px;
 	padding-top: 0px;
-	background-color: rgba(153,213,0,.5);
-	
+	background-color: #333333;
+}
+
+.post-title-media {
+	font-family: 'Source Sans Pro', sans-serif;
+	color: #99D500;
 }
 
 #model {
@@ -67,3 +71,7 @@
 	height: 400px;
 }
 
+.footer {
+	padding-top: 50px;
+	clear: both;
+}
