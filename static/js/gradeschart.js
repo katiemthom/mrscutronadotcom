@@ -1,5 +1,6 @@
 // ***************** GLOBAL VARIABLES *****************
 var csvFile; 
+var gradesDict;
 
 // ***************** DOCUMENT.READY *****************
 $(document).ready(function() {
@@ -9,19 +10,23 @@ $(document).ready(function() {
 		url: "/gradeinfo"
 	}).done(function( msg ) {
 		csvFile = msg['grades_file'];
+		gradesDict = eval(msg['grades_dict']);
+		load_main_chart();
 	}); 
-	// ***************** LOADS MAIN GRADE CHART *****************
-	load_main_chart();
+	// ***************** LOADS MAIN GRADE CHART ****************
 });
 
 // ***************** FUNCTIONS *****************
+function create_data() {
+}
+
 // ***************** LOADS MAIN GRADE CHART *****************
 function load_main_chart () {
 	// ***************** D3 MAIN GRADES CHART *****************
 	// ***************** VARIABLES *****************
 	var margin = {top: 20, right: 20, bottom: 30, left: 40},
 		width = 400 - margin.left - margin.right,
-		height = 150 - margin.top - margin.bottom;
+		height = 190 - margin.top - margin.bottom;
 
 	// ***************** SCALING FUNCTIONS *****************
 	var x = d3.scale.ordinal()

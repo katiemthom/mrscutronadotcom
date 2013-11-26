@@ -27,11 +27,6 @@ app.config.from_object(config)
 Markdown(app)
 ########## end Flask Setup ##########
 
-########## Flask-Principal Setup ##########
-# principals = Principal(app)
-# admin_permission = Permission(RoleNeed('admin'))
-########## end Flask-Principal Setup ##########
-
 ########## Admin Views ##########
 class UploadGradesView(admin.BaseView):
 	@admin.expose('/')
@@ -40,7 +35,8 @@ class UploadGradesView(admin.BaseView):
 
 	def is_accessible(self):
 		try:
-			is_admin = current_user.user_id == 32
+			print current_user.user_id 
+			is_admin = current_user.user_id == 33
 			if is_admin:
 				return True
 			else:
@@ -56,7 +52,7 @@ class AnotherAdminView(admin.BaseView):
 
 	def is_accessible(self):
 		try:
-			is_admin = current_user.user_id == 32
+			is_admin = current_user.user_id == 33
 			if is_admin:
 				return True
 		except:
@@ -96,7 +92,7 @@ class AddAssignmentsView(admin.BaseView):
 
 	def is_accessible(self):
 		try:
-			is_admin = current_user.user_id == 32
+			is_admin = current_user.user_id == 33
 			if is_admin:
 				return True
 		except:
@@ -432,13 +428,12 @@ def calc_grade():
 	f.write("MK,0,0,"+str(grades[2])+"\n")
 	f.write("TOTAL,"+str(grades[0])+","+str(grades[1])+","+str(grades[2])+"\n")
 	f.close()
-	grades_list = model.get_grades_by_user_id(32)
-	grades_dict = {}
-	for grade in grades_list: 
-		grades_dict[grade.grade_pk] = {"title": grade.assignment.title, "score": grade.value, "due_on": format_date(grade.assignment.due_on)}
-	print grades_dict
-	grades_json = json.dumps(grades_dict)
-	return jsonify({'grades_file': csvname})
+	allgrades = model.get_grades_by_user_id(32)
+	grades_list = []
+	for grade in allgrades: 
+		grades_list.append({"title": grade.assignment.title, "score": grade.value, "due_on": format_date(grade.assignment.due_on), "pk": grade.grade_pk})
+	grades_json = json.dumps(grades_list)
+	return jsonify({'grades_file': csvname, 'grades_dict': grades_json})
 ########## end grade views ##########
 
 ########## test views ##########
