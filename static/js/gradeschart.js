@@ -211,12 +211,22 @@ function show_cwh(cwhData) {
 	    .attr("class", "axis")
 	    .attr("transform", "translate("+cwhMargin.left+"," + cwhMargin.top + ")")
 	    .call(cwhYAxis)
-	    .selectAll('text')
-	    .style("text-anchor", "end")
+	    .append("text")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 6)
+			.attr("dy", ".71em")
+			.style("text-anchor", "end")
+			.text("Score");
     vis.append("g")
 	    .attr("class", "xaxis axis")  
 	    .attr("transform", "translate(" + cwhMargin.left + "," + (cwhMargin.top + chartHeight) + ")")
-	    .call(cwhXAxis);
+	    .call(cwhXAxis)
+	   	.append("text")
+			.attr("y", 6)
+			.attr("x", chartWidth - 10)
+			.attr("dy", ".71em")
+			.style("text-anchor", "end")
+			.text("Time");
 
 	// ***************** LOAD AND DISPLAY DATA *****************
     vis.selectAll("rect")
