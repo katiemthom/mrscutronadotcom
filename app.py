@@ -18,6 +18,7 @@ import config
 import forms 
 import datetime
 import csvparser
+import json
 ########## end Import ##########
 
 ########## Flask Setup ##########
@@ -431,6 +432,12 @@ def calc_grade():
 	f.write("MK,0,0,"+str(grades[2])+"\n")
 	f.write("TOTAL,"+str(grades[0])+","+str(grades[1])+","+str(grades[2])+"\n")
 	f.close()
+	grades_list = model.get_grades_by_user_id(32)
+	grades_dict = {}
+	for grade in grades_list: 
+		grades_dict[grade.grade_pk] = {"title": grade.assignment.title, "score": grade.value, "due_on": format_date(grade.assignment.due_on)}
+	print grades_dict
+	grades_json = json.dumps(grades_dict)
 	return jsonify({'grades_file': csvname})
 ########## end grade views ##########
 
