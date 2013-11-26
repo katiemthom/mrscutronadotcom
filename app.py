@@ -6,7 +6,7 @@ from flask.ext.mail import Message, Mail
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
 from flask.ext import admin 
-# from flask.ext.admin.contrib.sqla import ModelView
+from flask.ext.admin.contrib.sqla import ModelView
 # from flask.ext.admin.contrib.fileadmin import FileAdmin
 
 import os.path as op
@@ -27,10 +27,26 @@ Markdown(app)
 
 ########## Admin Views ##########
 class UploadGradesView(admin.BaseView):
-	@admin.expose('/')
+	@admin.expose('/', methods=['GET','POST'])
 	def index(self):
-		return self.render('uploadgrades.html', user = current_user)
-
+		if request.method == 'POST':
+			form = forms.UploadGradesForm()
+			if not form.validate():
+				flash('You forgot to choose a file or you choose a file with an extension that is not allowed.','warning')
+				return self.render('adminuploadgrades.html', user = current_user)
+			file = request.files['csv_file']
+			if file and allowed_file(file.filename):
+				filename = secure_filename(file.filename)
+				file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+				success = csvparser.load_grade_csv(filename)
+				if success:
+					flash('Grades uploaded!','success')
+				else: 
+					flash('No assignment with that name.', 'warning')
+				return self.render('adminuploadgrades.html', user = current_user)
+		else: 
+			return self.render('adminuploadgrades.html', user = current_user)
+			
 	def is_accessible(self):
 		try:
 			print current_user.user_id 
@@ -77,17 +93,12 @@ class AddAssignmentsView(admin.BaseView):
 		except:
 			pass
 
-
-
-
 admin = admin.Admin()
 admin.add_view(UploadGradesView(category='Grades'))
 admin.add_view(AddAssignmentsView(category='Assignments'))
 admin.init_app(app)
-# admin.add_view(MyView(endpoint='test',name='test'))
 
 # admin.add_view(MyView(name="Upload Grades"))
-# admin.add_view(ModelView(User, model.session))
 # path = op.join(op.dirname(__file__), 'static')
 # admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
 ########## end Admin Views ##########

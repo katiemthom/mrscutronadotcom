@@ -33,10 +33,14 @@ def load_grade_csv(csv_file):
                 value = float(data[3][1:-1])
                 user = model.get_user_by_school_id(student_id)
                 user_id = user.user_id
-                assignment = model.get_assignment_by_title(title)
-                assignment_pk = assignment.assignment_pk
-                grade = model.add_grade(assignment_pk,value,user_id)
-                model.session.add(grade)
+                try: 
+                    assignment = model.get_assignment_by_title(title)
+                    assignment_pk = assignment.assignment_pk
+                    grade = model.add_grade(assignment_pk,value,user_id)
+                    model.session.add(grade)
+                    return true
+                except:
+                    return False 
             else: 
                 if data[0].strip() == "Assignment Name:":
                     title = data[1][1:-1].strip()
