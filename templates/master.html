@@ -116,8 +116,11 @@
             <br><br>
             <div class='footer'>
                 <p> 
-                    <a href='/reportbug'>report a bug </a>|
-                    <a href='/admin'> admin</a>
+                    <a href='/reportbug'>report a bug </a>
+                    {% if current_user.is_admin_user %}
+                    |<a href='/uploadgrades'> upload grades</a>
+                    |<a href='/addassignment'> add assignment</a>
+                    {% endif %}
                 </p>
             </div>
         </div>

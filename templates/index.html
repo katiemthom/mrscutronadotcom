@@ -11,6 +11,15 @@
 </div> -->
 
 <div class="container">
+    <p>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages%}
+            <div class="alert alert-{{category}}">{{message}}</div>
+        {% endfor %}
+        {% endif %}
+    {% endwith %}
+    </p>
     <div class="row">
         <div class="col-md-4">
             <h2>Get Notes</h2>
@@ -28,11 +37,6 @@
             <p><a class="btn btn-default" href="/grades" role="button">Check Grades &raquo;</a></p>
         </div>
     </div>
-    <p>
-        {% for message in get_flashed_messages() %}
-        {{message}}
-        {% endfor %}
-    </p>
 </div>
 
 {% endblock %}

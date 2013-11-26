@@ -162,20 +162,28 @@ def load_user(user_id):
 ########## signin and signup views ##########
 @app.route('/uploadgrades', methods=['GET', 'POST'])
 def upload_img():
-	if request.method == 'POST':
-		form = forms.UploadGradesForm()
-		if not form.validate():
-			flash('You forgot to choose a file or you choose a file with an extension that is not allowed.','warning')
-			return render_template('uploadgrades.html', user=current_user)
-		file = request.files['csv_file']
-		if file and allowed_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-			csvparser.load_grade_csv(filename)
-			flash('Grades uploaded!','success')
-			return render_template('uploadgrades.html', user=current_user)
-	else: 
-		return render_template('uploadgrades.html', user=current_user)
+	try: 
+		if current_user.is_admin_user: 
+			if request.method == 'POST':
+				form = forms.UploadGradesForm()
+				if not form.validate():
+					flash('You forgot to choose a file or you choose a file with an extension that is not allowed.','warning')
+					return render_template('uploadgrades.html', user=current_user)
+				file = request.files['csv_file']
+				if file and allowed_file(file.filename):
+					filename = secure_filename(file.filename)
+					file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+					csvparser.load_grade_csv(filename)
+					flash('Grades uploaded!','success')
+					return render_template('uploadgrades.html', user=current_user)
+			else: 
+				return render_template('uploadgrades.html', user=current_user)
+		else:
+			flash('You don\'t have permission to access that page.', 'warning')
+			return render_template('index.html', user=current_user)
+	except:
+		flash('You don\'t have permission to access that page.', 'warning')
+		return render_template('index.html', user=current_user)
 
 @app.route('/', methods=['POST'])
 def process_login(): 
