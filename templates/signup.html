@@ -2,16 +2,16 @@
 {% block body %}
 <div class='container'>
 	<div class="well" id='signup_well'>
-	<div class='page-header'>
-		<h1>Sign Up</h1>
-	</div>
-	<form action='{{url_for('sign_up')}}' method='post' enctype='multipart/form-data'>
+		<br>
+		<h1>Sign Up</h1>	
+		<form action='{{url_for('sign_up')}}' method='post' enctype='multipart/form-data'>
 		<br>
 		<p><input class='form-control' name='first_name' placeholder='First Name' id='signup' {% if first %}value={{first}} {% endif %}></input></p>
 		<p><input class='form-control' name='last_name' placeholder='Last Name' id='signup' {% if last %} value={{last}} {% endif %}></input></p>
 		<p><input class='form-control' type = 'email' name='email' placeholder='Email' id='signup' {% if email %} value={{email}} {% endif %}></input></p>
 		<p><input class='form-control' type = 'password' name='password' placeholder='Password' id='signup'></input></p>
 		<p><input class='form-control' type = 'password' name='validate_password' placeholder='Validate Password' id='signup'></input></p>
+		<p>Upload Profile Picture:</p>
 		<p><input class='form-control' name='file' id='fileupload' type='file'></input></p>
 		<br> 
 		<p><select class='form-control' name='period' placeholder='Period' id='signup'>
@@ -22,7 +22,7 @@
 		<option value='5'>5</option>
 		</select></p>
 		<p><input class='form-control' name='school_id' placeholder='School ID' id='signup'></input></p>
-		<p><button type="submit" class="btn btn-default">Send</button></p>
+		<p><a type="submit" class="btn btn-default">Send</a></p>
 	</form>
 	{% for message in get_flashed_messages() %}
     	<div class="alert alert-warning">{{ message }}</div>
