@@ -4,12 +4,14 @@
 {% block body %}
 
 <!-- Featured Blogs -->
+
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
 	<ol class="carousel-indicators">
 		<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
 		<li data-target="#myCarousel" data-slide-to="1"></li>
 		<li data-target="#myCarousel" data-slide-to="2"></li>
 	</ol>
+	{% if featured_posts[0] %}
 	<div class="carousel-inner">
 		<div class="item active">
 			<img src="{{featured_posts[0].user.profile_picture}}" width="900px" height="500px" alt="First slide">
@@ -23,6 +25,7 @@
 				</div>
 			</div>
 		</div>
+		{% if featured_posts[1] %}
 		<div class="item">
 			<img src="{{featured_posts[1].user.profile_picture}}" width="900px" height="500px" alt="Second slide">
 			<div class="container">
@@ -35,6 +38,8 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
+		{% if featured_posts[2] %}
 		<div class="item">
 			<img src="{{featured_posts[1].user.profile_picture}}" width="900px" height="500px" alt="Third slide">
 			<div class="container">
@@ -47,7 +52,9 @@
 				</div>
 			</div>
 		</div>
+		{% endif %}
 	</div>
+	{% endif %}
 	<a class="left carousel-control" href="#myCarousel" data-slide="prev"><span class="glyphicon glyphicon-chevron-left"></span></a>
 	<a class="right carousel-control" href="#myCarousel" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a>
 </div>
