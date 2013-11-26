@@ -1,6 +1,10 @@
 // ***************** GLOBAL VARIABLES *****************
 var csvFile; 
 var gradesDict;
+var CWHGrades = new Array;
+var AKGrades = new Array;
+var MKGrades = new Array;
+var TTOTALGRADES = new Array;
 
 // ***************** DOCUMENT.READY *****************
 $(document).ready(function() {
@@ -12,12 +16,23 @@ $(document).ready(function() {
 		csvFile = msg['grades_file'];
 		gradesDict = eval(msg['grades_dict']);
 		load_main_chart();
+		create_data();
 	}); 
 	// ***************** LOADS MAIN GRADE CHART ****************
 });
 
 // ***************** FUNCTIONS *****************
 function create_data() {
+	for (var i = gradesDict.length - 1; i >= 0; i--) {
+		if ( gradesDict[i].category == "CWH" ) {
+			CWHGrades.push(gradesDict[i]);
+		} else if ( gradesDict[i].category == "MK" ) {
+			MKGrades.push(gradesDict[i]);
+		} else if ( gradesDict[i].category == "AK" ) {
+			AKGrades.push(gradesDict[i]);
+		}
+	};
+
 }
 
 // ***************** LOADS MAIN GRADE CHART *****************
@@ -84,10 +99,18 @@ function load_main_chart () {
 				.data(data)
 				.enter().append("g")
 				.on("mouseover", function(){d3.select(this).style("cursor", "pointer");})
-				.on("click",function(){
+				.on("click",function(d){
 					$(".cwh-graph").html("");
 					$(".testdiv").html("");
-					show_cwh();
+					if (d.Category == "CWH") {
+						show_cwh(CWHGrades);
+					} else if (d.Category == "AK") {
+						show_cwh(AKGrades);
+					} else if (d.Category == "MK") {
+						show_cwh(MKGrades);
+					} else if (d.Category == "TOTAL") {
+						show_cwh(TOTALGrades);
+					}
 					show_details();
 				})
 				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)"; });
@@ -132,22 +155,22 @@ function load_main_chart () {
 }
 
 // ***************** LOADS CATEGORY GRADE CHART *****************
-function show_cwh() {
+function show_cwh(cwhData) {
 	// ***************** VARIABLES *****************
-    var cwhData = [
-	      {aTitle: 'homework 1', score: 4, 'maxScore': 5, date: '2011-01-01', pk: 1},
-	      {aTitle: 'homework 1', score: 3, 'maxScore': 5, date: '2011-01-02', pk: 2},
-	      {aTitle: 'homework 1', score: 2.5, 'maxScore': 5, date: '2011-01-03', pk: 3},
-	      {aTitle: 'homework 1', score: 1, 'maxScore': 5, date: '2011-01-04', pk: 4},
-	      {aTitle: 'homework 1', score: 5, 'maxScore': 5, date: '2011-01-05', pk: 5},
-	      {aTitle: 'homework 1', score: 0, 'maxScore': 5, date: '2011-01-06', pk: 6},
-	      {aTitle: 'homework 1', score: .33, 'maxScore': 5, date: '2011-01-07', pk: 7},
-	      {aTitle: 'homework 1', score: 4.33, 'maxScore': 5, date: '2011-01-08', pk: 8},
-	      {aTitle: 'homework 1', score: 2.67, 'maxScore': 5, date: '2011-01-09', pk: 9},
-	      {aTitle: 'homework 2', score: 0, 'maxScore': 5, date: '2011-01-10', pk: 10},
-	      {aTitle: 'homework 3', score: .33, 'maxScore': 5, date: '2011-01-11', pk: 11},
-	      {aTitle: 'homework 4', score: 4.33, 'maxScore': 5, date: '2011-01-12', pk: 12},
-    ]
+    // var cwhData = [
+	   //    {aTitle: 'homework 1', score: 4, 'maxScore': 5, date: '2011-01-01', pk: 1},
+	   //    {aTitle: 'homework 1', score: 3, 'maxScore': 5, date: '2011-01-02', pk: 2},
+	   //    {aTitle: 'homework 1', score: 2.5, 'maxScore': 5, date: '2011-01-03', pk: 3},
+	   //    {aTitle: 'homework 1', score: 1, 'maxScore': 5, date: '2011-01-04', pk: 4},
+	   //    {aTitle: 'homework 1', score: 5, 'maxScore': 5, date: '2011-01-05', pk: 5},
+	   //    {aTitle: 'homework 1', score: 0, 'maxScore': 5, date: '2011-01-06', pk: 6},
+	   //    {aTitle: 'homework 1', score: .33, 'maxScore': 5, date: '2011-01-07', pk: 7},
+	   //    {aTitle: 'homework 1', score: 4.33, 'maxScore': 5, date: '2011-01-08', pk: 8},
+	   //    {aTitle: 'homework 1', score: 2.67, 'maxScore': 5, date: '2011-01-09', pk: 9},
+	   //    {aTitle: 'homework 2', score: 0, 'maxScore': 5, date: '2011-01-10', pk: 10},
+	   //    {aTitle: 'homework 3', score: .33, 'maxScore': 5, date: '2011-01-11', pk: 11},
+	   //    {aTitle: 'homework 4', score: 4.33, 'maxScore': 5, date: '2011-01-12', pk: 12},
+    // ]
     var cwhMargin = {top: 20, right: 20, bottom: 30, left: 40},
         cwhWidth = 700,
         cwhHeight = 300,
@@ -223,7 +246,7 @@ function show_cwh() {
         .attr("fill", "#707070")
         .on("mouseover", function(d){
             d3.select(this).style("fill", "#ADADAD");
-            $('#assignment_title').append(d.aTitle);
+            $('#assignment_title').append(d.atitle);
             $('#assignment_score').append(d.score);
             $('#assignment_due_on').append(d.date);
         })
