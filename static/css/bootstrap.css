@@ -154,6 +154,9 @@ textarea {
   margin: 0;
   font-family: inherit;
   font-size: 100%;
+  color: #99D500;
+  background-color: #333;
+  border-color: rgba(255,255,255,0.43);
 }
 
 button,
@@ -2054,9 +2057,9 @@ fieldset[disabled] .btn {
           box-shadow: none;
 }
 
+
 .btn-default {
   color: #99D500;
-  /*background-color: #ffffff;*/
   color: #333;
   border-color: rgba(255,255,255,0.43);
 }

@@ -12,7 +12,7 @@
 		<p><input class='form-control' type = 'password' name='password' placeholder='Password' id='signup'></input></p>
 		<p><input class='form-control' type = 'password' name='validate_password' placeholder='Validate Password' id='signup'></input></p>
 		<p>Upload Profile Picture:</p>
-		<p><input class='form-control' name='file' id='fileupload' type='file'></input></p>
+		<p><input class='btn btn-default' name='file' id='fileupload' type='file'></input></p>
 		<br> 
 		<p><select class='form-control' name='period' placeholder='Period' id='signup'>
 		<option>Select Period</option>
@@ -22,7 +22,7 @@
 		<option value='5'>5</option>
 		</select></p>
 		<p><input class='form-control' name='school_id' placeholder='School ID' id='signup'></input></p>
-		<p><a type="submit" class="btn btn-default">Send</a></p>
+		<p><button type="submit" class="btn btn-default">Send</button></p>
 	</form>
 	{% for message in get_flashed_messages() %}
     	<div class="alert alert-warning">{{ message }}</div>
