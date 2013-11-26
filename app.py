@@ -6,7 +6,7 @@ from flask.ext.mail import Message, Mail
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
 from flask.ext import admin 
-from flask.ext.admin.contrib.sqla import ModelView
+# from flask.ext.admin.model import BaseModelView
 # from flask.ext.admin.contrib.fileadmin import FileAdmin
 
 import os.path as op
@@ -92,6 +92,9 @@ class AddAssignmentsView(admin.BaseView):
 				return True
 		except:
 			pass
+
+# class MyModelView(BaseModelView):
+#     pass
 
 admin = admin.Admin()
 admin.add_view(UploadGradesView(category='Grades'))
