@@ -86,7 +86,7 @@ class Assignment(Base):
 	due_on = Column(DateTime, nullable = False)
 	link = Column(String(120), nullable = True)
 	description = Column(Text, nullable = True)
-	max_points = Column(Integer, nullable = False, default=5)
+	max_points = Column(Integer, nullable = False, default=4)
 	category = Column(String, nullable = False)
 	group = Column(Integer, nullable = False, default=0)
 	version_id = Column(Integer, nullable = False, default=1)

@@ -41,14 +41,10 @@ class AddAssignmentForm(Form):
 	category = SelectField('Category', choices=[('CWH','CWH'),('MK','MK'),('AK','AK')])
 	link = TextField('Assignment Link')
 	description = TextField('Assignment Description')
-	max_points = TextField('Max Points', [validators.Required()])
 	group = SelectField('Group', choices=[('0','0'),('1','1'),('2','2'),('3','3'),('4','4')])
 
 class UploadGradesForm(Form):
 	csv_file = FileField("CSV", [validators.Required()])
 
-class AdminLoginForm(Form):
-	email = TextField('Email', [validators.Required(), validators.Email()])
-	password = PasswordField('Password', [validators.Required()])
 
 	
