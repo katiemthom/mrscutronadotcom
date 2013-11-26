@@ -65,6 +65,11 @@
 	background-color: #FFFFFF;
 	border: 1px solid #e3e3e3;
 	padding: 19px;
+	color: #333333;
+}
+
+.preview {
+	color: #333333;
 }
 
 #post_content {
