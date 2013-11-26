@@ -4,7 +4,7 @@ var gradesDict;
 var CWHGrades = new Array;
 var AKGrades = new Array;
 var MKGrades = new Array;
-var TTOTALGRADES = new Array;
+var TOTALGRADES = new Array;
 
 // ***************** DOCUMENT.READY *****************
 $(document).ready(function() {
@@ -17,6 +17,7 @@ $(document).ready(function() {
 		gradesDict = eval(msg['grades_dict']);
 		load_main_chart();
 		show_main_details();
+		$("#cat_details").append("<p class=larger>Total Grade: " + msg['total_grade'] + "%</p>");
 		create_data();
 	}); 
 	// ***************** LOADS MAIN GRADE CHART ****************
@@ -126,6 +127,9 @@ function load_main_chart () {
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
 				.style("fill", function(d) { return color(d.name); })
 				.on("mouseover", function(d){
+					$('#category_title').html("");
+		            $('#category_score').html("");
+		            $('#max_possible').html("");
 					if (d.name == "CWH") {
 						$('#category_title').append("College Work Habits");
 						$('#max_possible').append("15%");
@@ -139,11 +143,6 @@ function load_main_chart () {
 
 					$('#category_score').append(d.y1+"%");   
         		})
-		       .on("mouseout", function(){
-		            $('#category_title').html("");
-		            $('#category_score').html("");
-		            $('#max_possible').html("");
-		        });
 
 			// ***************** AXES *****************
 			var xAxis = d3.svg.axis()
@@ -170,6 +169,22 @@ function load_main_chart () {
 
 			// ***************** END SECOND CALLBACK *****************
 			});
+		
+			// ***************** CLEAR COVERS *****************
+		    var cover = svg.selectAll(".cover")
+				.data(data)
+				.enter().append("g")
+				.attr("class", "g")
+				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)";});
+
+			cover.selectAll("rect")
+				.data(function(d) { return d.cats; })
+				.enter().append("rect")
+				.attr("width", x.rangeBand())
+				.attr("y", function(d) { return y(d.y1); })
+				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
+				.on("mouseover", function(){d3.select(this).style("cursor", "pointer");})
+				.style("fill", "transparent");
 		// ***************** END FIRST CALLBACK *****************
 		});
 }
@@ -280,5 +295,5 @@ function show_details() {
 }
 
 function show_main_details() {
-    $(".chart").append('<div class="container"><br><h1>Category Details</h1><br><br><p class="larger">Category Title: <span id="category_title"></span></p><p class="larger">Grade: <span id="category_score"></span></p><p class="larger">Max Possible: <span id="max_possible"></span></p></div>');
+    $(".chart").append('<div class="container" id="cat_details"><br><h1>Category Details</h1><br><br><p class="larger">Category Title: <span id="category_title"></span></p><p class="larger">Grade: <span id="category_score"></span></p><p class="larger">Max Possible: <span id="max_possible"></span></p></div>');
 }
