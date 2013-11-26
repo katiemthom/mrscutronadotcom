@@ -8,8 +8,6 @@ from werkzeug import secure_filename
 from flask.ext import admin 
 # from flask.ext.admin.contrib.sqla import ModelView
 # from flask.ext.admin.contrib.fileadmin import FileAdmin
-# from flask.ext import login 
-# from flask.ext.principal import Principal, Permission, RoleNeed
 
 import os.path as op
 import model
@@ -31,7 +29,7 @@ Markdown(app)
 class UploadGradesView(admin.BaseView):
 	@admin.expose('/')
 	def index(self):
-		return self.render('myadmin.html')
+		return self.render('uploadgrades.html', user = current_user)
 
 	def is_accessible(self):
 		try:
@@ -44,26 +42,7 @@ class UploadGradesView(admin.BaseView):
 		except:
 			flash('You don\'t have permission to access administrative settings!', 'warning')
 
-class AnotherAdminView(admin.BaseView):
-
-	@admin.expose('/')
-	def index(self):
-		return self.render('anotheradmin.html')
-
-	def is_accessible(self):
-		try:
-			is_admin = current_user.user_id == 33
-			if is_admin:
-				return True
-		except:
-			pass
-
-	@admin.expose('/test/')
-	def test(self):
-		return self.render('test.html')
-
 class AddAssignmentsView(admin.BaseView):
-
 	@admin.expose('/', methods=['GET','POST'])
 	def index(self):
 		if request.method == 'POST':
