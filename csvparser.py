@@ -6,7 +6,7 @@ import time
 import urllib
 
 def load_period_2():
-    with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/period2.txt","rb") as f:
+    with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/student_data/period2.txt","rb") as f:
         reader = csv.reader(f, delimiter = "\n")
         for row in reader:
             data = row[0].split(',')
@@ -21,9 +21,12 @@ def load_period_2():
 
 def load_grade_csv(csv_file):
     with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades/" + csv_file,"rb") as f:
+        print "opened file"
         reader=csv.reader(f,delimiter='\n')
         recording = False
         for row in reader:
+            print "going through rows, e.g."
+            print row
             if row == []:
                 continue
             data = row[0].split(',')
@@ -38,7 +41,6 @@ def load_grade_csv(csv_file):
                     assignment_pk = assignment.assignment_pk
                     grade = model.add_grade(assignment_pk,value,user_id)
                     model.session.add(grade)
-                    return true
                 except:
                     return False 
             else: 
@@ -49,3 +51,4 @@ def load_grade_csv(csv_file):
                     recording = True
         model.session.commit()
         f.close()
+        return True

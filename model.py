@@ -34,7 +34,7 @@ class User(Base, UserMixin):
     is_banned = Column(Boolean, nullable=False, default=False)
     profile_picture = Column(String(200), nullable=True, default='http://katiemthom.com/cat_ph.jpeg')
     school_id = Column(Integer, nullable=False) 
-    is_admin = Column(Boolean, nullable=False, default=False)
+    is_admin_user = Column(Boolean, nullable=False, default=False)
 
     def get_id(self):
     	return self.user_id
@@ -48,6 +48,9 @@ class User(Base, UserMixin):
     def authenticate(self, password):
         password = password.encode('utf-8')
         return bcrypt.hashpw(password, self.salt.encode('utf-8')) == self.password
+
+    def is_admin(self):
+    	return False 
 
 class Post(Base):
 	__tablename__ = 'posts'

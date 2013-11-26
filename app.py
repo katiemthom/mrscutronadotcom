@@ -49,8 +49,8 @@ class UploadGradesView(admin.BaseView):
 			
 	def is_accessible(self):
 		try:
-			is_admin = current_user.is_admin
-			if is_admin:
+			is_admin_user = current_user.user_id == 1
+			if is_admin_user:
 				return True
 			else:
 				flash('You don\'t have permission to access the administrative settings!', 'warning')
@@ -86,8 +86,8 @@ class AddAssignmentsView(admin.BaseView):
 
 	def is_accessible(self):
 		try:
-			is_admin = current_user.is_admin
-			if is_admin:
+			is_admin_user = current_user.user_id == 1
+			if is_admin_user:
 				return True
 		except:
 			pass
@@ -210,7 +210,7 @@ def add_assignment():
 		form = forms.AddAssignmentForm(request.form)
 		if form.validate() == False: 
 			flash('All fields are required.','warning')
-			return render_template('adminaddassignment.html',  user=current_user)
+			return render_template('addassignment.html',  user=current_user)
 		else:
 			assigned_on = form.assigned_on.data
 			assigned_on_split = assigned_on.split('-')
@@ -226,9 +226,9 @@ def add_assignment():
 			title = form.title.data
 			new_assignment = model.add_assignment(assigned_on,due_on,link,description,max_points,category,group,title)
 			flash('Assignment added!','success')
-			return render_template('adminaddassignment.html', user=current_user)
+			return render_template('addassignment.html', user=current_user)
 	else:
-		return render_template('adminaddassignment.html', user=current_user)
+		return render_template('addassignment.html', user=current_user)
 ########## end assignment views ##########
 
 ########## other views ##########
@@ -404,15 +404,14 @@ def delete_comment(comment_pk):
 ########## grade views ##########
 @app.route('/grades')
 def show_grades():
-	# make work for general user_id 
 	return render_template('grades.html', user = current_user)
 
 @app.route('/gradeinfo')
 def calc_grade():
-	# make work for general user_id 
-	grades = model.calc_grade(32)
-	filename = "/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/gradesbyuser/data_32"
-	csvname = "/static/gradesbyuser/data_32"
+	grades = model.calc_grade(current_user.user_id)
+	print grades
+	filename = "/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/gradesbyuser/data_" + str(current_user.user_id)
+	csvname = "/static/gradesbyuser/data_" + str(current_user.user_id)
 	f = open(filename,'w+')
 	f.write("Category,CWH,AK,MK\n")
 	f.write("CWH,"+str(grades[0])+",0,0\n")
@@ -420,7 +419,7 @@ def calc_grade():
 	f.write("MK,0,0,"+str(grades[2])+"\n")
 	f.write("TOTAL,"+str(grades[0])+","+str(grades[1])+","+str(grades[2])+"\n")
 	f.close()
-	allgrades = model.get_grades_by_user_id(32)
+	allgrades = model.get_grades_by_user_id(current_user.user_id)
 	grades_list = []
 	for grade in allgrades: 
 		grades_list.append({"title": grade.assignment.title, "score": grade.value, "due_on": format_date(grade.assignment.due_on), "pk": grade.grade_pk})
