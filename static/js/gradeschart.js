@@ -76,7 +76,7 @@ function load_main_chart () {
 				.data(data)
 				.enter().append("g")
 				.attr("class", "g")
-				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)";});
+				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)";})
 
 		max.selectAll("rect")
 				.data(function(d) { return d.cats; })
@@ -86,7 +86,8 @@ function load_main_chart () {
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
 				.style("stroke", "white")
 				.on("mouseover", function(){d3.select(this).style("cursor", "pointer");})
-				.style("fill", "transparent")
+				.style("fill", "transparent");
+
 
 		// ***************** ADD STUDENT GRADE DATA (COLORED BANDS) *****************
 		d3.csv(csvFile, function(error, data) {
@@ -175,7 +176,21 @@ function load_main_chart () {
 				.data(data)
 				.enter().append("g")
 				.attr("class", "g")
-				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)";});
+				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)";})
+				.on("click",function(d){
+					$(".cwh-graph").html("");
+					$(".testdiv").html("");
+					if (d.Category == "CWH") {
+						show_cwh(CWHGrades);
+					} else if (d.Category == "AK") {
+						show_cwh(AKGrades);
+					} else if (d.Category == "MK") {
+						show_cwh(MKGrades);
+					} else if (d.Category == "TOTAL") {
+						show_cwh(TOTALGrades);
+					}
+					show_details();
+				});
 
 			cover.selectAll("rect")
 				.data(function(d) { return d.cats; })
