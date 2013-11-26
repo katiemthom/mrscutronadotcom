@@ -43,7 +43,7 @@
 						edited on {{format_date(comment.timestamp)}}
 						
 					{% endif %}
-					{% if user.user_id == comment.user_id or user.admin == True %}
+					{% if user.user_id == comment.user_id or user.is_admin == True %}
 						<a href="javascript:editComment('#{{comment.comment_pk}}',{{comment.comment_pk}});">edit</a>
 						<a href='{{url_for("delete_comment", comment_pk=comment.comment_pk)}}'>delete</a>
 					{% endif %}

@@ -33,7 +33,7 @@
 	{% filter markdown %}{{post.content}}{% endfilter %}
 	</div>
 	<p><a href="{{url_for('show_post', post_pk=post.post_pk)}}">{{ post.comment_count }} Comments</a></p>
-	{% if user.user_id == posts[0].user.user_id or user.admin == True %}
+	{% if user.user_id == posts[0].user.user_id or user.is_admin == True %}
 	<a href='{{url_for("edit_post", post_pk=post.post_pk)}}' type="button" class="btn btn-default">Edit Post</a>
 	<a href='{{url_for("delete_post", post_pk=post.post_pk)}}' type="button" class="btn btn-default">Delete Post</a>
 	{% endif %}

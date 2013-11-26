@@ -49,8 +49,7 @@ class UploadGradesView(admin.BaseView):
 			
 	def is_accessible(self):
 		try:
-			print current_user.user_id 
-			is_admin = current_user.user_id == 33
+			is_admin = current_user.is_admin
 			if is_admin:
 				return True
 			else:
@@ -87,7 +86,7 @@ class AddAssignmentsView(admin.BaseView):
 
 	def is_accessible(self):
 		try:
-			is_admin = current_user.user_id == 33
+			is_admin = current_user.is_admin
 			if is_admin:
 				return True
 		except:
