@@ -16,6 +16,7 @@ $(document).ready(function() {
 		csvFile = msg['grades_file'];
 		gradesDict = eval(msg['grades_dict']);
 		load_main_chart();
+		show_main_details();
 		create_data();
 	}); 
 	// ***************** LOADS MAIN GRADE CHART ****************
@@ -84,7 +85,7 @@ function load_main_chart () {
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
 				.style("stroke", "white")
 				.on("mouseover", function(){d3.select(this).style("cursor", "pointer");})
-				.style("fill", "transparent");
+				.style("fill", "transparent")
 
 		// ***************** ADD STUDENT GRADE DATA (COLORED BANDS) *****************
 		d3.csv(csvFile, function(error, data) {
@@ -124,6 +125,25 @@ function load_main_chart () {
 				.attr("y", function(d) { return y(d.y1); })
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
 				.style("fill", function(d) { return color(d.name); })
+				.on("mouseover", function(d){
+					if (d.name == "CWH") {
+						$('#category_title').append("College Work Habits");
+						$('#max_possible').append("15%");
+					} else if (d.name == "MK") {
+						$('#category_title').append("Mastery of Knowledge");
+						$('#max_possible').append("40%");
+					} else if (d.name == "AK") {
+						$('#category_title').append("Application of Knowledge");
+						$('#max_possible').append("45%");
+					} 
+
+					$('#category_score').append(d.y1+"%");   
+        		})
+		       .on("mouseout", function(){
+		            $('#category_title').html("");
+		            $('#category_score').html("");
+		            $('#max_possible').html("");
+		        });
 
 			// ***************** AXES *****************
 			var xAxis = d3.svg.axis()
@@ -157,20 +177,6 @@ function load_main_chart () {
 // ***************** LOADS CATEGORY GRADE CHART *****************
 function show_cwh(cwhData) {
 	// ***************** VARIABLES *****************
-    // var cwhData = [
-	   //    {aTitle: 'homework 1', score: 4, 'maxScore': 5, date: '2011-01-01', pk: 1},
-	   //    {aTitle: 'homework 1', score: 3, 'maxScore': 5, date: '2011-01-02', pk: 2},
-	   //    {aTitle: 'homework 1', score: 2.5, 'maxScore': 5, date: '2011-01-03', pk: 3},
-	   //    {aTitle: 'homework 1', score: 1, 'maxScore': 5, date: '2011-01-04', pk: 4},
-	   //    {aTitle: 'homework 1', score: 5, 'maxScore': 5, date: '2011-01-05', pk: 5},
-	   //    {aTitle: 'homework 1', score: 0, 'maxScore': 5, date: '2011-01-06', pk: 6},
-	   //    {aTitle: 'homework 1', score: .33, 'maxScore': 5, date: '2011-01-07', pk: 7},
-	   //    {aTitle: 'homework 1', score: 4.33, 'maxScore': 5, date: '2011-01-08', pk: 8},
-	   //    {aTitle: 'homework 1', score: 2.67, 'maxScore': 5, date: '2011-01-09', pk: 9},
-	   //    {aTitle: 'homework 2', score: 0, 'maxScore': 5, date: '2011-01-10', pk: 10},
-	   //    {aTitle: 'homework 3', score: .33, 'maxScore': 5, date: '2011-01-11', pk: 11},
-	   //    {aTitle: 'homework 4', score: 4.33, 'maxScore': 5, date: '2011-01-12', pk: 12},
-    // ]
     var cwhMargin = {top: 20, right: 20, bottom: 30, left: 40},
         cwhWidth = 700,
         cwhHeight = 300,
@@ -270,5 +276,9 @@ function show_cwh(cwhData) {
 
 // ***************** SHOW ASSIGNMENT/GRADE DETAILS *****************
 function show_details() {
-    $(".testdiv").append('<h1>Assignment Details</h1><br><br><p class="larger">Assignment Title: <span id="assignment_title"></span></p><p class="larger">Score: <span id="assignment_score"></span></p><p class="larger">Due Date: <span id="assignment_due_on"></span></p>');
+    $(".cwh-graph").append('<div class="container" id="assignment_details"><h1>Assignment Details</h1><br><br><p class="larger">Assignment Title: <span id="assignment_title"></span></p><p class="larger">Score: <span id="assignment_score"></span></p><p class="larger">Due Date: <span id="assignment_due_on"></span></p></div>');
+}
+
+function show_main_details() {
+    $(".chart").append('<div class="container"><br><h1>Category Details</h1><br><br><p class="larger">Category Title: <span id="category_title"></span></p><p class="larger">Grade: <span id="category_score"></span></p><p class="larger">Max Possible: <span id="max_possible"></span></p></div>');
 }
