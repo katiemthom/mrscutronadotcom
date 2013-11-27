@@ -467,28 +467,34 @@ def sign_up():
 
 @app.route('/signup', methods=['POST'])
 def process_sign_up():
-	form = forms.SignupForm(request.form)
-	first_name = form.first_name.data
-	last_name = form.last_name.data
-	email = form.email.data
-	password = form.password.data
-	validate_password = form.validate_password.data
-	period = form.period.data
-	school_id = form.school_id.data
-	if password != validate_password:
-		flash('Passwords do not match.')
-		return render_template('signup.html', user=current_user, first=first_name
-			, last=last_name,email=email)
-	file = request.files['file']
-	if file and allowed_img_file(file.filename):
-		filename = secure_filename(file.filename)
-		file.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
-		profile_pic =  "/static/profile_pics/" + filename
-		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id),profile_pic)
+	form = forms.SignupForm()
+	if not form.validate(): 
+		print form.errors
+		flash('All fields are required.  School ID must be a 4-digit number.','warning')
+		return render_template('signup.html', user=current_user)
 	else:
-		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
-	login_user(new_user)
-	return render_template('index.html',user=new_user)
+		print form.errors
+		first_name = form.first_name.data
+		last_name = form.last_name.data
+		email = form.email.data
+		password = form.password.data
+		validate_password = form.pw_validation.data
+		period = form.period.data
+		school_id = form.school_id.data
+		if password != validate_password:
+			flash('Passwords do not match.')
+			return render_template('signup.html', user=current_user, first=first_name
+				, last=last_name,email=email)
+		file = request.files['file']
+		if file and allowed_img_file(file.filename):
+			filename = secure_filename(file.filename)
+			file.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+			profile_pic =  "/static/profile_pics/" + filename
+			new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id),profile_pic)
+		else:
+			new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
+		login_user(new_user)
+		return render_template('index.html',user=new_user)
 
 @app.route('/d3test')
 def show_d3():

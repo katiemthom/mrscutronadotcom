@@ -29,7 +29,7 @@ class SignupForm(Form):
 	last_name = TextField('Last', [validators.Required()])
 	password = TextField('Password', [validators.Required()])
 	email = TextField('Email', [validators.Required()])
-	validate_password = TextField('Validate', [validators.Required()])
+	pw_validation = TextField('Validate', [validators.Required()])
 	school_id = TextField('SchoolId', [validators.Required()])
 	period = SelectField('Class Period', choices=[('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
 	profile_picture = FileField('Image File')
