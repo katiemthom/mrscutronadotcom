@@ -136,14 +136,18 @@ function load_main_chart () {
 				})
 				.on("click",function(d){
 					$(".cwh-graph").html("");
-					$(".testdiv").html("");
+					$(".category-title").html("");
 					if (d.Category == "CWH") {
+						$(".category-title").append("<h1>College Work Habits Assignments</h1>");
 						show_cwh(CWHGrades);
 					} else if (d.Category == "AK") {
+						$(".category-title").append("<h1>Application of Knowledge Assignments</h1>");
 						show_cwh(AKGrades);
 					} else if (d.Category == "MK") {
+						$(".category-title").append("<h1>Mastery of Knowledge Assignments</h1>");
 						show_cwh(MKGrades);
 					} else if (d.Category == "TOTAL") {
+						$(".category-title").append("<h1>All Assignments</h1>");
 						show_cwh(TOTALGrades);
 					}
 					show_details();
@@ -158,22 +162,7 @@ function load_main_chart () {
 				.attr("width", x.rangeBand())
 				.attr("y", function(d) { return y(d.y1); })
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
-				.style("fill", function(d) { return color(d.name); })
-				// .on("mouseover", function(d){
-				// 	$('#category_title').html("");
-		  //           $('#category_score').html("");
-		  //           $('#max_possible').html("");
-				// 	if (d.name == "CWH") {
-				// 		$('#category_title').append("College Work Habits");
-				// 		$('#max_possible').append("15%");
-				// 	} else if (d.name == "MK") {
-				// 		$('#category_title').append("Mastery of Knowledge");
-				// 		$('#max_possible').append("40%");
-				// 	} else if (d.name == "AK") {
-				// 		$('#category_title').append("Application of Knowledge");
-				// 		$('#max_possible').append("45%");
-				// 	}  
-    //     		})
+				.style("fill", function(d) { return color(d.name); });
 
 			// ***************** AXES *****************
 			var xAxis = d3.svg.axis()
@@ -219,6 +208,7 @@ function load_main_chart () {
 					} else if (d.Category == "TOTAL") {
 						show_cwh(TOTALGrades);
 					}
+
 					show_details();
 				});
 
