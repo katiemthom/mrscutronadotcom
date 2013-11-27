@@ -34,7 +34,7 @@ def load_users():
 
 
 def load_notes():
-    with open("data/notes","rb") as f:
+    with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/student_data/notes","rb") as f:
         reader=csv.reader(f,delimiter='\n')
         for row in reader:
             data = row[0].split('|')

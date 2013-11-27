@@ -20,10 +20,9 @@ jQuery(function($){
 {% block body %}
 <div class="page-header">
 	<h1>
-		Get Notes<small> Keep up-to-date if you are sick or miss class.</small>
-    <button id='cal-button'><span class="glyphicon glyphicon-calendar"></span></button>
-		<p>Date: <input type='text' id='datepicker' /></p>
+		Get Notes
 	</h1>
+  <p>Date: <input type='text' id='datepicker' /></p>
 </div>
 <div class="row">
 <!--   	<div class="col-sm-6 col-md-4">
@@ -39,11 +38,11 @@ jQuery(function($){
   {% for note in notes %}
   <div class="col-sm-6 col-md-4">
       <div class="thumbnail">
-          <img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" /> 
+          <img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" />  
           <div class="caption">
             <h3>{{note.created_on}}</h3>
             <p>{{note.description}}</p>
-            <p><a href="/static{{note.link}}" class="btn btn-primary" role="button">Preview</a></p>
+            <p><a href="{{note.link}}" class="btn btn-default" role="button">Preview</a></p>
           </div>
       </div>
     </div>
