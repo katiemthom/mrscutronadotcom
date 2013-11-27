@@ -66,17 +66,12 @@ $(document).ready(function() {
             url: "/find_notes",
             data: { search_for: $('#datepicker').val() }
             }).done(function( msg ) {
-                $('#found-notes').append("<br><p>"+msg['message']+"</p>");
+                if (msg['message']) {
+                    $('#found-notes').append("<br><p>"+msg['message']+"</p>");
+                } else {
+                    $('#found-notes').append('<br><br><div class="thumbnail" id="searched"><img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" width="300" height="400" />  <div class="caption"><h3>'+msg['created_on']+'</h3><p>'+msg['description']+'</p><p><a href="'+msg['link']+'" class="btn btn-default" role="button">Preview</a></p></div>');
+                }
             });
-                // $(startId).hide();
-                // $(startId+"-mom").append(msg['comment_content']
-                // +'<br><br><small>'
-                // +msg['comment_timestamp']
-                // +'<a href="javascript:editComment(\'#'
-                // +msg['comment_pk']
-                // +'\','
-                // +msg['comment_pk']
-                // +');"> edit</a></small></div>');
     });
 });
 

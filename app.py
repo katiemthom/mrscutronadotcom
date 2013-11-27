@@ -251,12 +251,13 @@ def find_notes():
 	notes_from = request.form.get('search_for')
 	notes_from_split = notes_from.split('-')
 	notes_from = datetime.datetime(int(notes_from_split[2]),int(notes_from_split[1]),int(notes_from_split[0]))
+	print notes_from
 	try:
+		print "in try"
 		notes = model.get_notes_by_date(notes_from)
+		return jsonify({'created_on': format_date(notes.created_on), 'description': notes.description, 'link': notes.link})
 	except:
-		flash('No notes were found for that date.','warning')
 		return jsonify({'message': 'No notes were found for that date.'})
-	return
 
 ########## end notes views ##########
 
