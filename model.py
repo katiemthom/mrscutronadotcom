@@ -176,6 +176,15 @@ def get_notes():
 
 def get_notes_by_date(dt):
 	return session.query(Notes).filter_by(created_on=dt).one()
+
+def count_all_notes():
+	return len(session.query(Notes).all())
+
+def get_notes_for_page(page, per_page, count):
+	end = page * per_page
+	begin = end - per_page
+	notes = session.query(Notes).order_by(desc(Notes.created_on)).all()
+	return notes[begin:end]
 ########### END FUNCTIONS WITH NOTES ###########
 
 ########### FUNCTIONS WITH POSTS ###########

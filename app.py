@@ -240,10 +240,13 @@ def add_assignment():
 ########## end assignment views ##########
 
 ########## notes views ##########
-@app.route('/notes')
-def show_notes():
-	notes = model.get_notes()
-	return render_template('notes.html', notes = notes, user = current_user)
+@app.route('/notes', defaults={'page':1})
+@app.route('/notes/<int:page>')
+def show_notes(page):
+	count = model.count_all_notes()
+	notes = model.get_notes_for_page(page, 3, count)
+	pagination = model.Pagination(page, PER_PAGE, count)
+	return render_template('notes.html', notes = notes, user = current_user, pagination=pagination)
 
 @app.route('/find_notes', methods=['POST'])
 def find_notes():
