@@ -46,7 +46,6 @@
 		<li class="dropdown">
 			<a href="#" class="dropdown-toggle" data-toggle="dropdown">grades <b class="caret"></b></a>
 			<ul class="dropdown-menu">
-				<li><a href="{{url_for('show_grades')}}">compare classes</a></li>
 				{% if user.is_active() %}
 				<li><a href="{{url_for('show_grades')}}">my grade</a></li>
 				{% endif %}
