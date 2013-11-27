@@ -417,7 +417,10 @@ def show_grades():
 @app.route('/gradeinfo')
 def calc_grade():
 	grades = model.calc_grade(current_user.user_id)
-	total_grade = grades[0] + grades[1] + grades[2]
+	total_grade = round(grades[0] + grades[1] + grades[2])
+	cwh_grade = round(grades[0])
+	mk_grade = round(grades[2])
+	ak_grade = round(grades[1])
 	print grades
 	filename = "/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/gradesbyuser/data_" + str(current_user.user_id)
 	csvname = "/static/gradesbyuser/data_" + str(current_user.user_id)
@@ -433,7 +436,7 @@ def calc_grade():
 	for grade in allgrades: 
 		grades_list.append({"category": grade.assignment.category, "atitle": grade.assignment.title, "score": grade.value, "date": format_date(grade.assignment.due_on), "pk": grade.grade_pk})
 	grades_json = json.dumps(grades_list)
-	return jsonify({'grades_file': csvname, 'grades_dict': grades_json, 'total_grade': total_grade})
+	return jsonify({'grades_file': csvname, 'grades_dict': grades_json, 'total_grade': total_grade, 'mk_grade': mk_grade, 'ak_grade': ak_grade, 'cwh_grade': cwh_grade})
 ########## end grade views ##########
 
 ########## test views ##########

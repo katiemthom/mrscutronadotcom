@@ -1,10 +1,14 @@
 // ***************** GLOBAL VARIABLES *****************
 var csvFile; 
 var gradesDict;
+var AKGrade; 
+var MKGrade;
+var TOTALGrade;
+var CWHGrade;
 var CWHGrades = new Array;
 var AKGrades = new Array;
 var MKGrades = new Array;
-var TOTALGRADES = new Array;
+var TOTALGrades = new Array;
 
 // ***************** DOCUMENT.READY *****************
 $(document).ready(function() {
@@ -17,7 +21,12 @@ $(document).ready(function() {
 		gradesDict = eval(msg['grades_dict']);
 		load_main_chart();
 		show_main_details();
+		TOTALGrade = msg['total_grade'];
+		MKGrade = msg['mk_grade'];
+		AKGrade = msg['ak_grade'];
+		CWHGrade = msg['cwh_grade'];
 		$("#cat_details").append("<p class=larger>Total Grade: " + msg['total_grade'] + "%</p>");
+		$("#gradesfor").append("Current Grade: " + msg['total_grade'] + "%");
 		create_data();
 	}); 
 	// ***************** LOADS MAIN GRADE CHART ****************
@@ -33,6 +42,7 @@ function create_data() {
 		} else if ( gradesDict[i].category == "AK" ) {
 			AKGrades.push(gradesDict[i]);
 		}
+		TOTALGrades.push(gradesDict[i]);
 	};
 
 }
@@ -101,7 +111,29 @@ function load_main_chart () {
 			var Category = svg.selectAll(".Category")
 				.data(data)
 				.enter().append("g")
-				.on("mouseover", function(){d3.select(this).style("cursor", "pointer");})
+				.on("mouseover", function(d){
+					d3.select(this).style("cursor", "pointer");
+					$('#category_title').html("");
+					$('#max_possible').html("");
+					$('#category_score').html("");
+					if (d.Category == "CWH") {
+						$('#category_title').append("College Work Habits");
+						$('#max_possible').append("15%");
+						$('#category_score').append(CWHGrade+"%");
+					} else if (d.Category == "MK") {
+						$('#category_title').append("Mastery of Knowledge");
+						$('#max_possible').append("40%");
+						$('#category_score').append(MKGrade+"%");
+					} else if (d.Category == "AK") {
+						$('#category_title').append("Application of Knowledge");
+						$('#max_possible').append("45%");
+						$('#category_score').append(AKGrade+"%");
+					} else if (d.Category == "TOTAL") {
+						$('#category_title').append("Total");
+						$('#max_possible').append("100%");
+						$('#category_score').append(TOTALGrade+"%");
+					}
+				})
 				.on("click",function(d){
 					$(".cwh-graph").html("");
 					$(".testdiv").html("");
@@ -127,23 +159,21 @@ function load_main_chart () {
 				.attr("y", function(d) { return y(d.y1); })
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
 				.style("fill", function(d) { return color(d.name); })
-				.on("mouseover", function(d){
-					$('#category_title').html("");
-		            $('#category_score').html("");
-		            $('#max_possible').html("");
-					if (d.name == "CWH") {
-						$('#category_title').append("College Work Habits");
-						$('#max_possible').append("15%");
-					} else if (d.name == "MK") {
-						$('#category_title').append("Mastery of Knowledge");
-						$('#max_possible').append("40%");
-					} else if (d.name == "AK") {
-						$('#category_title').append("Application of Knowledge");
-						$('#max_possible').append("45%");
-					} 
-
-					$('#category_score').append(d.y1+"%");   
-        		})
+				// .on("mouseover", function(d){
+				// 	$('#category_title').html("");
+		  //           $('#category_score').html("");
+		  //           $('#max_possible').html("");
+				// 	if (d.name == "CWH") {
+				// 		$('#category_title').append("College Work Habits");
+				// 		$('#max_possible').append("15%");
+				// 	} else if (d.name == "MK") {
+				// 		$('#category_title').append("Mastery of Knowledge");
+				// 		$('#max_possible').append("40%");
+				// 	} else if (d.name == "AK") {
+				// 		$('#category_title').append("Application of Knowledge");
+				// 		$('#max_possible').append("45%");
+				// 	}  
+    //     		})
 
 			// ***************** AXES *****************
 			var xAxis = d3.svg.axis()
@@ -175,7 +205,7 @@ function load_main_chart () {
 		    var cover = svg.selectAll(".cover")
 				.data(data)
 				.enter().append("g")
-				.attr("class", "g")
+				.attr("class", "cover")
 				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)";})
 				.on("click",function(d){
 					$(".cwh-graph").html("");
