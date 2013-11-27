@@ -88,3 +88,10 @@
 .thumbnail {
 	background-color: #333333;
 }
+
+#ui-datepicker-div {
+	background-color: #333333;
+	padding-right: 20px;
+	border: 1px solid white; 
+	padding-bottom: 10px;
+}

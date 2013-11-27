@@ -173,6 +173,9 @@ def get_user_by_school_id(school_id):
 ########### FUNCTIONS WITH NOTES ###########
 def get_notes(): 
 	return session.query(Notes).limit(3).all()
+
+def get_notes_by_date(dt):
+	return session.query(Notes).filter_by(created_on=dt).one()
 ########### END FUNCTIONS WITH NOTES ###########
 
 ########### FUNCTIONS WITH POSTS ###########

@@ -1,5 +1,47 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<!-- ************************ HEADER/SEARCH BY DATE ************************  -->
+<div class="page-header">
+	<h1>
+		Notes
+        <h3>Search by Date:</h3> 
+        <input type='text' id='datepicker' />
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+        <a id="get-notes" type="button" class="btn btn-default">Get Notes</a>
+	</h1>
+    <div id="found-notes"></div>
+</div>
+
+<!-- ************************ NOTES PREVIEW ************************  -->
+<div class="page-header">
+    <h1>
+    Most Recent Notes
+    </h1>
+</div>
+<div class="row">
+    {% for note in notes %}
+    <div class="col-sm-6 col-md-4">
+        <div class="thumbnail">
+            <img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" />  
+            <div class="caption">
+                <h3>{{note.created_on}}</h3>
+                <p>{{note.description}}</p>
+                <p><a href="{{note.link}}" class="btn btn-default" role="button">Preview</a></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+<!-- ************************ SCRIPTS ************************  -->
+{% block javascript %}
+
+
 <meta charset="utf-8" />
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css" />
+
 <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 <script src="http://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
 <script>
@@ -15,38 +57,30 @@ jQuery(function($){
         }
       });
 });
+
+$(document).ready(function() {
+    $('#get-notes').click(function() {
+        $('#found-notes').html("");
+            $.ajax({
+            type: "POST",
+            url: "/find_notes",
+            data: { search_for: $('#datepicker').val() }
+            }).done(function( msg ) {
+                $('#found-notes').append("<br><p>"+msg['message']+"</p>");
+            });
+                // $(startId).hide();
+                // $(startId+"-mom").append(msg['comment_content']
+                // +'<br><br><small>'
+                // +msg['comment_timestamp']
+                // +'<a href="javascript:editComment(\'#'
+                // +msg['comment_pk']
+                // +'\','
+                // +msg['comment_pk']
+                // +');"> edit</a></small></div>');
+    });
+});
+
 </script>
-{% extends 'master.html' %}
-{% block body %}
-<div class="page-header">
-	<h1>
-		Get Notes
-	</h1>
-  <p>Date: <input type='text' id='datepicker' /></p>
-</div>
-<div class="row">
-<!--   	<div class="col-sm-6 col-md-4">
-    	<div class="thumbnail">
-      		<img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" /> 
-      		<div class="caption">
-        		<h3>Thumbnail label</h3>
-        		<p>...</p>
-        		<p><a href="http://katiemthom.com/katiemthom_resume.pdf" class="btn btn-primary" role="button">Preview</a> <a href="#" class="btn btn-default" role="button">Download</a></p>
-      		</div>
-    	</div>
-  	</div> -->
-  {% for note in notes %}
-  <div class="col-sm-6 col-md-4">
-      <div class="thumbnail">
-          <img src="http://docs.google.com/viewer?url=http://katiemthom.com/katiemthom_resume.pdf&a=bi&pagenumber=1&w=800" alt="" />  
-          <div class="caption">
-            <h3>{{note.created_on}}</h3>
-            <p>{{note.description}}</p>
-            <p><a href="{{note.link}}" class="btn btn-default" role="button">Preview</a></p>
-          </div>
-      </div>
-    </div>
-  {% endfor %}
-</div>
+
 {% endblock %}
 

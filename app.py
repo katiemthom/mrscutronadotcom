@@ -239,16 +239,28 @@ def add_assignment():
 		return render_template('addassignment.html', user=current_user)
 ########## end assignment views ##########
 
-########## other views ##########
+########## notes views ##########
 @app.route('/notes')
 def show_notes():
 	notes = model.get_notes()
 	return render_template('notes.html', notes = notes, user = current_user)
 
-@app.route('/classes')
-def show_classes():
-	return render_template('classes.html', user=current_user)
+@app.route('/find_notes', methods=['POST'])
+def find_notes():
+	print request.form
+	notes_from = request.form.get('search_for')
+	notes_from_split = notes_from.split('-')
+	notes_from = datetime.datetime(int(notes_from_split[2]),int(notes_from_split[1]),int(notes_from_split[0]))
+	try:
+		notes = model.get_notes_by_date(notes_from)
+	except:
+		flash('No notes were found for that date.','warning')
+		return jsonify({'message': 'No notes were found for that date.'})
+	return
 
+########## end notes views ##########
+
+########## other views ##########
 @app.route('/reportbug')
 def report_bug():
 	return render_template('reportbug.html', user=current_user)

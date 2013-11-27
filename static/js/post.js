@@ -42,6 +42,7 @@ function editComment(destId,commentPk) {
 		$(destId).append(first);
 	});
 }
+
 function submitEdit(startId,commentPk) {
 	$.ajax({
 		type: "POST",
