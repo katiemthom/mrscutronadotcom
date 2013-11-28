@@ -1,0 +1,35 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<div class='container'>
+
+<!-- **************** HEADER **************** -->
+	<div class="page-header">
+		<h1>Sign Up To Receive Texts</h1>
+	</div>
+<!-- **************** END HEADER **************** -->
+
+<!-- ********** ADD PHONE FORM ********** -->
+<div id="phone-number">
+	<form action='{{url_for('add_number')}}' method=post>
+		<br>
+		<p><input class='form-control' name='phone_number' placeholder='xxxxxxxxxx'></input></p>
+		<p><button type="submit" class="btn btn-default">Send</button></p>
+	</form>
+</div>
+<!-- ********** END REPORT BUG FORM ********** -->
+
+<!-- ********** FLASHED MESSAGES ********** -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+	{% if messages %}
+	{% for category, message in messages%}
+		<div class="alert alert-{{category}}">{{message}}</div>
+		{% endfor %}
+		{% endif %}
+	{% endwith %}
+	<!-- ********** END FLASHED MESSAGES ********** -->
+
+
+
+</div>
+{% endblock %}

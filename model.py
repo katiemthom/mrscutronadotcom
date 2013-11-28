@@ -114,6 +114,19 @@ class Notes(Base):
 	created_on = Column(Date)
 	description = Column(String(200), nullable = True)
 
+class PhoneNumber(Base):
+	__tablename__ = 'phone_numbers'
+	id = Column(Integer, primary_key = True)
+	user_id = Column(BigInteger, nullable = False)
+	phone_number = Column(Integer, nullable = False)
+	salt = Column(String(64), nullable=False)
+
+	def setphone_number(self, phone_number):
+		self.salt = bcrypt.gensalt()
+		phone_number = phone_number.encode("utf-8")
+		self.phone_number = bcrypt.hashpw(phone_number, self.salt)
+		session.commit()
+
 class Pagination(object):
 
 	def __init__(self, page, per_page, total_count):

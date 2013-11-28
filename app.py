@@ -8,6 +8,7 @@ from werkzeug import secure_filename
 from flask.ext import admin 
 # from flask.ext.admin.model import BaseModelView
 # from flask.ext.admin.contrib.fileadmin import FileAdmin
+from twilio.rest import TwilioRestClient
 
 import os.path as op
 import model
@@ -24,6 +25,30 @@ app = Flask(__name__)
 app.config.from_object(config)
 Markdown(app)
 ########## end Flask Setup ##########
+
+########## Twilio Setup ##########
+account_sid = "AC3901c5cf385356b4ab1bf0684c5751c8"
+auth_token  = "7f1b4dd329c1aa6bfa87b0aa4a669a94"
+client = TwilioRestClient(account_sid, auth_token)
+
+# try:
+#     client = twilio.rest.TwilioRestClient(account_sid, auth_token)
+#     from twilio.rest import TwilioRestClient
+ 
+#     message = client.sms.messages.create(
+#         body="Hello World",
+#         to="+14159352345",
+#         from_="+14158141829"
+#     )
+# except twilio.TwilioRestException as e:
+#     print e
+
+
+# message = client.sms.messages.create(body="Jenny please?! I love you <3",
+#     to="+18572058821",    # Replace with your phone number
+#     from_="+18572541932") # Replace with your Twilio number
+# print message.sid
+########## end Twilio Setup ##########
 
 ########## Admin Views ##########
 class UploadGradesView(admin.BaseView):
@@ -572,6 +597,14 @@ def show_d3():
 @app.route('/datamodels')
 def show_models():
 	return render_template('datamodels.html', user=current_user)
+
+@app.route('/sendtext')
+def send_text():
+	return render_template('sendtext.html', user=current_user)
+
+@app.route('/textnotifications')
+def add_number():
+	return render_template('textnotifications.html', user=current_user)
 
 ########## end test views ##########
 

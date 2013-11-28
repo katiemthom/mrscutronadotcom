@@ -95,6 +95,7 @@
 				</li>
 				{% endif %}
 				{% if user.is_active() %}
+					<li><a href="/textnotifications">text notifications</a></li>
 					<li><a href="/logout">sign out</a></li>
 				{% endif %}
 				</ul>
@@ -120,6 +121,7 @@
                     |<a href='/uploadgrades'> upload grades</a>
                     |<a href='/addassignment'> add assignment</a>
                     |<a href='/uploadnotes'> upload notes</a>
+                    |<a href='/sendtext'> send text</a>
                     {% endif %}
                 </p>
             </div>
