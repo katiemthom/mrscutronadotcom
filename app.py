@@ -108,15 +108,23 @@ admin.init_app(app)
 ########## File Upload Setup ##########
 UPLOAD_FOLDER = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades'
 UPLOAD_FOLDER_PICS = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/profile_pics'
+UPLOAD_FOLDER_NOTES = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/notes'
 ALLOWED_EXTENSIONS = set(['txt','csv'])
+ALLOWED_EXTENSIONS_NOTES = set(['txt','pdf'])
 ALLOWED_EXTENSIONS_PICS = set(['png','jpg','jpeg','gif'])
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.config['UPLOAD_FOLDER_PICS'] = UPLOAD_FOLDER_PICS
+app.config['UPLOAD_FOLDER_NOTES'] = UPLOAD_FOLDER_NOTES
 
 def allowed_file(filename):
 	print "checking allowed"
 	return '.' in filename and \
 		filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS
+
+def allowed_file_notes(filename):
+	print "checking allowed"
+	return '.' in filename and \
+		filename.rsplit('.',1)[1] in ALLOWED_EXTENSIONS_NOTES
 
 def allowed_img_file(filename):
 	return '.' in filename and \
@@ -261,6 +269,47 @@ def find_notes():
 		return jsonify({'created_on': format_date(notes.created_on), 'description': notes.description, 'link': notes.link})
 	except:
 		return jsonify({'message': 'No notes were found for that date.'})
+
+@app.route('/uploadnotes', methods=['GET', 'POST'])
+def upload_notes():
+	if request.method == "POST":
+		try: 
+			print "in try"
+			if current_user.is_admin_user: 
+				print "is admin"
+				if request.method == 'POST':
+					print "if post"
+					form = forms.UploadNotesForm()
+					if not form.validate():
+						flash('All fields are required.  Notes can only be pdf files.','warning')
+						return render_template('uploadnotes.html', user=current_user)
+					file = request.files['notes_file']
+					if file and allowed_file_notes(file.filename):
+						print "if file"
+						print file.filename
+						filename = secure_filename(file.filename)
+						print filename
+						print app.config['UPLOAD_FOLDER_NOTES']
+						file.save(os.path.join(app.config['UPLOAD_FOLDER_NOTES'], filename))
+						description = form.description.data
+						created_on = form.created_on.data
+						created_on_split = created_on.split('-')
+						created_on = datetime.datetime(int(created_on_split[2]),int(created_on_split[1]),int(created_on_split[0]))
+						link =  "/static/notes/" + filename
+						new_notes = model.add_notes(link=link,created_on=created_on,description=description)
+						flash('Notes uploaded!','success')
+						return render_template('uploadnotes.html', user=current_user)
+				else: 
+					return render_template('uploadnotes.html', user=current_user)
+			# else:
+			# 	flash('You don\'t have permission to access that page.', 'warning')
+			# 	return render_template('index.html', user=current_user)
+		except:
+			flash('You don\'t have permission to access that page.', 'warning')
+			return render_template('index.html', user=current_user)
+	else:
+		return render_template('uploadnotes.html', user=current_user)
+
 
 ########## end notes views ##########
 

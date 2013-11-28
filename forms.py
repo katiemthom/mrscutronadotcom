@@ -46,5 +46,10 @@ class AddAssignmentForm(Form):
 class UploadGradesForm(Form):
 	csv_file = FileField("CSV", [validators.Required()])
 
+class UploadNotesForm(Form):
+	notes_file = FileField("PDF", [validators.Required()])
+	created_on = TextField("Created On", [validators.Required()])
+	description = TextField("Description", [validators.Required()])
+
 
 	

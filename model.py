@@ -185,6 +185,14 @@ def get_notes_for_page(page, per_page, count):
 	begin = end - per_page
 	notes = session.query(Notes).order_by(desc(Notes.created_on)).all()
 	return notes[begin:end]
+
+def add_notes(link, created_on, description):
+	new_notes = Notes(link = link, created_on = created_on, description = description)
+	session.add(new_notes)
+	session.commit()
+	return new_notes
+
+
 ########### END FUNCTIONS WITH NOTES ###########
 
 ########### FUNCTIONS WITH POSTS ###########
