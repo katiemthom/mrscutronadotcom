@@ -282,20 +282,23 @@ def calc_grade(user_id):
 ########### END FUNCTIONS WITH GRADES ###########
 
 ########### FUNCTIONS WITH ASSIGNMENTS ###########
-def add_assignment(assigned_on,due_on,link,description,max_points,category,group,title):
+def add_assignment(assigned_on,due_on,link,description,category,group,title):
 	#set assignment id see add comment below
 	last = session.query(Assignment).order_by(desc(Assignment.assignment_pk)).first()
 	if last: 
 		assignment_id = last.assignment_pk + 1
 	else: 
 		assignment_id = 1
-	new_assignment = Assignment(assigned_on=assigned_on,due_on=due_on,link=link,description=description,max_points=max_points,category=category,group=group,title=title,assignment_id=assignment_id)
+	new_assignment = Assignment(assigned_on=assigned_on,due_on=due_on,link=link,description=description,category=category,group=group,title=title,assignment_id=assignment_id)
 	session.add(new_assignment)
 	session.commit()
 	return new_assignment
 
 def get_assignment_by_title(title):
 	return session.query(Assignment).filter_by(title=title).one()
+
+def get_assignments():
+	return session.query(Assignment).all()
 ########### END FUNCTIONS WITH ASSIGNMENTS ###########
 
 ########### FUNCTIONS WITH COMMENTS ###########

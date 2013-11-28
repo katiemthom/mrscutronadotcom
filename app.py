@@ -74,7 +74,6 @@ class AddAssignmentsView(admin.BaseView):
 				due_on = datetime.datetime(int(due_on_split[2]),int(due_on_split[1]),int(due_on_split[0]))
 				link = form.link.data
 				description = form.description.data
-				max_points = form.max_points.data
 				category = form.category.data
 				group = form.group.data
 				title = form.title.data
@@ -220,6 +219,11 @@ def index():
 ########## end signin and signup views ##########
 
 ########## assignment views ##########
+@app.route('/assignmentlist')
+def list_assignments():
+	assignments = model.get_assignments()
+	return render_template('assignmentlist.html', assignments=assignments, user=current_user)
+
 @app.route('/addassignment', methods=['GET','POST'])
 def add_assignment():
 	if request.method == 'POST':
@@ -236,13 +240,12 @@ def add_assignment():
 			due_on = datetime.datetime(int(due_on_split[2]),int(due_on_split[1]),int(due_on_split[0]))
 			link = form.link.data
 			description = form.description.data
-			max_points = form.max_points.data
 			category = form.category.data
 			group = form.group.data
 			title = form.title.data
-			new_assignment = model.add_assignment(assigned_on,due_on,link,description,max_points,category,group,title)
+			new_assignment = model.add_assignment(assigned_on,due_on,link,description,category,group,title)
 			flash('Assignment added!','success')
-			return render_template('addassignment.html', user=current_user)
+			return redirect('assignmentlist')
 	else:
 		return render_template('addassignment.html', user=current_user)
 ########## end assignment views ##########

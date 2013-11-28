@@ -1,0 +1,20 @@
+{% extends 'master.html' %}
+{% block body %}
+
+<!-- ************************ HEADER ************************  -->
+<div class="page-header">
+	<h1>
+		All Assignments
+	</h1>
+    <div id="found-notes"></div>
+</div>
+
+<!-- ************************ ALL ASSIGNMENTS ************************  -->
+
+<div class="container">
+    {% for assignment in assignments %}
+    <p>{{assignment.title}}</p>
+    {% endfor %}
+</div>
+
+{% endblock %}
