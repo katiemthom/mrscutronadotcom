@@ -406,10 +406,12 @@ def comment(post_pk):
 @app.route('/addpost')
 @login_required
 def show_add_post():
-	post = session['current_post']
-	print post
-	title = session['current_title']
-	print title
+	if session.get('current_post'):
+		post = session['current_post']
+		title = session['current_title']
+	else:
+		post = ""
+		title = ""
 	return render_template('addpost.html', user=current_user, post=post, title = title)
 
 @app.route('/addpost', methods=['POST'])
