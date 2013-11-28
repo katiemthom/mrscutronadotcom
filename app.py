@@ -1,7 +1,7 @@
 ########## Import ##########
-from flask import Flask, render_template, request, redirect, url_for, flash, jsonify
+from flask import Flask, render_template, request, redirect, url_for, flash, jsonify, session
 from flask.ext.login import LoginManager, login_required, login_user, current_user, logout_user
-from model import User, session
+from model import User, session as sesh
 from flask.ext.mail import Message, Mail 
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
@@ -201,7 +201,7 @@ def process_login():
 		return render_template('index.html')
 	email = form.email.data
 	password = form.password.data 
-	user = session.query(User).filter_by(email=email).first()
+	user = sesh.query(User).filter_by(email=email).first()
 	if not user or not user.authenticate(password):
 		flash('Incorrect username or password')
 		return render_template('index.html',  user = current_user)
@@ -403,19 +403,27 @@ def comment(post_pk):
 @app.route('/addpost')
 @login_required
 def show_add_post():
-	return render_template('addpost.html', user=current_user)
+	post = session['current_post']
+	print post
+	title = session['current_title']
+	print title
+	return render_template('addpost.html', user=current_user, post=post, title = title)
 
 @app.route('/addpost', methods=['POST'])
 @login_required
 def add_post():
 	form = forms.AddPostForm(request.form)
 	if form.validate() == False: 
+		post = session['current_post']
+		title = session['current_title']
 		flash('All fields are required.')
-		return render_template('addpost.html', user=current_user)
+		return render_template('addpost.html', user=current_user, post=post, title = title)
 	else:
 		content = form.post_content.data
 		title = form.post_title.data
 		new_post = model.add_post(current_user.user_id, content, title)
+		session['current_post'] = ""
+		session['current_title'] = ""
 	return redirect(url_for("show_blog",author_id=current_user.user_id))
 
 @app.route('/editpost/<int:post_pk>')
@@ -443,7 +451,7 @@ def process_edit(post_pk):
 def delete_post(post_pk): 
 	post = model.get_post_by_pk(post_pk)
 	post.is_deleted = True 
-	model.session.commit()
+	model.sesh.commit()
 	return redirect(url_for("show_blog",author_id=current_user.user_id))
 ########## end post views ##########
 
@@ -470,7 +478,7 @@ def delete_comment(comment_pk):
 	comment = model.get_comment_by_pk(comment_pk)
 	comment.is_deleted = True 
 	comment.post.comment_count -= 1 
-	model.session.commit()
+	model.sesh.commit()
 	return redirect(url_for("show_post",post_pk=comment.post_pk))
 ########## end comment views ##########
 
@@ -505,17 +513,6 @@ def calc_grade():
 ########## end grade views ##########
 
 ########## test views ##########
-@app.route('/testdatabase', methods=['POST'])
-def check_db():
-	try:
-		session.info()
-		return jsonify({'up': True}) 
-	except sqlalchemy.exc.OperationalError:
-		return jsonify({'up': False})
-	else:
-		return jsonify({'up': False})  
-	
-
 @app.route('/test')
 def show_mark():
 	return render_template('test2.html', user=current_user)
@@ -524,6 +521,8 @@ def show_mark():
 def test_ajax():
 	content = request.form.get('hello')
 	title = request.form.get('title')
+	session['current_post'] = request.form['hello']
+	session['current_title'] = request.form['title']
 	return render_template('filtermarkdown.html', content=content, title=title)
 
 @app.route('/signup')
