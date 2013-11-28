@@ -118,7 +118,7 @@ class PhoneNumber(Base):
 	__tablename__ = 'phone_numbers'
 	id = Column(Integer, primary_key = True)
 	user_id = Column(BigInteger, nullable = False)
-	phone_number = Column(Integer, nullable = False)
+	phone_number = Column(String, nullable = False)
 	salt = Column(String(64), nullable=False)
 
 	def setphone_number(self, phone_number):
@@ -126,6 +126,7 @@ class PhoneNumber(Base):
 		phone_number = phone_number.encode("utf-8")
 		self.phone_number = bcrypt.hashpw(phone_number, self.salt)
 		session.commit()
+		return 
 
 class Pagination(object):
 
@@ -344,7 +345,9 @@ def get_comment_by_pk(comment_pk):
 
 ########### FUNCTIONS WITH PHONENUMBERS ###########
 def add_phone_number(user_id, phone_number):
-	new_phone_number = PhoneNumber(user_id=user_id,phone_number=phone_number,salt=salt)
+	print user_id, phone_number
+	new_phone_number = PhoneNumber(user_id=long(user_id),phone_number=int(phone_number),salt="salt")
+	print new_phone_number
 	new_phone_number.setphone_number(phone_number)
 	session.add(new_phone_number)
 	session.commit()

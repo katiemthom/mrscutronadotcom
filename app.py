@@ -6,8 +6,6 @@ from flask.ext.mail import Message, Mail
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
 from flask.ext import admin 
-# from flask.ext.admin.model import BaseModelView
-# from flask.ext.admin.contrib.fileadmin import FileAdmin
 from twilio.rest import TwilioRestClient
 
 import os.path as op
@@ -602,10 +600,27 @@ def show_models():
 def send_text():
 	return render_template('sendtext.html', user=current_user)
 
-@app.route('/textnotifications')
+@app.route('/textnotifications', methods = ['GET', 'POST'])
 def add_number():
-	return render_template('textnotifications.html', user=current_user)
-
+	if request.method == "GET":
+		return render_template('textnotifications.html', user=current_user)
+	else: 
+		form = forms.AddPhoneForm()
+		if not form.validate(): 
+			flash('Make sure you enter a ten digit number.', 'warning')
+			return render_template('textnotifications.html', user=current_user)
+		else:
+			try: 
+				print current_user.user_id
+				print form.phone_number.data
+				model.add_phone_number(current_user.user_id, form.phone_number.data)
+				flash('Phone number added!', 'success')
+				return render_template('textnotifications.html', user=current_user)
+			except: 
+				print "in except"
+				flash('Make sure you enter a ten digit number.', 'warning')
+				return render_template('textnotifications.html', user=current_user)
+			 
 ########## end test views ##########
 
 if __name__ == "__main__":

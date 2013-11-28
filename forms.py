@@ -30,7 +30,7 @@ class SignupForm(Form):
 	password = TextField('Password', [validators.Required()])
 	email = TextField('Email', [validators.Required()])
 	pw_validation = TextField('Validate', [validators.Required()])
-	school_id = IntegerField('SchoolId', [validators.Length(min=4,max=4)])
+	school_id = TextField('SchoolId', [validators.Length(min=4,max=4)])
 	period = SelectField('Class Period', choices=[('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
 	profile_picture = FileField('Image File')
 
@@ -52,7 +52,7 @@ class UploadNotesForm(Form):
 	description = TextField("Description", [validators.Required()])
 
 class AddPhoneForm(Form):
-	phone_number = IntegerField("Phone", [validators.Length(min=10, max=10)])
+	phone_number = TextField("Phone", [validators.Length(min=10, max=10)])
 
 
 	
