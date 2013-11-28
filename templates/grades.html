@@ -25,6 +25,15 @@
 </div>
 <!-- ***************** END GRADES SVG ***************** -->
 
+<!-- ***************** WHAT IF ***************** -->
+<div class="what-if">
+	<a id="what-if-btn" type="button" class="btn btn-default">What if?</a>
+	<div>
+
+	</div>
+</div>
+<!-- ***************** WHAT IF ***************** -->
+
 {% endblock %}
 
 <!-- ***************** SCRIPTS ***************** -->
@@ -35,6 +44,15 @@
 
 <!-- ***************** CHARTS ***************** -->
 <script type="text/javascript" src="/static/js/gradeschart.js"></script>
+
+<!-- ***************** WHAT IF ***************** -->
+<script type="text/javascript">
+	
+	$('#what-if-btn').click(function() {
+		$('.what-if').append();
+	});
+
+</script>
 
 {% endblock %}
 <!-- ***************** END SCRIPTS ***************** -->
