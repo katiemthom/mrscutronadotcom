@@ -342,6 +342,16 @@ def get_comment_by_pk(comment_pk):
 	return session.query(Comment).filter_by(comment_pk=comment_pk).first()	
 ########### END FUNCTIONS WITH COMMENTS ###########
 
+########### FUNCTIONS WITH PHONENUMBERS ###########
+def add_phone_number(user_id, phone_number):
+	new_phone_number = PhoneNumber(user_id=user_id,phone_number=phone_number,salt=salt)
+	new_phone_number.setphone_number(phone_number)
+	session.add(new_phone_number)
+	session.commit()
+	return new_phone_number
+
+########### END FUNCTIONS WITH PHONENUBMERS ###########
+
 ########### END FUNCTIONS ###########
 
 def main(): 
