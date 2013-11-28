@@ -353,6 +353,9 @@ def add_phone_number(user_id, phone_number):
 	session.commit()
 	return new_phone_number
 
+def get_phone_numbers(): 
+	return session.query(PhoneNumber).all()
+
 ########### END FUNCTIONS WITH PHONENUBMERS ###########
 
 ########### END FUNCTIONS ###########

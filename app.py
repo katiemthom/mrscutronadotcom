@@ -601,6 +601,8 @@ def send_text():
 	else: 
 		form = forms.SendTextForm()
 		text_body = form.text_content.data
+		phone_numbers = model.get_phone_numbers()
+		# where do I unencrypt? 
 		if not form.validate(): 
 			flash('All fields are required.', 'warning')
 			return render_template('sendtext.html', user=current_user)
