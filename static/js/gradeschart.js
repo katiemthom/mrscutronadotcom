@@ -25,7 +25,7 @@ $(document).ready(function() {
 		MKGrade = msg['mk_grade'];
 		AKGrade = msg['ak_grade'];
 		CWHGrade = msg['cwh_grade'];
-		$("#cat_details").append("<p class=larger>Total Grade: " + msg['total_grade'] + "%</p>");
+		$("#cat_details").append("<p class=larger>Total Grade: <span>" + msg['total_grade'] + "%</span></p>");
 		$("#gradesfor").append("Current Grade: " + msg['total_grade'] + "%");
 		create_data();
 	}); 
