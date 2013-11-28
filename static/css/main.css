@@ -26,7 +26,8 @@
 }
 
 #add-assignment-well {
-	width: 70%;
+	width: 400px;
+	margin-right: auto;
 }
 
 #add-comment-well {
