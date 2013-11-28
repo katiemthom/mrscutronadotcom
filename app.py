@@ -588,17 +588,35 @@ def process_sign_up():
 		login_user(new_user)
 		return render_template('index.html',user=new_user)
 
-@app.route('/d3test')
-def show_d3():
-	return render_template('d3test.html')
-
 @app.route('/datamodels')
 def show_models():
 	return render_template('datamodels.html', user=current_user)
+########## end test views ##########
 
-@app.route('/sendtext')
+########## text views ##########
+@app.route('/sendtext', methods=['GET','POST'])
 def send_text():
-	return render_template('sendtext.html', user=current_user)
+	if request.method == "GET": 
+		return render_template('sendtext.html', user=current_user)
+	else: 
+		form = forms.SendTextForm()
+		text_body = form.text_content.data
+		if not form.validate(): 
+			flash('All fields are required.', 'warning')
+			return render_template('sendtext.html', user=current_user)
+		else:
+			try: 
+				message = client.sms.messages.create(
+			        body=text_body,
+			        to="+15188591825",
+			        from_="+18572541932"
+			    )
+				flash('Success!', 'success')
+				return render_template('sendtext.html', user=current_user)
+			except twilio.TwilioRestException as e:
+				print e
+				flash(e, 'warning')
+				return render_template('sendtext.html', user=current_user)
 
 @app.route('/textnotifications', methods = ['GET', 'POST'])
 def add_number():
@@ -611,17 +629,13 @@ def add_number():
 			return render_template('textnotifications.html', user=current_user)
 		else:
 			try: 
-				print current_user.user_id
-				print form.phone_number.data
 				model.add_phone_number(current_user.user_id, form.phone_number.data)
 				flash('Phone number added!', 'success')
 				return render_template('textnotifications.html', user=current_user)
 			except: 
-				print "in except"
 				flash('Make sure you enter a ten digit number.', 'warning')
 				return render_template('textnotifications.html', user=current_user)
-			 
-########## end test views ##########
+########## end text views ##########			 
 
 if __name__ == "__main__":
     app.run(debug = True)

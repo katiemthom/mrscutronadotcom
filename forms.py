@@ -54,5 +54,8 @@ class UploadNotesForm(Form):
 class AddPhoneForm(Form):
 	phone_number = TextField("Phone", [validators.Length(min=10, max=10)])
 
+class SendTextForm(Form):
+	text_content = TextField("Text Content", [validators.Required()])	
+
 
 	
