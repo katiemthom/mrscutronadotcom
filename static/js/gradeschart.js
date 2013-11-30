@@ -29,7 +29,69 @@ $(document).ready(function() {
 		$("#gradesfor").append("<br>Current Grade: " + msg['total_grade'] + "% " + msg['letter_grade']);
 		create_data();
 	}); 
-	// ***************** LOADS MAIN GRADE CHART ****************
+	// ***************** WHATIF ****************
+	$('#what-if-btn').click(function() {
+		$('.whatifappend').append('<div id="what-if-form"></div>');
+		$('#what-if-form').append('<p>What if I get a <select id="new-grade-val"><option value="4.33">4.33 (A+)</option><option value="4">4 (A)</option><option value="3.67">3.67 (A-)</option><option value="3.33">3.33 (B+)</option><option value="3">3 (B)</option><option value="2.67">2.67 (B-)</option><option value="2.33">2.33 (C+)</option><option value="2">2 (C)</option><option value="1.67">1.67 (C-)</option><option value="1.33">1.33 (.NC)</option><option value="1">1 (N.C)</option><option value="0.67">0.67 (NC.)</option><option value="0">0 (NC)</option></select> on the next <select id="new-num-val"><option value="1">one</option><option value="2">two</option><option value="3">three</option><option value="4">four</option><option value="5">five</option></select> <select id="new-cat-val"><option value="CWH">College Work Habits</option><option value="AK">Application of Knowledge</option><option value="MK">Mastery of Knowledge</option></select> assignments?</p><br><a type="button" id="fake-grade-btn" class="btn btn-default">See your grade!</a><div id="show-new-grade"></div>');
+		$('#fake-grade-btn').click(function() {
+			$('#show-new-grade').html('');
+			CWH_val = 0
+			CWH_max = 0
+			for (var i = 0; i < CWHGrades.length; i++) {
+				CWH_val += CWHGrades[i].score;
+				CWH_max += 4; 
+			};
+			console.log(CWH_val);
+			console.log(CWH_max); 
+			MK_val = 0
+			MK_max = 0
+			for (var i = 0; i < MKGrades.length; i++) {
+				MK_val += MKGrades[i].score;
+				MK_max += 4; 
+			};
+			console.log(MK_val);
+			console.log(MK_max); 
+			AK_val = 0
+			AK_max = 0
+			for (var i = 0; i < AKGrades.length; i++) {
+				AK_val += AKGrades[i].score;
+				AK_max += 4; 
+			};
+			console.log(AK_val);
+			console.log(AK_max);
+			add_to_cat_val = parseFloat($('#new-grade-val').val()) * parseFloat($('#new-num-val').val());
+			add_to_max_val = 4 * parseFloat($('#new-num-val').val());
+			if ($('#new-cat-val').val() == "CWH") {
+				CWH_val += add_to_cat_val; 
+				CWH_max += add_to_max_val;
+			};
+			if ($('#new-cat-val').val() == "MK") {
+				MK_val += add_to_cat_val; 
+				MK_max += add_to_max_val;
+			};
+			if ($('#new-cat-val').val() == "AK") {
+				AK_val += add_to_cat_val; 
+				AK_max += add_to_max_val;
+			};
+			if (CWH_max == 0) {
+				CWH_final = .15 * 100; 
+			} else {
+				CWH_final = (CWH_val/CWH_max) * .15 * 100; 
+			} 
+			if (MK_max == 0) {
+				MK_final = .4 * 100; 
+			} else {
+				MK_final = (MK_val/MK_max) * .4 * 100; 
+			} 
+			if (AK_max == 0) {
+				AK_final = .45 * 100; 
+			} else {
+				AK_final = (AK_val/AK_max) * .45 * 100; 
+			} 
+			final_new_grade = Math.round(AK_final + MK_final + CWH_final); 
+			$('#show-new-grade').append('<br><p>If you get a '+$('#new-grade-val').val()+' on the next '+$('#new-num-val').val()+' '+$('#new-cat-val').val()+' assignments, your grade will be a '+final_new_grade+'%.</p>');
+		});
+	});
 });
 
 // ***************** FUNCTIONS *****************
