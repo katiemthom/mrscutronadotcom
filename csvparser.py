@@ -33,7 +33,10 @@ def load_grade_csv(csv_file):
             if recording:
                 student_id = int(data[0].strip())
                 print student_id
-                value = float(data[3][1:-1])
+                try: 
+                    value = float(data[3][1:-1])
+                except: 
+                    value = 0
                 user = model.get_user_by_school_id(student_id)
                 user_id = user.user_id
                 try: 
@@ -50,5 +53,36 @@ def load_grade_csv(csv_file):
                 if data[0].strip() == "Student ID":
                     recording = True
         model.session.commit()
+        f.close()
+        return True
+
+def load_grades_csv(csv_file):
+    with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades/" + csv_file,"rU") as f:
+        reader=csv.reader(f,dialect=csv.excel_tab)
+
+        recording = False
+        for row in reader:
+            if row == []:
+                continue
+            data = row[0].split(',')
+            print data
+            # if recording:
+            #     # student_id = int(data[0].strip())
+            #     # print student_id
+            #     # value = float(data[3][1:-1])
+            #     # user = model.get_user_by_school_id(student_id)
+            #     # user_id = user.user_id
+            #     # try: 
+            #     #     # assignment = model.get_assignment_by_title(title)
+            #     #     # assignment_pk = assignment.assignment_pk
+            #     #     # grade = model.add_grade(assignment_pk,value,user_id)
+            #     #     # model.session.add(grade)
+            #     # except:
+            #     #     return False 
+            # else: 
+            #     counter += 1
+            #     if counter == 4:
+            #         recording = True 
+        # model.session.commit()
         f.close()
         return True

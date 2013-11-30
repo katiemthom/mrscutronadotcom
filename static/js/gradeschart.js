@@ -26,7 +26,7 @@ $(document).ready(function() {
 		AKGrade = msg['ak_grade'];
 		CWHGrade = msg['cwh_grade'];
 		$("#cat_details").append("<p class=larger>Total Grade: <span>" + msg['total_grade'] + "%</span></p>");
-		$("#gradesfor").append("Current Grade: " + msg['total_grade'] + "% " + msg['letter_grade']);
+		$("#gradesfor").append("<br>Current Grade: " + msg['total_grade'] + "% " + msg['letter_grade']);
 		create_data();
 	}); 
 	// ***************** LOADS MAIN GRADE CHART ****************

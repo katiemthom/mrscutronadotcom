@@ -68,3 +68,10 @@ span {
   color: white;
   font-size: 14px;
 }
+
+#what-if-form {
+  margin-top: 20px;
+  border: 1px solid #e3e3e3;
+  padding: 15px; 
+  width: 650px; 
+}
