@@ -261,13 +261,18 @@ function load_main_chart () {
 				.on("click",function(d){
 					$(".cwh-graph").html("");
 					$(".testdiv").html("");
+					$(".category-title").html("");
 					if (d.Category == "CWH") {
+						$(".category-title").append("<h1>College Work Habits Assignments</h1>");
 						show_cwh(CWHGrades);
 					} else if (d.Category == "AK") {
+						$(".category-title").append("<h1>Application of Knowledge Assignments</h1>");
 						show_cwh(AKGrades);
 					} else if (d.Category == "MK") {
+						$(".category-title").append("<h1>Mastery of Knowledge Assignments</h1>");
 						show_cwh(MKGrades);
 					} else if (d.Category == "TOTAL") {
+						$(".category-title").append("<h1>All Assignments</h1>");
 						show_cwh(TOTALGrades);
 					}
 

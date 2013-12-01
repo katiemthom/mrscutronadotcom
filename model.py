@@ -205,8 +205,6 @@ def add_notes(link, created_on, description):
 	session.add(new_notes)
 	session.commit()
 	return new_notes
-
-
 ########### END FUNCTIONS WITH NOTES ###########
 
 ########### FUNCTIONS WITH POSTS ###########
