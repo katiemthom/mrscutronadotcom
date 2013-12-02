@@ -229,15 +229,15 @@ def count_all_posts(user_id):
 def add_post(author_id,content,title):
 	last = session.query(Post).order_by(desc(Post.post_pk)).first()
 	if last:
-		new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=last.post_pk+1, title=title)
+		new_post = Post(timestamp=datetime.datetime.utcnow(),user_id=author_id,content=content,post_id=last.post_pk+1, title=title)
 	else:
-		new_post = Post(timestamp=datetime.datetime.now(),user_id=author_id,content=content,post_id=1, title=title)
+		new_post = Post(timestamp=datetime.datetime.utcnow(),user_id=author_id,content=content,post_id=1, title=title)
 	session.add(new_post)
 	session.commit()
 	return new_post
 
 def edit_post(user_id,post_id,content,title,is_featured,version_id,comment_count):
-	new_post = Post(timestamp=datetime.datetime.now(),user_id=user_id,post_id=post_id,content=content,is_featured=is_featured,version_id=version_id,title=title,comment_count=comment_count)
+	new_post = Post(timestamp=datetime.datetime.utcnow(),user_id=user_id,post_id=post_id,content=content,is_featured=is_featured,version_id=version_id,title=title,comment_count=comment_count)
 	session.add(new_post)
 	session.commit()
 	return new_post
@@ -317,9 +317,9 @@ def get_assignments():
 def add_comment(author_id,post_pk,content):
 	last = session.query(Comment).order_by(desc(Comment.comment_pk)).first()
 	if last: 
-		new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_pk,content=content,comment_id=last.comment_pk+1)
+		new_comment = Comment(timestamp=datetime.datetime.utcnow(),user_id=author_id,post_pk=post_pk,content=content,comment_id=last.comment_pk+1)
 	else: 
-		new_comment = Comment(timestamp=datetime.datetime.now(),user_id=author_id,post_pk=post_pk,content=content,comment_id=1)
+		new_comment = Comment(timestamp=datetime.datetime.utcnow(),user_id=author_id,post_pk=post_pk,content=content,comment_id=1)
 	post = session.query(Post).filter_by(post_pk=post_pk).one()
 	post.comment_count += 1
 	session.add(new_comment)
@@ -329,7 +329,7 @@ def add_comment(author_id,post_pk,content):
 def edit_comment(user_id,post_pk,comment_pk,content):
 	old_comment = get_comment_by_pk(comment_pk)
 	old_comment.is_deleted = True 
-	new_comment = Comment(timestamp=datetime.datetime.now(),user_id=user_id,post_pk=post_pk,content=content, comment_id=old_comment.comment_id, version_id=old_comment.version_id+1)
+	new_comment = Comment(timestamp=datetime.datetime.utcnow(),user_id=user_id,post_pk=post_pk,content=content, comment_id=old_comment.comment_id, version_id=old_comment.version_id+1)
 	session.add(new_comment)
 	session.commit()
 	return new_comment

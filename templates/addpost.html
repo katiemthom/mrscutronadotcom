@@ -68,7 +68,8 @@
 <!-- ***************** DIALOG ***************** -->
 <script type="text/javascript" src='/static/js/jquery-ui-1.10.3.custom.js'></script>
 <script type="text/javascript">
-$('#dialog-link').dialog({
+$(document).ready(function() {
+	$('#dialog-link').dialog({
 	autoOpen: false,
 	height: 350,
 	wight: 350,
@@ -83,9 +84,10 @@ $('#dialog-link').dialog({
 			$(this).dialog('close');
 		},
 	}
+	});
+	$('#link').click(function() {
+		$('#dialog-link').dialog('open');
 });
-$('#link').click(function() {
-	$('#dialog-link').dialog('open');
 });
 </script>
 <!-- ***************** END DIALOG ***************** -->
