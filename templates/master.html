@@ -64,7 +64,7 @@
 		</li>
 
 		<li><a href="/notes">notes</a></li>
-		
+
 		{% if not user.is_active() %}
 		<li><a href="/signup">sign up</a></li>
 		{% endif %}
@@ -121,6 +121,7 @@
                     |<a href='/addassignment'> add assignment</a>
                     |<a href='/uploadnotes'> upload notes</a>
                     |<a href='/sendtext'> send text</a>
+                    |<a href='/assignmentlist'> assignment list</a>
                     {% endif %}
                 </p>
             </div>

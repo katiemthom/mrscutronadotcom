@@ -271,6 +271,12 @@ def add_assignment():
 			return redirect('assignmentlist')
 	else:
 		return render_template('addassignment.html', user=current_user)
+
+@app.route('/deleteassignment/<int:assignment_pk>', methods=['GET'])
+def delete_assignment(assignment_pk):
+	model.delete_assignment(assignment_pk)
+	assignments = model.get_assignments()
+	return render_template('assignmentlist.html', user = current_user, assignments=assignments)
 ########## end assignment views ##########
 
 ########## notes views ##########
@@ -342,7 +348,7 @@ def upload_notes():
 
 ########## end notes views ##########
 
-########## other views ##########
+########## report bug views ##########
 @app.route('/reportbug')
 def report_bug():
 	return render_template('reportbug.html', user=current_user)
@@ -361,7 +367,7 @@ def send_bug():
 		mail.send(msg)
 		flash('Message sent!','success')
 		return render_template('reportbug.html', user=current_user)
-########## end other views ##########
+########## end report bug views ##########
 
 ########## blog views ##########
 @app.route('/blogs')
@@ -484,6 +490,14 @@ def delete_post(post_pk):
 	post.is_deleted = True 
 	model.sesh.commit()
 	return redirect(url_for("show_blog",author_id=current_user.user_id))
+
+@app.route('/addpostajax', methods=['POST'])
+def test_ajax():
+	content = request.form.get('hello')
+	title = request.form.get('title')
+	session['current_post'] = request.form['hello']
+	session['current_title'] = request.form['title']
+	return render_template('filtermarkdown.html', content=content, title=title)
 ########## end post views ##########
 
 ########## comment views ##########
@@ -567,15 +581,9 @@ def calc_grade():
 @app.route('/test')
 def show_mark():
 	return render_template('test2.html', user=current_user)
+########## end test views ##########	
 
-@app.route('/addpostajax', methods=['POST'])
-def test_ajax():
-	content = request.form.get('hello')
-	title = request.form.get('title')
-	session['current_post'] = request.form['hello']
-	session['current_title'] = request.form['title']
-	return render_template('filtermarkdown.html', content=content, title=title)
-
+########## signup views ##########
 @app.route('/signup')
 def sign_up():
 	return render_template('signup.html', user=current_user)
@@ -619,7 +627,7 @@ def process_sign_up():
 @app.route('/datamodels')
 def show_models():
 	return render_template('datamodels.html', user=current_user)
-########## end test views ##########
+########## end signup views ##########
 
 ########## text views ##########
 @app.route('/sendtext', methods=['GET','POST'])

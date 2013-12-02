@@ -13,7 +13,7 @@
 
 <div class="container">
     {% for assignment in assignments %}
-    <p>{{assignment.title}}</p>
+    <p>{{assignment.title}} <a href="{{url_for("delete_assignment", assignment_pk=assignment.assignment_pk)}}">delete</a></p>
     {% endfor %}
 </div>
 

@@ -310,7 +310,14 @@ def get_assignment_by_title(title):
 	return session.query(Assignment).filter_by(title=title).one()
 
 def get_assignments():
-	return session.query(Assignment).all()
+	return session.query(Assignment).filter_by(is_deleted=False).all()
+
+def delete_assignment(assignment_pk):
+	assignment = session.query(Assignment).filter_by(assignment_pk=assignment_pk).one()
+	assignment.is_deleted = True
+	session.commit()
+	return 
+
 ########### END FUNCTIONS WITH ASSIGNMENTS ###########
 
 ########### FUNCTIONS WITH COMMENTS ###########
