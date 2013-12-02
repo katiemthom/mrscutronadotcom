@@ -629,6 +629,16 @@ def show_models():
 	return render_template('datamodels.html', user=current_user)
 ########## end signup views ##########
 
+########## student views ##########
+@app.route('/students')
+def show_students():
+	return render_template('students.html', user = current_user)
+
+@app.route('/getstudents/<int:period>')
+def get_students(period):
+	return jsonify({'hi': 'hi katie'})
+########## end student views ##########
+
 ########## text views ##########
 @app.route('/sendtext', methods=['GET','POST'])
 def send_text():
