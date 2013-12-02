@@ -182,6 +182,10 @@ def search_user(search_term):
 
 def get_user_by_school_id(school_id):
 	return session.query(User).filter_by(school_id=school_id).one()
+
+def get_users_by_period(period):
+	return session.query(User).filter_by(period=period).all()
+	
 ########### END USER FUNCTIONS ###########
 
 ########### FUNCTIONS WITH NOTES ###########

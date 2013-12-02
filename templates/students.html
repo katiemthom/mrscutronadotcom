@@ -27,14 +27,20 @@
 <!-- ************************ SCRIPTS ************************  -->
 {% block javascript %}
 <script type="text/javascript">
+var students;
 
 $(document).ready(function() {
 	$("#period-select").change(function() {
+		$('#found-students').html('');
 		$.ajax({
 			type: "GET",
 			url: "/getstudents/" + $('#period-select').val()
 			}).done(function(msg) {
-				$('#found-students').append(msg['hi']);
+				students = eval(msg['students_list']);
+				$('#found-students').append('<div class="page-header"><h1>Period '+$('#period-select').val()+'</h1></div>');
+				for (var i = students.length - 1; i >= 0; i--) {
+					$('#found-students').append('<p>'+students[i].first_name+' '+students[i].last_name+'</p>');
+				}
 		});
 	});
 })

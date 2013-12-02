@@ -636,7 +636,12 @@ def show_students():
 
 @app.route('/getstudents/<int:period>')
 def get_students(period):
-	return jsonify({'hi': 'hi katie'})
+	students = model.get_users_by_period(period)
+	students_list = []
+	for student in students: 
+		students_list.append({"user_id": student.user_id, "first_name": student.first_name, "last_name": student.last_name, "period": student.period})
+	students_json = json.dumps(students_list)
+	return jsonify({'students_list': students_list})
 ########## end student views ##########
 
 ########## text views ##########
