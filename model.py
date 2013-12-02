@@ -249,7 +249,12 @@ def get_last_post(user_id):
 
 ########### FUNCTIONS WITH GRADES ###########
 def get_grades_by_user_id(user_id):
-	return session.query(Grade).filter_by(user_id=user_id).all()
+	grades = session.query(Grade).filter_by(user_id=user_id).filter_by().all()
+	for grade in grades: 
+		if grade.assignment.is_deleted == True: 
+			grades.remove(grade)
+	return grades
+
 
 def add_grade(assignment_pk, value, user_id):
 	new_grade = Grade(assignment_pk = assignment_pk, value = value, user_id = user_id)
