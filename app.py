@@ -638,10 +638,19 @@ def show_students():
 def get_students(period):
 	students = model.get_users_by_period(period)
 	students_list = []
-	for student in students: 
-		students_list.append({"user_id": student.user_id, "first_name": student.first_name, "last_name": student.last_name, "period": student.period})
+	for student in students:
+		if student.is_banned == False: 
+			is_banned = "Active"
+		else:
+			is_banned = "Banned"
+		students_list.append({"user_id": student.user_id, "first_name": student.first_name, "last_name": student.last_name, "period": student.period, "is_banned": is_banned})
 	students_json = json.dumps(students_list)
 	return jsonify({'students_list': students_list})
+
+@app.route('/togglestatus/<int:user_id>/<status>', methods=['POST'])
+def toggle_status(user_id, status):
+	model.toggle_status_by_user_id(user_id, status) 
+	return jsonify({'msg': 'success!'})
 ########## end student views ##########
 
 ########## text views ##########

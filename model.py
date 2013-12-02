@@ -185,7 +185,15 @@ def get_user_by_school_id(school_id):
 
 def get_users_by_period(period):
 	return session.query(User).filter_by(period=period).all()
-	
+
+def toggle_status_by_user_id(user_id, status): 
+	user = get_user_by_id(user_id)
+	if status == "Banned": 
+		user.is_banned = True
+	else: 
+		user.is_banned = False
+	session.commit()
+	return 
 ########### END USER FUNCTIONS ###########
 
 ########### FUNCTIONS WITH NOTES ###########

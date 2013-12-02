@@ -39,8 +39,27 @@ $(document).ready(function() {
 				students = eval(msg['students_list']);
 				$('#found-students').append('<div class="page-header"><h1>Period '+$('#period-select').val()+'</h1></div>');
 				for (var i = students.length - 1; i >= 0; i--) {
-					$('#found-students').append('<p>'+students[i].first_name+' '+students[i].last_name+'</p>');
+					var option;
+					if (students[i].is_banned == "Active") {
+						option = "Banned";
+					} else {
+						option = "Active";
+					}
+					$('#found-students').append('<p>'+students[i].first_name+' '+students[i].last_name+'<select class="form-control is_banned" id="'+students[i].user_id+'"><option value='+students[i].is_banned+'>'+students[i].is_banned+'</option><option value='+option+'>'+option+'</option></select></p>');
 				}
+				$('.is_banned').change(function() {
+					var el = $(':focus');
+					var val = $(el).val();
+					var id = $(el).closest("select").attr("id");
+					console.log(id); 
+					console.log(val); 
+					$.ajax({
+						type: "POST",
+						url: "/togglestatus/" + id +"/" + val
+					}).done(function(msg) {
+						console.log(msg['msg']);
+					}); 
+				});
 		});
 	});
 })

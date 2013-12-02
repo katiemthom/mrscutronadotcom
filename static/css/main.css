@@ -129,6 +129,10 @@
 	padding-bottom: 0px;
 }
 
+.is_banned {
+	width: 120px ;
+}
+
 @font-face {
   font-family: 'Quando';
   font-style: normal;
