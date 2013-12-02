@@ -58,9 +58,11 @@ Students can view and download lecture notes.
 Will show previews of notes (as opposed to my resume) when Amazon S3 is implemented. 
 
 Search by date: 
+
 ![](/static/ss/12.png)
 
 Recent notes: 
+
 ![](/static/ss/13.png)
 ![](/static/ss/14.png)
 
