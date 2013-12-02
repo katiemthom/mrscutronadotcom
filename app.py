@@ -278,8 +278,11 @@ def add_assignment():
 @app.route('/notes/<int:page>')
 def show_notes(page):
 	count = model.count_all_notes()
+	print count
 	notes = model.get_notes_for_page(page, 3, count)
-	pagination = model.Pagination(page, PER_PAGE, count)
+	print notes
+	pagination = model.Pagination(page, 3, count)
+	print pagination
 	return render_template('notes.html', notes = notes, user = current_user, pagination=pagination)
 
 @app.route('/find_notes', methods=['POST'])
