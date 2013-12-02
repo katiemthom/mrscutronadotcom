@@ -585,8 +585,13 @@ def process_sign_up():
 	form = forms.SignupForm()
 	if not form.validate(): 
 		print form.errors
+		first_name = form.first_name.data
+		last_name = form.last_name.data
+		email = form.email.data
+		school_id = form.school_id.data
 		flash('All fields are required.  School ID must be a 4-digit number.','warning')
-		return render_template('signup.html', user=current_user)
+		return render_template('signup.html', user=current_user, first=first_name
+				, last=last_name,email=email, school_id=school_id)
 	else:
 		print form.errors
 		first_name = form.first_name.data
@@ -599,7 +604,7 @@ def process_sign_up():
 		if password != validate_password:
 			flash('Passwords do not match.')
 			return render_template('signup.html', user=current_user, first=first_name
-				, last=last_name,email=email)
+				, last=last_name,email=email, school_id=school_id)
 		file = request.files['file']
 		if file and allowed_img_file(file.filename):
 			filename = secure_filename(file.filename)

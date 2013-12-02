@@ -21,7 +21,7 @@
 		<option value='4'>4</option>
 		<option value='5'>5</option>
 		</select></p>
-		<p><input class='form-control' name='school_id' placeholder='School ID' id='signup'></input></p>
+		<p><input class='form-control' {% if school_id %} value={{school_id}} {% endif %} name='school_id' placeholder='School ID' id='signup'></input></p>
 		<p><button type="submit" class="btn btn-default">Send</button></p>
 	</form>
 	{% for message in get_flashed_messages() %}
