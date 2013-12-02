@@ -77,6 +77,11 @@
 	color: #333333;
 }
 
+.preview h3 {
+	color: #333333;
+}
+
+
 #post_content {
 	height: 400px;
 }

@@ -6,15 +6,33 @@ mrscutronadotcom is a web app I'm building for my friend Laura, who teaches Alge
 Users
 =====
 
-Laura will be the admin user on the site.  Her students will be the users. 
+Laura will be the admin user on the site.  Her students will be the users. Users can upload profile pictures. 
 
 Landing page, signed in as admin: 
 ![Signed in as admin.](/static/ss/1.png)
 
+Landing page, signed in as student: 
+![Signed in as user.](/static/ss/2.png)
+
 Blogs
 =====
 
-Students will have their own math blogs.  They will be able to comment on each others' blogs. 
+Laura wants to assign blog posts to students, so students will have their own math blogs.  They will be able to comment on each others' blogs, as well as edit their own comments and posts. 
+
+Featured and recent blogs: 
+![](/static/ss/3.png)
+
+Search blogs by student: 
+![](/static/ss/4.png)
+
+Pagination: 
+![](/static/ss/5.png)
+
+Comments: 
+![](/static/ss/6.png)
+
+Add a post with live preview and auto-save: 
+![](/static/ss/7.png)
 
 Grades
 ======
