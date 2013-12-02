@@ -5,7 +5,6 @@ from model import User, session as sesh
 from flask.ext.mail import Message, Mail 
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
-from flask.ext import admin 
 from twilio.rest import TwilioRestClient
 
 import os.path as op
@@ -47,85 +46,6 @@ client = TwilioRestClient(account_sid, auth_token)
 #     from_="+18572541932") # Replace with your Twilio number
 # print message.sid
 ########## end Twilio Setup ##########
-
-########## Admin Views ##########
-class UploadGradesView(admin.BaseView):
-	@admin.expose('/', methods=['GET','POST'])
-	def index(self):
-		if request.method == 'POST':
-			form = forms.UploadGradesForm()
-			if not form.validate():
-				flash('You forgot to choose a file or you choose a file with an extension that is not allowed.','warning')
-				return self.render('adminuploadgrades.html', user = current_user)
-			file = request.files['csv_file']
-			if file and allowed_file(file.filename):
-				filename = secure_filename(file.filename)
-				file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-				success = csvparser.load_grade_csv(filename)
-				if success:
-					flash('Grades uploaded!','success')
-				else: 
-					flash('No assignment with that name.', 'warning')
-				return self.render('adminuploadgrades.html', user = current_user)
-		else: 
-			return self.render('adminuploadgrades.html', user = current_user)
-			
-	def is_accessible(self):
-		try:
-			is_admin_user = current_user.user_id == 1
-			if is_admin_user:
-				return True
-			else:
-				flash('You don\'t have permission to access the administrative settings!', 'warning')
-		except:
-			flash('You don\'t have permission to access administrative settings!', 'warning')
-
-class AddAssignmentsView(admin.BaseView):
-	@admin.expose('/', methods=['GET','POST'])
-	def index(self):
-		if request.method == 'POST':
-			form = forms.AddAssignmentForm(request.form)
-			if form.validate() == False: 
-				flash('All fields are required.','warning')
-				return self.render('adminaddassignment.html',  user=current_user)
-			else:
-				assigned_on = form.assigned_on.data
-				assigned_on_split = assigned_on.split('-')
-				assigned_on = datetime.datetime(int(assigned_on_split[2]),int(assigned_on_split[1]),int(assigned_on_split[0]))
-				due_on = form.due_on.data
-				due_on_split = due_on.split('-')
-				due_on = datetime.datetime(int(due_on_split[2]),int(due_on_split[1]),int(due_on_split[0]))
-				link = form.link.data
-				description = form.description.data
-				category = form.category.data
-				group = form.group.data
-				title = form.title.data
-				new_assignment = model.add_assignment(assigned_on,due_on,link,description,max_points,category,group,title)
-				flash('Assignment added!','success')
-				return self.render('adminaddassignment.html', user=current_user)
-		else:
-			return self.render('adminaddassignment.html', user=current_user)
-
-	def is_accessible(self):
-		try:
-			is_admin_user = current_user.user_id == 1
-			if is_admin_user:
-				return True
-		except:
-			pass
-
-# class MyModelView(BaseModelView):
-#     pass
-
-admin = admin.Admin()
-admin.add_view(UploadGradesView(category='Grades'))
-admin.add_view(AddAssignmentsView(category='Assignments'))
-admin.init_app(app)
-
-# admin.add_view(MyView(name="Upload Grades"))
-# path = op.join(op.dirname(__file__), 'static')
-# admin.add_view(FileAdmin(path, '/static/', name='Static Files'))
-########## end Admin Views ##########
 
 ########## File Upload Setup ##########
 UPLOAD_FOLDER = '/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades'
