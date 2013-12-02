@@ -22,7 +22,7 @@ Laura wants to assign blog posts to students, so students will have their own ma
 Featured and recent blogs: 
 ![](/static/ss/3.png)
 
-Search blogs by student: 
+Search blogs by student (I searched for "K"): 
 ![](/static/ss/4.png)
 
 Pagination: 
@@ -34,22 +34,36 @@ Comments:
 Add a post with live preview and auto-save: 
 ![](/static/ss/7.png)
 
+User view of blog post: 
+![](/static/ss/8.png)
+
 Grades
 ======
 
 Students will be able to view and interact with a visualization of their grade for the class. 
 
+Grades view: 
+![](/static/ss/9.png)
+
+"What if?": 
+![](/static/ss/10.png)
+![](/static/ss/11.png)
+
+
 Notes 
 =====
 
-Students will be able to view and download lecture notes. 
+Students can view and download lecture notes.
 
-Class Stats
-===========
+Will show previews of notes (as opposed to my resume) when Amazon S3 is implemented. 
 
-Students will be able to view how their class stacks up against the rest through interactive data visualizations. 
+Search by date: 
+![](/static/ss/12.png)
 
-...and hopefully more!
+Recent notes: 
+![](/static/ss/13.png)
+![](/static/ss/14.png)
+
 
 Build Instructions
 ==================

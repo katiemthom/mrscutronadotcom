@@ -17,7 +17,6 @@ class CommentForm(Form):
 class AddPostForm(Form):
 	post_content = TextField('Content', [validators.Required()])
 	post_title = TextField('Content', [validators.Required()])
-	post_date = TextField('Post Date', [validators.Required()])
 
 class EditPostForm(Form):
 	new_content = TextField('Content', [validators.Required()])
