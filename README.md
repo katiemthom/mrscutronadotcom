@@ -8,6 +8,9 @@ Users
 
 Laura will be the admin user on the site.  Her students will be the users. 
 
+Landing page, signed in as admin: 
+![Signed in as admin.](/static/ss/1.png)
+
 Blogs
 =====
 
