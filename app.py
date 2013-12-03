@@ -407,7 +407,7 @@ def process_edit(post_pk):
 def delete_post(post_pk): 
 	post = model.get_post_by_pk(post_pk)
 	post.is_deleted = True 
-	model.sesh.commit()
+	sesh.commit()
 	return redirect(url_for("show_blog",author_id=current_user.user_id))
 
 @app.route('/addpostajax', methods=['POST'])
