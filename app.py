@@ -478,7 +478,6 @@ def calc_grade():
 	cwh_grade = round(grades[0])
 	mk_grade = round(grades[2])
 	ak_grade = round(grades[1])
-	print grades
 	filename = "/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/gradesbyuser/data_" + str(current_user.user_id)
 	csvname = "/static/gradesbyuser/data_" + str(current_user.user_id)
 	f = open(filename,'w+')
