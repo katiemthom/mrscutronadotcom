@@ -133,6 +133,11 @@
 	width: 120px ;
 }
 
+#send-textarea {
+	width: 250px;
+	height: 200px;
+}
+
 @font-face {
   font-family: 'Quando';
   font-style: normal;

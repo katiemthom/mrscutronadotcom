@@ -443,7 +443,7 @@ def delete_comment(comment_pk):
 	comment = model.get_comment_by_pk(comment_pk)
 	comment.is_deleted = True 
 	comment.post.comment_count -= 1 
-	model.sesh.commit()
+	sesh.commit()
 	return redirect(url_for("show_post",post_pk=comment.post_pk))
 ########## end comment views ##########
 

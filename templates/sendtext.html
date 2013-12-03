@@ -12,8 +12,8 @@
 <!-- ********** ADD PHONE FORM ********** -->
 <div id="phone-number">
 	<form action='{{url_for('send_text')}}' method=post>
+		<textarea type="textarea" class='form-control' name='text_content' placeholder="Here is a hint on your homework tonight..." id="send-textarea"></textarea>
 		<br>
-		<p><input type="textarea" class='form-control' name='text_content'></input></p>
 		<p><button type="submit" class="btn btn-default">Send</button></p>
 	</form>
 </div>
