@@ -5,43 +5,43 @@ Mrscutronadotcom is a web application I am building for a fantastic friend and A
 
 Mrscutronadotcome is written with Python, Flask, Javascript, AJAX, D3, and the Twilio API.
 
-#Grades
+##Grades
 
-##Grades view: 
-![](/static/ss/9.png)
-
-##"What if?": 
-![](/static/ss/10.png)
-![](/static/ss/11.png)
-
-##gradeschart.js
+####gradeschart.js
 
 Uses AJAX to retrieve student grade data and D3 to visualize the data.  Data is graphed in layers and scaled according to the amount of data.  Implements interactive "What If?" feature where students can select from a variety of outcomes for future assignments and see how their grade is affected. 
 
-##csvparser.py
+####csvparser.py
 
-Parses grade files exported from Laura's gradebook and enters individual grades into the database. 
+Parses grade files exported from Laura's gradebook and enters individual grades into the database.
 
-#Blogs
+####Grades view: 
+![](/static/ss/9.png)
+
+####"What if?": 
+![](/static/ss/10.png)
+![](/static/ss/11.png) 
+
+##Blogs
 
 Blogging functionality includes searching by user, editing and deleting comments and posts, add post live preview and autosave. 
 
-##post.js, addpost.js
+####post.js, addpost.js
 
 Uses AJAX to allow students to comment on posts and edit comments.  
 
 Uses the browser session and AJAX to auto-save posts, and markdown for styling. 
 
 
-##Featured and recent blogs view: 
+####Featured and recent blogs view: 
 ![](/static/ss/3.png)
 
-##Add post view: 
+####Add post view: 
 ![](/static/ss/7.png)
 
-#Build Instructions
+##Build Instructions
 
-##Environment 
+####Environment 
 
 You'll need virtualenv for this.  If you don't have it, run the following in your project folder: 
 
@@ -55,15 +55,13 @@ This installs virtualenv, creates the env folder in your project folder with a l
 <pre><code>(env)$ pip install -r requirements.txt
 </code></pre>
 
-##Database
+####Database
 
 To run the postgres server: download and run [postgres.app](http://postgresapp.com/) (for mac). 
 
 Follow the instructions to set up postgres app (especially about setting your path).  
 
-###Create database:
-
-First in PostgreSQL:
+Create the database, first in PostgreSQL:
 
 <pre><code>$ psql
 # CREATE DATABASE mrscdb;
@@ -75,7 +73,7 @@ Then in Python (make sure your virtualenv is activated):
 (env)$ create_db()
 </code></pre>
 
-##Finally, run the app: 
+####Finally, run the app: 
 
 <pre><code>(env)$ python app.py
 </code></pre>
