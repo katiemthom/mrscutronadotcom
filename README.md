@@ -45,16 +45,14 @@ Uses the browser session and AJAX to auto-save posts, and markdown for styling.
 
 You'll need virtualenv for this.  If you don't have it, run the following in your project folder: 
 
-<pre><code>
-$ pip install virtualenv
+<pre><code>$ pip install virtualenv
 $ virtualenv env
 $ . env/bin/activate 
 </code></pre>
 
 This installs virtualenv, creates the env folder in your project folder with a local copy of python, activates the virtual environment. Then, install the requirements via pip: 
 
-<pre><code>
-(env)$ pip install -r requirements.txt
+<pre><code>(env)$ pip install -r requirements.txt
 </code></pre>
 
 ##Database
@@ -67,22 +65,19 @@ Follow the instructions to set up postgres app (especially about setting your pa
 
 First in PostgreSQL:
 
-<pre><code>
-$ psql
+<pre><code>$ psql
 # CREATE DATABASE mrscdb;
 </code></pre>
 
 Then in Python (make sure your virtualenv is activated): 
 
-<pre><code>
-(env)$ python -i model.py
+<pre><code>(env)$ python -i model.py
 (env)$ create_db()
 </code></pre>
 
 ##Finally, run the app: 
 
-<pre><code>
-(env)$ python app.py
+<pre><code>(env)$ python app.py
 </code></pre>
 
 Point your browser to: localhost:5000.
