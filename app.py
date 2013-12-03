@@ -187,7 +187,6 @@ def add_assignment():
 			group = form.group.data
 			title = form.title.data
 			new_assignment = model.add_assignment(assigned_on,due_on,link,description,category,group,title)
-			flash('Assignment added!','success')
 			return redirect('assignmentlist')
 	else:
 		return render_template('addassignment.html', user=current_user)
