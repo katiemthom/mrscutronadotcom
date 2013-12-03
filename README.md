@@ -1,74 +1,45 @@
 mrscutronadotcom
 ================
 
-mrscutronadotcom is a web app I'm building for my friend Laura, who teaches Algebra II at a public charter high school in San Francisco.  It is also my Hackbright Academy final project. 
+Mrscutronadotcom is a web application I am building for a fantastic friend and Algebra II teacher, Laura Cutrona. This project was inspired by my time in the classroom as a math teacher at Ocala Middle School and Metropolitan Arts and Tech High School.  With this application, Mrs. Cutrona will be able to assign blog posts as homework or in-class assignments as well as send mass texts to students ("don't forget--quiz tomorrow!"), and students will be able to view interactive grade visualizations as well as download class notes.  There are more features to come!  This is a work in progress, and will be put into production January 2014. 
 
-Users
-=====
+Mrscutronadotcome is written with Python, Flask, Javascript, AJAX, D3, and the Twilio API.
 
-Laura will be the admin user on the site.  Her students will be the users. Users can upload profile pictures. 
+#Grades
 
-Landing page, signed in as admin: 
-![Signed in as admin.](/static/ss/1.png)
-
-Landing page, signed in as student: 
-![Signed in as user.](/static/ss/2.png)
-
-Blogs
-=====
-
-Laura wants to assign blog posts to students, so students will have their own math blogs.  They will be able to comment on each others' blogs, as well as edit their own comments and posts. 
-
-Featured and recent blogs: 
-![](/static/ss/3.png)
-
-Search blogs by student (I searched for "K"): 
-![](/static/ss/4.png)
-
-Pagination: 
-![](/static/ss/5.png)
-
-Comments: 
-![](/static/ss/6.png)
-
-Add a post with live preview and auto-save: 
-![](/static/ss/7.png)
-
-User view of blog post: 
-![](/static/ss/8.png)
-
-Grades
-======
-
-Students will be able to view and interact with a visualization of their grade for the class. 
-
-Grades view: 
+##Grades view: 
 ![](/static/ss/9.png)
 
-"What if?": 
+##"What if?": 
 ![](/static/ss/10.png)
 ![](/static/ss/11.png)
 
+##gradeschart.js
 
-Notes 
-=====
+Uses AJAX to retrieve student grade data and D3 to visualize the data.  Data is graphed in layers and scaled according to the amount of data.  Implements interactive "What If?" feature where students can select from a variety of outcomes for future assignments and see how their grade is affected. 
 
-Students can view and download lecture notes.
+##csvparser.py
 
-Will show previews of notes (as opposed to my resume) when Amazon S3 is implemented. 
+Parses grade files exported from Laura's gradebook and enters individual grades into the database. 
 
-Search by date: 
+#Blogs
 
-![](/static/ss/12.png)
+Blogging functionality includes searching by user, editing and deleting comments and posts, add post live preview and autosave. 
 
-Recent notes: 
+##post.js, addpost.js
 
-![](/static/ss/13.png)
-![](/static/ss/14.png)
+Uses AJAX to allow students to comment on posts and edit comments.  
+
+Uses the browser session and AJAX to auto-save posts, and markdown for styling. 
 
 
-Build Instructions
-==================
+##Featured and recent blogs view: 
+![](/static/ss/3.png)
+
+##Add post view: 
+![](/static/ss/7.png)
+
+#Build Instructions
 
 To run the postgres server: download and run [postgres.app](http://postgresapp.com/) (for mac). 
 
