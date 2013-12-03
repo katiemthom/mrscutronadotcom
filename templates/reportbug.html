@@ -3,12 +3,20 @@
 
 <div class='container'>
 
+	<br>
+
+	<div class="well" id='search-well'>
+
+	<div class="page-header">
+		<h1>Report a Bug</h1>
+	</div>
+
 	<!-- ********** REPORT BUG FORM ********** -->
 	<form action='{{url_for('report_bug')}}' method=post>
+		<p><input class='form-control' name='page' id="reportbug-input" placeholder='What page is the bug on?'></input></p>
+		<p><textarea type='textarea' id="reportbug-textarea" class='form-control' name='bug' placeholder='Describe the bug is as much detail as you can...'></textarea></p>
 		<br>
-		<p><input class='form-control' name='page' placeholder='What page is the bug on?'></input></p>
-		<p><input type='textarea' class='form-control' name='bug' placeholder='Describe the bug is as much detail as you can...'></input></p>
-		<p><button type="submit" class="btn">Send</button></p>
+		<p><button type="submit" class="btn btn-default">Send</button></p>
 	</form>
 	<!-- ********** END REPORT BUG FORM ********** -->
 
@@ -21,7 +29,9 @@
   		{% endif %}
   	{% endwith %}
   	<!-- ********** END FLASHED MESSAGES ********** -->
-  	
+  		
+  	</div>
+
 </div>	
 
 {% endblock %}

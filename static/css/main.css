@@ -138,6 +138,15 @@
 	height: 200px;
 }
 
+#reportbug-textarea {
+	width: 300px;
+	height: 300px;
+}
+
+#reportbug-input {
+	width: 300px;
+}
+
 @font-face {
   font-family: 'Quando';
   font-style: normal;
