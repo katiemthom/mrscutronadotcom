@@ -285,7 +285,10 @@ function load_main_chart () {
 				.attr("width", x.rangeBand())
 				.attr("y", function(d) { return y(d.y1); })
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
-				.on("mouseover", function(){d3.select(this).style("cursor", "pointer");})
+				.on("mouseover", function(){
+					d3.select(this).style("cursor", "pointer");
+					
+				})
 				.style("fill", "transparent");
 		// ***************** END FIRST CALLBACK *****************
 		});
