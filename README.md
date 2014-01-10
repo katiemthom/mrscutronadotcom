@@ -16,11 +16,11 @@ Uses AJAX to retrieve student grade data and D3 to visualize the data.  Data is 
 Parses grade files exported from Laura's gradebook and enters individual grades into the database.
 
 ####Grades view: 
-![](/static/ss/9.png)
+![](static/ss/9.png)
 
 ####"What if?": 
-![](/static/ss/10.png)
-![](/static/ss/11.png) 
+![](static/ss/10.png)
+![](static/ss/11.png) 
 
 ##Blogs
 
@@ -34,10 +34,10 @@ Uses the browser session and AJAX to auto-save posts, and markdown for styling.
 
 
 ####Featured and recent blogs view: 
-![](/static/ss/3.png)
+![](static/ss/3.png)
 
 ####Add post view: 
-![](/static/ss/7.png)
+![](static/ss/7.png)
 
 ##Build Instructions
 
