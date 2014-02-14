@@ -5,7 +5,7 @@ from model import User, session as sesh
 from flask.ext.mail import Message, Mail 
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
-from twilio.rest import TwilioRestClient
+# from twilio.rest import TwilioRestClient
 
 import os.path as op
 import model
@@ -24,9 +24,9 @@ Markdown(app)
 ########## end Flask Setup ##########
 
 ########## Twilio Setup ##########
-account_sid = "AC3901c5cf385356b4ab1bf0684c5751c8"
-auth_token  = "7f1b4dd329c1aa6bfa87b0aa4a669a94"
-client = TwilioRestClient(account_sid, auth_token)
+# account_sid = "AC3901c5cf385356b4ab1bf0684c5751c8"
+# auth_token  = "7f1b4dd329c1aa6bfa87b0aa4a669a94"
+# client = TwilioRestClient(account_sid, auth_token)
 
 # try:
 #     client = twilio.rest.TwilioRestClient(account_sid, auth_token)
@@ -227,40 +227,41 @@ def find_notes():
 @app.route('/uploadnotes', methods=['GET', 'POST'])
 def upload_notes():
 	if request.method == "POST":
-		try: 
-			print "in try"
-			if current_user.is_admin_user: 
-				print "is admin"
-				if request.method == 'POST':
-					print "if post"
-					form = forms.UploadNotesForm()
-					if not form.validate():
-						flash('All fields are required.  Notes can only be pdf files.','warning')
-						return render_template('uploadnotes.html', user=current_user)
-					file = request.files['notes_file']
-					if file and allowed_file_notes(file.filename):
-						print "if file"
-						print file.filename
-						filename = secure_filename(file.filename)
-						print filename
-						print app.config['UPLOAD_FOLDER_NOTES']
-						file.save(os.path.join(app.config['UPLOAD_FOLDER_NOTES'], filename))
-						description = form.description.data
-						created_on = form.created_on.data
-						created_on_split = created_on.split('-')
-						created_on = datetime.datetime(int(created_on_split[2]),int(created_on_split[1]),int(created_on_split[0]))
-						link =  "/static/notes/" + filename
-						new_notes = model.add_notes(link=link,created_on=created_on,description=description)
-						flash('Notes uploaded!','success')
-						return render_template('uploadnotes.html', user=current_user)
-				else: 
-					return render_template('uploadnotes.html', user=current_user)
+		# try: 
+		# 	print "in try"
+		# 	if current_user.is_admin_user: 
+		# 		print "is admin"
+		# 		if request.method == 'POST':
+		# 			print "if post"
+		form = forms.UploadNotesForm()
+		if not form.validate():
+			flash('All fields are required.  Notes can only be pdf files.','warning')
+			return render_template('uploadnotes.html', user=current_user)
+					# file = request.files['notes_file']
+					# if file and allowed_file_notes(file.filename):
+					# print "if file"
+					# print file.filename
+					# filename = secure_filename(file.filename)
+					# print filename
+					# print app.config['UPLOAD_FOLDER_NOTES']
+					# file.save(os.path.join(app.config['UPLOAD_FOLDER_NOTES'], filename))
+		description = form.description.data
+		created_on = form.created_on.data
+		created_on_split = created_on.split('-')
+		created_on = datetime.datetime(int(created_on_split[2]),int(created_on_split[1]),int(created_on_split[0]))
+		filename = form.notes_file.data
+		link =  "https://www.dropbox.com/sh/q2e8gjmi9bm5gr7/ebpSLR6lcC/" + filename
+		new_notes = model.add_notes(link=link,created_on=created_on,description=description)
+		flash('Notes uploaded!','success')
+		return render_template('uploadnotes.html', user=current_user)
+				# else: 
+				# 	return render_template('uploadnotes.html', user=current_user)
 			# else:
 			# 	flash('You don\'t have permission to access that page.', 'warning')
 			# 	return render_template('index.html', user=current_user)
-		except:
-			flash('You don\'t have permission to access that page.', 'warning')
-			return render_template('index.html', user=current_user)
+		# except:
+		# 	flash('You don\'t have permission to access that page.', 'warning')
+		# 	return render_template('index.html', user=current_user)
 	else:
 		return render_template('uploadnotes.html', user=current_user)
 
@@ -504,7 +505,8 @@ def show_mark():
 ########## signup views ##########
 @app.route('/signup')
 def sign_up():
-	return render_template('signup.html', user=current_user)
+	form = forms.SignupForm()
+	return render_template('signup.html', user=current_user, form =form)
 
 @app.route('/signup', methods=['POST'])
 def process_sign_up():
@@ -527,18 +529,20 @@ def process_sign_up():
 		validate_password = form.pw_validation.data
 		period = form.period.data
 		school_id = form.school_id.data
+		profile_pic = form.profile_pic.data
+		print profile_pic
 		if password != validate_password:
 			flash('Passwords do not match.')
 			return render_template('signup.html', user=current_user, first=first_name
 				, last=last_name,email=email, school_id=school_id)
-		file = request.files['file']
-		if file and allowed_img_file(file.filename):
-			filename = secure_filename(file.filename)
-			file.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
-			profile_pic =  "/static/profile_pics/" + filename
-			new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id),profile_pic)
-		else:
-			new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
+		# file = request.files['file']
+		# if file and allowed_img_file(file.filename):
+		# 	filename = secure_filename(file.filename)
+		# 	file.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
+		# 	profile_pic =  "/static/profile_pics/" + filename
+		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id),profile_pic)
+		# else:
+		# 	new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
 		login_user(new_user)
 		return render_template('index.html',user=new_user)
 

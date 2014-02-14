@@ -1,4 +1,4 @@
-from wtforms import TextField, TextAreaField, SubmitField, PasswordField, validators, IntegerField
+from wtforms import TextField, TextAreaField, SubmitField, PasswordField, validators, IntegerField, RadioField
 from wtforms import SelectField
 from flask_wtf import Form
 from flask_wtf.file import FileField
@@ -32,7 +32,9 @@ class SignupForm(Form):
 	pw_validation = TextField('Validate', [validators.Required()])
 	school_id = TextField('SchoolId', [validators.Length(min=4,max=4)])
 	period = SelectField('Class Period', choices=[('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
-	profile_picture = FileField('Image File')
+	profile_pic = RadioField('ProfileImage', choices=[('/static/profile_pics/cat1.png','<img class="media-object" src="/static/profile_pics/cat1.png">'),('/static/profile_pics/cat2.png','<img class="media-object" src="/static/profile_pics/cat2.png">'),('/static/profile_pics/cat3.png','<img class="media-object" src="/static/profile_pics/cat3.png">')])
+	# profile_pic = TextField('Profile Picture')
+
 
 class AddAssignmentForm(Form):
 	assigned_on = TextField("Assigned On", [validators.Required()])
@@ -47,7 +49,7 @@ class UploadGradesForm(Form):
 	csv_file = FileField("CSV", [validators.Required()])
 
 class UploadNotesForm(Form):
-	notes_file = FileField("PDF", [validators.Required()])
+	notes_file = TextField("PDF", [validators.Required()])
 	created_on = TextField("Created On", [validators.Required()])
 	description = TextField("Description", [validators.Required()])
 

@@ -106,7 +106,6 @@ function create_data() {
 		}
 		TOTALGrades.push(gradesDict[i]);
 	};
-
 }
 
 // ***************** LOADS MAIN GRADE CHART *****************
