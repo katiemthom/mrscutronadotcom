@@ -128,6 +128,7 @@ def upload_img():
 				file = request.files['csv_file']
 				if file and allowed_file(file.filename):
 					# filename = secure_filename(file.filename)
+					print "hello1"
 					bucket = s3.create_bucket('mrscutronagrades'+str(time.time()))
 					k = Key(bucket)
 					k.key = 'grades file'
