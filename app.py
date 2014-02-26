@@ -5,6 +5,8 @@ from model import User, session as sesh
 from flask.ext.mail import Message, Mail 
 from flaskext.markdown import Markdown
 from werkzeug import secure_filename
+from boto.s3.connection import S3Connection
+from boto.s3.key import Key
 # from twilio.rest import TwilioRestClient
 
 import os.path as op
@@ -15,12 +17,16 @@ import forms
 import datetime
 import csvparser
 import json
+import csv
+import time
 ########## end Import ##########
 
 ########## Flask Setup ##########
 app = Flask(__name__)
 app.config.from_object(config)
 Markdown(app)
+s3 = S3Connection(config.aws_access_key_id, config.aws_secret_access_key)
+
 ########## end Flask Setup ##########
 
 ########## Twilio Setup ##########
@@ -121,9 +127,16 @@ def upload_img():
 					return render_template('uploadgrades.html', user=current_user)
 				file = request.files['csv_file']
 				if file and allowed_file(file.filename):
-					filename = secure_filename(file.filename)
-					file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-					csvparser.load_grade_csv(filename)
+					# filename = secure_filename(file.filename)
+					bucket = s3.create_bucket('mrscutronagrades'+str(time.time()))
+					k = Key(bucket)
+					k.key = 'grades file'
+					print "hello"
+					k.set_contents_from_filename('/Users/katiemthom/Downloads/a.csv')
+					contents = k.get_contents_as_string()
+					print contents
+					# file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+					# csvparser.load_grade_csv(filename)
 					flash('Grades uploaded!','success')
 					return render_template('uploadgrades.html', user=current_user)
 			else: 
