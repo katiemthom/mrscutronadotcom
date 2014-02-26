@@ -25,7 +25,7 @@ import time
 app = Flask(__name__)
 app.config.from_object(config)
 Markdown(app)
-s3 = S3Connection(ENV['aws_access_key_id'], ENV['aws_secret_access_key'])
+s3 = S3Connection(os.environ['aws_access_key_id'], os.environ['aws_secret_access_key'])
 
 ########## end Flask Setup ##########
 
