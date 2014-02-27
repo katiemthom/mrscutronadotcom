@@ -126,8 +126,9 @@ def upload_img():
 					flash('You forgot to choose a file or you choose a file with an extension that is not allowed.','warning')
 					return render_template('uploadgrades.html', user=current_user)
 				# GET URL
+				n = form.csv_file.data
 				b = s3.get_bucket('mrscutronagrades')
-				k = b.get_key('a.csv')
+				k = b.get_key(n)
 				contents = k.get_contents_as_string()
 				print contents
 				# file = request.files['csv_file']
