@@ -4,6 +4,7 @@ from datetime import date
 import datetime
 import time
 import urllib
+import sys
 
 def load_period_2():
     with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/student_data/period2.txt","rb") as f:
@@ -46,9 +47,9 @@ def load_grade_csv(csv_file):
     for row in reader:
         # if row == []:
         #     continue
-        print "row"
-        print "\n"
-        print row
+        sys.stdout("row")
+        sys.stdout("\n")
+        sys.stdout(row)
         data = row.split(',')
         if recording:
             student_id = int(data[0].strip())
@@ -66,10 +67,10 @@ def load_grade_csv(csv_file):
             except:
                 return False 
         else: 
-            print "in else"
-            print "\n"
-            print "data"
-            print data
+            # print "in else"
+            # print "\n"
+            # print "data"
+            # print data
             if data[0].strip() == "Assignment Name:":
                 title = data[1][1:-1].strip()
             if data[0].strip() == "Student ID":
