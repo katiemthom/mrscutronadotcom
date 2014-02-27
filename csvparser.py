@@ -45,12 +45,12 @@ def load_grade_csv(csv_file):
     reader=csv_file.split("\r")
     # recording = False
     for row in reader:
-        print row
-        print row[0]
-        print row[0].strip()
-        print row[0].strip()[1]
-        return
-        if row[0].strip()[0] == "x":
+        # print row[]
+        # print row[0]
+        # print row[0].strip()
+        # print row[0].strip()[1]
+        # return
+        if row[0].strip() == "x":
             print "x found"
             return
         if row == []:
