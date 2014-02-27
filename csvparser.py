@@ -21,11 +21,11 @@ def load_period_2():
 
 def upload_grades(csv_string):
     rows = csv_string.split("\n") 
-    header_row = row[1].split(",")
+    header_row = rows[1].split(",")
     grades_dict = {}
     for i in range(4, len(header_row)):
         grades_dict[header_row[i].strip()] = {}
-        print header_row[i]
+        print header_row[i] + "\n"
     print grades_dict
     return    
 
