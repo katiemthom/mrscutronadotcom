@@ -46,6 +46,9 @@ def load_grade_csv(csv_file):
     for row in reader:
         # if row == []:
         #     continue
+        print "row"
+        print "\n"
+        print row
         data = row.split(',')
         if recording:
             student_id = int(data[0].strip())
