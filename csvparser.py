@@ -47,9 +47,6 @@ def load_grade_csv(csv_file):
         if row == []:
             continue
         data = row.split(',')
-        print "data"
-        print "\n"
-        print data
         if recording:
             student_id = int(data[0].strip())
             try: 
@@ -66,6 +63,10 @@ def load_grade_csv(csv_file):
             except:
                 return False 
         else: 
+            print "in else"
+            print "\n"
+            print "data"
+            print data
             if data[0].strip() == "Assignment Name:":
                 title = data[1][1:-1].strip()
             if data[0].strip() == "Student ID":
