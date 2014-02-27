@@ -21,6 +21,10 @@ def load_period_2():
 
 def upload_grades(csv_string):
     rows = csv_string.split("\n") 
+    print "rows"
+    print "\n"
+    print rows
+    print "\n"
     header_row = rows[1].split(",")
     print header_row
     print "\n"
