@@ -42,14 +42,14 @@ def upload_grades(csv_string):
 def load_grade_csv(csv_file):
     print "opened file"
     reader=csv_file.split("\n")
-    print "reader"
-    print "\n"
-    print reader
     recording = False
     for row in reader:
         if row == []:
             continue
         data = row[0].split(',')
+        print "data"
+        print "\n"
+        print data
         if recording:
             student_id = int(data[0].strip())
             try: 
