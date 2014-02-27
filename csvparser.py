@@ -76,11 +76,11 @@ def load_grade_csv(csv_file):
             # print "\n"
             # print "data"
             # print data
-            print "not recording"
-            print data[0].strip()
-            return
             if data[0].strip() == "Assignment Name:":
+                print "reached assignment name"
                 title = data[1][1:-1].strip()
+                print title
+                return
             if data[0].strip() == "Student ID":
                 recording = True
     model.session.commit()
