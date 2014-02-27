@@ -46,7 +46,7 @@ def load_grade_csv(csv_file):
     for row in reader:
         if row == []:
             continue
-        data = row[0].split(',')
+        data = row.split(',')
         print "data"
         print "\n"
         print data
