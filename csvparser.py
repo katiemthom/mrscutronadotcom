@@ -22,10 +22,13 @@ def load_period_2():
 def upload_grades(csv_string):
     print "in upload_grades"
     rows = csv_string.split("\n") 
+    print rows
     header_row = row[1].split(",")
+    print header_row
     grades_dict = {}
     for i in range(4, len(header_row)):
         grades_dict[header_row[i]] = {}
+        print header_row[i]
     print grades_dict
     return    
 
