@@ -42,16 +42,16 @@ def upload_grades(csv_string):
 def load_grade_csv(csv_file):
     print "opened file"
     reader=csv_file.split("\n")
+    print "reader"
+    print "\n"
+    print reader
     recording = False
     for row in reader:
-        print "going through rows, e.g."
-        print row
         if row == []:
             continue
         data = row[0].split(',')
         if recording:
             student_id = int(data[0].strip())
-            print student_id
             try: 
                 value = float(data[3][1:-1])
             except: 
@@ -68,7 +68,6 @@ def load_grade_csv(csv_file):
         else: 
             if data[0].strip() == "Assignment Name:":
                 title = data[1][1:-1].strip()
-                print title
             if data[0].strip() == "Student ID":
                 recording = True
     model.session.commit()
