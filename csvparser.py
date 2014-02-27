@@ -50,6 +50,7 @@ def load_grade_csv(csv_file):
         print "row"
         print "\n"
         print row
+        return
         data = row.split(',')
         if recording:
             student_id = int(data[0].strip())
