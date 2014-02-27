@@ -41,6 +41,7 @@ def upload_grades(csv_string):
     return    
 
 def load_grade_csv(csv_file):
+    c = 0
     print "opened file"
     reader=csv_file.split("\n")
     recording = False
@@ -51,11 +52,13 @@ def load_grade_csv(csv_file):
         # print "\n"
         # print row
         data = row.split(',')
-        # print "\n"
-        # print "data"
-        # print "\n"
-        # print data
-        # return
+        print "\n"
+        print "data"
+        print "\n"
+        print data
+        c += 1
+        if c == 4: 
+            return
         if recording:
             student_id = int(data[0].strip())
             try: 
