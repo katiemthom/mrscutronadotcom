@@ -125,17 +125,21 @@ def upload_img():
 				if not form.validate():
 					flash('You forgot to choose a file or you choose a file with an extension that is not allowed.','warning')
 					return render_template('uploadgrades.html', user=current_user)
-				file = request.files['csv_file']
-				if file and allowed_file(file.filename):
-					# filename = secure_filename(file.filename)
-					print "hello1"
-					bucket = s3.create_bucket('mrscutronagrades'+str(time.time()))
-					k = Key(bucket)
-					k.key = 'grades file'
-					print "hello"
-					k.set_contents_from_filename('/Users/katiemthom/Downloads/a.csv')
-					contents = k.get_contents_as_string()
-					print contents
+				# GET URL
+				b = s3.get_bucket('mrscutronagrades')
+				k = b.get_key('a.csv')
+				print k
+				# file = request.files['csv_file']
+				# if file and allowed_file(file.filename):
+				# 	# filename = secure_filename(file.filename)
+				# 	print "hello1"
+				# 	bucket = s3.create_bucket('mrscutronagrades'+str(time.time()))
+				# 	k = Key(bucket)
+				# 	k.key = 'grades file'
+				# 	print "hello"
+				# 	k.set_contents_from_filename('/Users/katiemthom/Downloads/a.csv')
+				# 	contents = k.get_contents_as_string()
+				# 	print contents
 					# file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 					# csvparser.load_grade_csv(filename)
 					flash('Grades uploaded!','success')
