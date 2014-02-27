@@ -142,8 +142,8 @@ def upload_img():
 				# 	print contents
 					# file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 					# csvparser.load_grade_csv(filename)
-					flash('Grades uploaded!','success')
-					return render_template('uploadgrades.html', user=current_user)
+				flash('Grades uploaded!','success')
+				return render_template('uploadgrades.html', user=current_user)
 			else: 
 				return render_template('uploadgrades.html', user=current_user)
 		else:
