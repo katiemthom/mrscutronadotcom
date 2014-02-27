@@ -19,6 +19,16 @@ def load_period_2():
         model.session.commit()
         f.close()
 
+def upload_grades(csv_string):
+    print "in upload_grades"
+    rows = csv_string.split("\n") 
+    header_row = row[1].split(",")
+    grades_dict = {}
+    for i in range(4, len(header_row)):
+        grades_dict[header_row[i]] = {}
+    print grades_dict
+    return    
+
 def load_grade_csv(csv_file):
     with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades/" + csv_file,"rb") as f:
         print "opened file"

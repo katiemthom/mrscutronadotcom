@@ -46,7 +46,7 @@ class AddAssignmentForm(Form):
 	group = SelectField('Group', choices=[('0','0'),('1','1'),('2','2'),('3','3'),('4','4')])
 
 class UploadGradesForm(Form):
-	csv_file = FileField("CSV", [validators.Required()])
+	csv_file = TextField("CSV", [validators.Required()])
 
 class UploadNotesForm(Form):
 	notes_file = TextField("PDF", [validators.Required()])
