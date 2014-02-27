@@ -41,11 +41,17 @@ def upload_grades(csv_string):
     return    
 
 def load_grade_csv(csv_file):
-    c = 0
     print "opened file"
     reader=csv_file.split("\n")
-    recording = False
+    # recording = False
     for row in reader:
+        print row
+        print row[0]
+        print row[0].strip()
+        print row[0].strip()[1]
+        if row[0].strip()[1] == "x":
+            print "x found"
+            return
         if row == []:
             continue
         # print "row"
