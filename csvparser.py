@@ -68,6 +68,7 @@ def load_grade_csv(csv_file):
                 print "data"
                 print "\n"
                 print data
+                return
                 title = data[1][1:-1].strip()
             if data[0].strip() == "Student ID":
                 recording = True
