@@ -128,7 +128,8 @@ def upload_img():
 				# GET URL
 				b = s3.get_bucket('mrscutronagrades')
 				k = b.get_key('a.csv')
-				print k
+				contents = k.get_contents_as_string()
+				print contents
 				# file = request.files['csv_file']
 				# if file and allowed_file(file.filename):
 				# 	# filename = secure_filename(file.filename)
