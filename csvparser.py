@@ -5,6 +5,7 @@ import datetime
 import time
 import urllib
 import sys
+import string
 
 def load_period_2():
     with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/student_data/period2.txt","rb") as f:
