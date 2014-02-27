@@ -47,12 +47,13 @@ def load_grade_csv(csv_file):
     for row in reader:
         # print row[]
         # print row[0]
-        print row[0].strip()
+        print row
+        return
         # print row[0].strip()[1]
         # return
-        if row[0:2] == " x":
-            print "x found"
-            return
+        # if row[0:2] == " x":
+        #     print "x found"
+        #     return
         if row == []:
             continue
         # print "row"
