@@ -49,6 +49,7 @@ def load_grade_csv(csv_file):
         print row[0]
         print row[0].strip()
         print row[0].strip()[1]
+        return
         if row[0].strip()[0] == "x":
             print "x found"
             return
