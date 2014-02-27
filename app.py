@@ -545,8 +545,10 @@ def process_sign_up():
 		first_name = form.first_name.data
 		last_name = form.last_name.data
 		email = form.email.data
-		print "email"
-		print email[-10:]
+		if email[-10:] != "es-cat.org":
+			flash('You must use your CAT email.','warning')
+			return render_template('signup.html', user=current_user, first=first_name
+				, last=last_name, school_id=school_id)
 		password = form.password.data
 		validate_password = form.pw_validation.data
 		period = form.period.data
