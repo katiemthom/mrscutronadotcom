@@ -40,41 +40,39 @@ def upload_grades(csv_string):
     return    
 
 def load_grade_csv(csv_file):
-    with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades/" + csv_file,"rb") as f:
-        print "opened file"
-        reader=csv.reader(f,delimiter='\n')
-        recording = False
-        for row in reader:
-            print "going through rows, e.g."
-            print row
-            if row == []:
-                continue
-            data = row[0].split(',')
-            if recording:
-                student_id = int(data[0].strip())
-                print student_id
-                try: 
-                    value = float(data[3][1:-1])
-                except: 
-                    value = 0
-                user = model.get_user_by_school_id(student_id)
-                user_id = user.user_id
-                try: 
-                    assignment = model.get_assignment_by_title(title)
-                    assignment_pk = assignment.assignment_pk
-                    grade = model.add_grade(assignment_pk,value,user_id)
-                    model.session.add(grade)
-                except:
-                    return False 
-            else: 
-                if data[0].strip() == "Assignment Name:":
-                    title = data[1][1:-1].strip()
-                    print title
-                if data[0].strip() == "Student ID":
-                    recording = True
-        model.session.commit()
-        f.close()
-        return True
+    print "opened file"
+    reader=csv_file.split()
+    recording = False
+    for row in reader:
+        print "going through rows, e.g."
+        print row
+        if row == []:
+            continue
+        data = row[0].split(',')
+        if recording:
+            student_id = int(data[0].strip())
+            print student_id
+            try: 
+                value = float(data[3][1:-1])
+            except: 
+                value = 0
+            user = model.get_user_by_school_id(student_id)
+            user_id = user.user_id
+            try: 
+                assignment = model.get_assignment_by_title(title)
+                assignment_pk = assignment.assignment_pk
+                grade = model.add_grade(assignment_pk,value,user_id)
+                model.session.add(grade)
+            except:
+                return False 
+        else: 
+            if data[0].strip() == "Assignment Name:":
+                title = data[1][1:-1].strip()
+                print title
+            if data[0].strip() == "Student ID":
+                recording = True
+    model.session.commit()
+    return True
 
 def load_grades_csv(csv_file):
     with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades/" + csv_file,"rU") as f:

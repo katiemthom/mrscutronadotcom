@@ -130,7 +130,7 @@ def upload_img():
 				b = s3.get_bucket('mrscutronagrades')
 				k = b.get_key(n)
 				contents = k.get_contents_as_string()
-				csvparser.upload_grades(contents)
+				csvparser.load_grade_csv(contents)
 				# file = request.files['csv_file']
 				# if file and allowed_file(file.filename):
 				# 	# filename = secure_filename(file.filename)
