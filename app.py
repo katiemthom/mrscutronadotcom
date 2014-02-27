@@ -547,8 +547,7 @@ def process_sign_up():
 		email = form.email.data
 		if email[-10:] != "es-cat.org":
 			flash('You must use your CAT email.','warning')
-			return render_template('signup.html', user=current_user, first=first_name
-				, last=last_name, school_id=school_id)
+			return render_template('signup.html', user=current_user, first=first_name, last=last_name, school_id=school_id)
 		password = form.password.data
 		validate_password = form.pw_validation.data
 		period = form.period.data
@@ -559,14 +558,7 @@ def process_sign_up():
 			flash('Passwords do not match.')
 			return render_template('signup.html', user=current_user, first=first_name
 				, last=last_name,email=email, school_id=school_id)
-		# file = request.files['file']
-		# if file and allowed_img_file(file.filename):
-		# 	filename = secure_filename(file.filename)
-		# 	file.save(os.path.join(app.config['UPLOAD_FOLDER_PICS'], filename))
-		# 	profile_pic =  "/static/profile_pics/" + filename
 		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id),profile_pic)
-		# else:
-		# 	new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id))
 		login_user(new_user)
 		return render_template('index.html',user=new_user)
 
