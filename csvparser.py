@@ -79,7 +79,7 @@ def load_grade_csv(csv_file):
             print "\n"
             print "data"
             print data[0][1:-1].strip()
-            if data[0].strip() == "Assignment Name:":
+            if data[0][1:-1].strip() == "Assignment Name:":
                 print "reached assignment name"
                 title = data[1][1:-1].strip()
                 print title
