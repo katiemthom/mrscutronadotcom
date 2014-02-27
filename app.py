@@ -536,6 +536,7 @@ def process_sign_up():
 		first_name = form.first_name.data
 		last_name = form.last_name.data
 		email = form.email.data
+		print email[-10:]
 		school_id = form.school_id.data
 		flash('All fields are required.  School ID must be a 4-digit number.','warning')
 		return render_template('signup.html', user=current_user, first=first_name
