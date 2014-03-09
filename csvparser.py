@@ -74,7 +74,6 @@ def load_grade_csv(csv_file):
         else: 
             # give each title an order
             i = string.find(row, ',"')
-            return
             if i != -1: 
                 print row
                 print i
