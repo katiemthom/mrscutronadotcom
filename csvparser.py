@@ -72,10 +72,12 @@ def load_grade_csv(csv_file):
                     # add grade
                     d += 1 
         else: 
+            print "in else"
             # give each title an order
             i = string.find(row, ',"')
             if i != -1: 
                 title = row[i+2:]
+                print title
                 assignment_dict[c] = [title,{}]
                 c += 1
     # now I have everthing and need to add it to the db 
