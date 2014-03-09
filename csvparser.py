@@ -50,9 +50,11 @@ def load_grade_csv(csv_file):
     assignment_dict = {}
     c = 0
     for row in reader:
+        print "for row"
         if row[:4].isdigit():
             recording = True
         if recording: 
+            print "recording"
             # do grade stufff
             data = row.split(',')
             grade = 0
@@ -72,12 +74,13 @@ def load_grade_csv(csv_file):
                     # add grade
                     d += 1 
         else: 
-            print "in else"
+            print "not recording"
+            print row
             # give each title an order
             i = string.find(row, ',"')
+            print i 
             if i != -1: 
                 title = row[i+2:]
-                print title
                 assignment_dict[c] = [title,{}]
                 c += 1
     # now I have everthing and need to add it to the db 
