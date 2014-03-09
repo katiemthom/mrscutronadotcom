@@ -25,7 +25,8 @@ import time
 app = Flask(__name__)
 app.config.from_object(config)
 Markdown(app)
-s3 = S3Connection(os.environ['aws_access_key_id'], os.environ['aws_secret_access_key'])
+# s3 = S3Connection(os.environ['aws_access_key_id'], os.environ['aws_secret_access_key'])
+s3 = S3Connection(config.aws_access_key_id, config.aws_secret_access_key)
 
 ########## end Flask Setup ##########
 
@@ -474,46 +475,43 @@ def show_grades():
 
 @app.route('/gradeinfo')
 def calc_grade():
-	grades = model.calc_grade(current_user.user_id)
-	total_grade = round(grades[0] + grades[1] + grades[2])
-	if total_grade > 100: 
-		letter_grade = "A+"
-	elif total_grade >= 96: 
-		letter_grade = "A"
-	elif total_grade >= 88: 
-		letter_grade = "A-"
-	elif total_grade >= 79: 
-		letter_grade = "B+"
-	elif total_grade >= 71: 
-		letter_grade = "B"
-	elif total_grade >= 63: 
-		letter_grade = "B-"
-	elif total_grade >= 54: 
-		letter_grade = "C+"
-	elif total_grade >= 46: 
-		letter_grade = "C"
-	elif total_grade >= 38: 
-		letter_grade = "C-"
-	else: 
-		letter_grade = "NC"
-	cwh_grade = round(grades[0])
-	mk_grade = round(grades[2])
-	ak_grade = round(grades[1])
-	filename = "/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/gradesbyuser/data_" + str(current_user.user_id)
-	csvname = "/static/gradesbyuser/data_" + str(current_user.user_id)
-	f = open(filename,'w+')
-	f.write("Category,CWH,AK,MK\n")
-	f.write("CWH,"+str(grades[0])+",0,0\n")
-	f.write("AK,0,"+str(grades[1])+",0\n")
-	f.write("MK,0,0,"+str(grades[2])+"\n")
-	f.write("TOTAL,"+str(grades[0])+","+str(grades[1])+","+str(grades[2])+"\n")
-	f.close()
-	allgrades = model.get_grades_by_user_id(current_user.user_id)
-	grades_list = []
-	for grade in allgrades: 
-		grades_list.append({"category": grade.assignment.category, "atitle": grade.assignment.title, "score": grade.value, "date": format_date(grade.assignment.due_on), "pk": grade.grade_pk})
-	grades_json = json.dumps(grades_list)
-	return jsonify({'letter_grade': letter_grade, 'grades_file': csvname, 'grades_dict': grades_json, 'total_grade': total_grade, 'mk_grade': mk_grade, 'ak_grade': ak_grade, 'cwh_grade': cwh_grade})
+	# grades = model.calc_grade(current_user.user_id)
+	# total_grade = round(grades[0] + grades[1] + grades[2])
+	# if total_grade > 100: 
+	# 	letter_grade = "A+"
+	# elif total_grade >= 96: 
+	# 	letter_grade = "A"
+	# elif total_grade >= 88: 
+	# 	letter_grade = "A-"
+	# elif total_grade >= 79: 
+	# 	letter_grade = "B+"
+	# elif total_grade >= 71: 
+	# 	letter_grade = "B"
+	# elif total_grade >= 63: 
+	# 	letter_grade = "B-"
+	# elif total_grade >= 54: 
+	# 	letter_grade = "C+"
+	# elif total_grade >= 46: 
+	# 	letter_grade = "C"
+	# elif total_grade >= 38: 
+	# 	letter_grade = "C-"
+	# else: 
+	# 	letter_grade = "NC"
+	# cwh_grade = round(grades[0])
+	# mk_grade = round(grades[2])
+	# ak_grade = round(grades[1])
+	cwh_grade = 14
+	mk_grade = 36
+	ak_grade = 44
+	letter_grade = "A"
+	# allgrades = model.get_grades_by_user_id(current_user.user_id)
+	# grades_list = []
+	# for grade in allgrades: 
+	# 	grades_list.append({"category": grade.assignment.category, "atitle": grade.assignment.title, "score": grade.value, "date": format_date(grade.assignment.due_on), "pk": grade.grade_pk})
+	# grades_json = json.dumps(grades_list)
+	# return jsonify({'letter_grade': letter_grade, 'grades_file': csvname, 'grades_dict': grades_json, 'total_grade': total_grade, 'mk_grade': mk_grade, 'ak_grade': ak_grade, 'cwh_grade': cwh_grade})
+	# return jsonify({'grades_file': csvname})
+	return jsonify({'letter_grade': letter_grade,'mk_grade': mk_grade, 'ak_grade': ak_grade, 'cwh_grade': cwh_grade})
 ########## end grade views ##########
 
 ########## test views ##########

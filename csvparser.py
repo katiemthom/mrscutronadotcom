@@ -21,82 +21,85 @@ def load_period_2():
         model.session.commit()
         f.close()
 
-def upload_grades(csv_string):
-    rows = csv_string.split("\r") 
-    print "rows"
-    print "\n"
-    print rows
-    print "\n"
-    header_row = rows[1].split(",")
-    print header_row
-    print "\n"
-    print len(header_row)
-    print "\n"
-    print header_row[4]
-    print "\n"
-    grades_dict = {}
-    for i in range(4, len(header_row)):
-        grades_dict[header_row[i].strip()] = {}
-        print header_row[i] + "\n"
-    print grades_dict
-    return    
+# def upload_grades(csv_string):
+#     rows = csv_string.split("\r") 
+#     print "rows"
+#     print "\n"
+#     print rows
+#     print "\n"
+#     header_row = rows[1].split(",")
+#     print header_row
+#     print "\n"
+#     print len(header_row)
+#     print "\n"
+#     print header_row[4]
+#     print "\n"
+#     grades_dict = {}
+#     for i in range(4, len(header_row)):
+#         grades_dict[header_row[i].strip()] = {}
+#         print header_row[i] + "\n"
+#     print grades_dict[]
+#     # need grades need to be added 
+#     # grades dict looks like 
+#     return    
 
 def load_grade_csv(csv_file):
     print "opened file"
     reader=csv_file.split("\r")
     recording = False
+    assignment_dict = {}
+    c = 0
     for row in reader:
-        # print row[]
-        # print row[0]
-        print string.find(row, ',"')
-        # print row[0].strip()[1]
-        # return
-        # look for ,"
-        if row[0:2] == " x":
-            print "x found"
-            return
-        if row == []:
-            continue
-        # print "row"
-        # print "\n"
-        # print row
-        data = row.split(',')
-        # print "\n"
-        # print "data"
-        # print "\n"
-        # print data
-        # c += 1
-        # if c == 5: 
-        #     return
-        if recording:
-            student_id = int(data[0][1:-1].strip())
-            try: 
-                value = float(data[3][1:-1])
-            except: 
-                value = 0
-            user = model.get_user_by_school_id(student_id)
-            user_id = user.user_id
-            try: 
-                assignment = model.get_assignment_by_title(title)
-                assignment_pk = assignment.assignment_pk
-                grade = model.add_grade(assignment_pk,value,user_id)
-                model.session.add(grade)
-            except:
-                return False 
+        if row[:4].isdigit():
+            recording = True
+        if recording: 
+            # do grade stufff
+            data = row.split(',')
+            grade = 0
+            d = 0
+            for j in range(0,len(data)):
+                if j == 0: 
+                    # student id
+                    student_id = int(data[j])
+                elif j > 3:
+                    # grade
+                    if data[j] == '':
+                        grade = 0
+                    else: 
+                        grade = float(data[j])
+                    # get assignment
+                    assignment_dict[d][1][student_id] = grade
+                    # add grade
+                    d += 1 
         else: 
-            # print "in else"
-            # print "\n"
-            # print "data"
-            # print data[0][1:-1].strip()
-            if data[0][1:-1].strip() == "Assignment Name:":
-                # print "reached assignment name"
-                title = data[1][1:-1].strip()
-                # print title
-                # return
-            if data[0][1:-1].strip() == "Student ID":
-                recording = True
+            # give each title an order
+            i = string.find(row, ',"')
+            if i != -1: 
+                title = row[i+2:]
+                assignment_dict[c] = [title,{}]
+                c += 1
+    # now I have everthing and need to add it to the db 
+    for key in assignment_dict.keys():
+        title = assignment_dict[key][0]
+        grades_dict = assignment_dict[key][1]
+        for student_id in grades_dict.keys():
+            value = grades_dict[student_id]
+            print float(value)
+            try:
+                user = model.get_user_by_school_id(student_id)
+                user_id = user.user_id
+                try: 
+                    assignment = model.get_assignment_by_title(title)
+                    assignment_pk = assignment.assignment_pk
+                    grade = model.add_grade(assignment_pk,value,user_id)
+                    model.session.add(grade)
+                except:
+                    pass
+            except:
+                pass
     model.session.commit()
     return True
+
 
 def load_grades_csv(csv_file):
     with open("/Users/katiemthom/Desktop/projects/mrscutronadotcom/static/grades/" + csv_file,"rU") as f:
