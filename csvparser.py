@@ -50,11 +50,9 @@ def load_grade_csv(csv_file):
     assignment_dict = {}
     c = 0
     for row in reader:
-        print "for row"
         if row[:4].isdigit():
             recording = True
         if recording: 
-            print "recording"
             # do grade stufff
             data = row.split(',')
             grade = 0
@@ -74,11 +72,11 @@ def load_grade_csv(csv_file):
                     # add grade
                     d += 1 
         else: 
-            print "not recording"
-            print row
             # give each title an order
             i = string.find(row, ',"')
+            print row
             print i 
+            return
             if i != -1: 
                 title = row[i+2:]
                 assignment_dict[c] = [title,{}]
