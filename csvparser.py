@@ -77,6 +77,7 @@ def load_grade_csv(csv_file):
             if i != -1: 
                 print row
                 print i
+                return
                 title = row[i+2:]
                 print title
                 return
