@@ -44,6 +44,7 @@ def load_period_2():
 #     return    
 
 def load_grade_csv(csv_file):
+    print "in parser"
     reader=csv_file.split("\r")
     recording = False
     assignment_dict = {}
