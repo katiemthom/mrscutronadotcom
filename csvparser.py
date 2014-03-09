@@ -44,7 +44,6 @@ def load_period_2():
 #     return    
 
 def load_grade_csv(csv_file):
-    print "opened file"
     reader=csv_file.split("\r")
     recording = False
     assignment_dict = {}
@@ -84,6 +83,7 @@ def load_grade_csv(csv_file):
         grades_dict = assignment_dict[key][1]
         for student_id in grades_dict.keys():
             value = grades_dict[student_id]
+            print value
             try:
                 user = model.get_user_by_school_id(student_id)
                 user_id = user.user_id
