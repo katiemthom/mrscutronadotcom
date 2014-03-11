@@ -130,6 +130,8 @@ def upload_img():
 				n = form.csv_file.data
 				print n
 				b = s3.get_bucket('mrscutronagrades')
+				print b
+				print "b"
 				k = b.get_key(n)
 				contents = k.get_contents_as_string()
 				csvparser.load_grade_csv(contents)
