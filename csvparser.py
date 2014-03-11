@@ -44,7 +44,7 @@ def load_period_2():
 #     return    
 
 def load_grade_csv(csv_file):
-    print "in parser"
+    csv_file = string.replace(csv_file, "\n", "\r")
     reader=csv_file.split("\r")
     recording = False
     assignment_dict = {}
@@ -75,12 +75,12 @@ def load_grade_csv(csv_file):
             # give each title an order
             i = string.find(row, ',"')
             if i != -1: 
-                print row
-                print i
-                return
+                # print row
+                # print i
+                # return
                 title = row[i+2:]
-                print title
-                return
+                # print title
+                # return
                 assignment_dict[c] = [title,{}]
                 c += 1
     # now I have everthing and need to add it to the db 
