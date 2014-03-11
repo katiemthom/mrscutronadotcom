@@ -128,6 +128,7 @@ def upload_img():
 					return render_template('uploadgrades.html', user=current_user)
 				# GET URL
 				n = form.csv_file.data
+				print n
 				b = s3.get_bucket('mrscutronagrades')
 				k = b.get_key(n)
 				contents = k.get_contents_as_string()
