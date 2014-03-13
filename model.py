@@ -286,7 +286,9 @@ def calc_grade(user_id):
 	for grade in grades:
 		try:
 			category = grade.assignment.category
-		if category:
+		except:
+			category = None
+		if category != None:
 			if category == "CWH":
 				cwh_max += grade.assignment.max_points
 				cwh_val += grade.value
