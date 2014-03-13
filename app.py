@@ -504,7 +504,7 @@ def calc_grade():
 	mk_grade = round(grades[2])
 	ak_grade = round(grades[1])
 	# allgrades = model.get_grades_by_user_id(current_user.user_id)
-	allgrades = model.get_grades_by_user_id(24)
+	allgrades = model.get_grades_by_user_id(10)
 	grades_list = []
 	for grade in allgrades: 
 		print grade.grade_pk
