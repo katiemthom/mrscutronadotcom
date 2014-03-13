@@ -506,6 +506,7 @@ def calc_grade():
 	allgrades = model.get_grades_by_user_id(current_user.user_id)
 	grades_list = []
 	for grade in allgrades: 
+		print grade.grade_pk
 	 	grades_list.append({"category": grade.assignment.category, "atitle": grade.assignment.title, "score": grade.value, "date": format_date(grade.assignment.due_on), "pk": grade.grade_pk})
 	grades_json = json.dumps(grades_list)
 	# return jsonify({'letter_grade': letter_grade, 'grades_file': csvname, 'grades_dict': grades_json, 'total_grade': total_grade, 'mk_grade': mk_grade, 'ak_grade': ak_grade, 'cwh_grade': cwh_grade})
