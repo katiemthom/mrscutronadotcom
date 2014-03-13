@@ -17,7 +17,7 @@ $(document).ready(function() {
 		type: "GET",
 		url: "/gradeinfo"
 	}).done(function( msg ) {
-		// gradesDict = eval(msg['grades_dict']);
+		gradesDict = eval(msg['grades_dict']);
 		load_main_chart();
 		show_main_details();
 		MKGrade = msg['mk_grade'];
@@ -91,7 +91,7 @@ $(document).ready(function() {
 		}
 		$("#cat_details").append("<p class=larger>Total Grade: <span>" + TOTALGrade + "%</span></p>");
 		$("#gradesfor").append("<br>Current Grade: " + TOTALGrade + "% " + msg['letter_grade']);
-		// create_data();
+		create_data();
 	}); 
 	// ***************** WHATIF ****************
 	// $('#what-if-btn').click(function() {
