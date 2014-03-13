@@ -265,7 +265,8 @@ def get_grades_by_user_id(user_id):
 	grades = []
 	for assignment in assignments: 
 		grade = session.query(Grade).filter_by(user_id=user_id).filter_by(assignment_pk=assignment.assignment_pk).first()
-		grades.append(grade)
+		if grade != None:
+			grades.append(grade)
 	return grades
 
 
