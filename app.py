@@ -508,8 +508,6 @@ def calc_grade():
 	for grade in allgrades: 
 	 	grades_list.append({"category": grade.assignment.category, "atitle": grade.assignment.title, "score": grade.value, "date": format_date(grade.assignment.due_on), "pk": grade.grade_pk})
 	grades_json = json.dumps(grades_list)
-	# return jsonify({'letter_grade': letter_grade, 'grades_file': csvname, 'grades_dict': grades_json, 'total_grade': total_grade, 'mk_grade': mk_grade, 'ak_grade': ak_grade, 'cwh_grade': cwh_grade})
-	# return jsonify({'grades_file': csvname})
 	return jsonify({'grades_dict': grades_json, 'letter_grade': letter_grade,'mk_grade': mk_grade, 'ak_grade': ak_grade, 'cwh_grade': cwh_grade})
 ########## end grade views ##########
 
