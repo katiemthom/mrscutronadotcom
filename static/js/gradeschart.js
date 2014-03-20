@@ -237,26 +237,6 @@ function load_main_chart() {
 				.enter().append("g")
 				.on("mouseover", function(d){
 					d3.select(this).style("cursor", "pointer");
-					// $('#category_title').html("");
-					// $('#max_possible').html("");
-					// $('#category_score').html("");
-					// if (d.Category == "CWH") {
-					// 	$('#category_title').append("College Work Habits");
-					// 	$('#max_possible').append("15%");
-					// 	$('#category_score').append(CWHGrade+"%");
-					// } else if (d.Category == "MK") {
-					// 	$('#category_title').append("Mastery of Knowledge");
-					// 	$('#max_possible').append("40%");
-					// 	$('#category_score').append(MKGrade+"%");
-					// } else if (d.Category == "AK") {
-					// 	$('#category_title').append("Application of Knowledge");
-					// 	$('#max_possible').append("45%");
-					// 	$('#category_score').append(AKGrade+"%");
-					// } else if (d.Category == "TOTAL") {
-					// 	$('#category_title').append("Total");
-					// 	$('#max_possible').append("100%");
-					// 	$('#category_score').append(TOTALGrade+"%");
-					// }
 				})
 				.on("click",function(d){
 					$(".cwh-graph").html("");
