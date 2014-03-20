@@ -236,7 +236,6 @@ function load_main_chart() {
 				.data(gradeObject)
 				.enter().append("g")
 				.on("mouseover", function(d){
-					console.log("mouseover");
 					d3.select(this).style("cursor", "pointer");
 					$('#category_title').html("");
 					$('#max_possible').html("");
@@ -260,7 +259,6 @@ function load_main_chart() {
 					}
 				})
 				.on("click",function(d){
-					console.log("click");
 					$(".cwh-graph").html("");
 					$(".category-title").html("");
 					if (d.Category == "CWH") {
@@ -323,6 +321,7 @@ function load_main_chart() {
 				.attr("class", "cover")
 				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)";})
 				.on("click",function(d){
+					console.log("click");
 					$(".cwh-graph").html("");
 					$(".testdiv").html("");
 					$(".category-title").html("");
@@ -351,6 +350,7 @@ function load_main_chart() {
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
 				.on("mouseover", function(){
 					d3.select(this).style("cursor", "pointer");
+					console.log("hover");
 					
 				})
 				.style("fill", "transparent");

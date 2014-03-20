@@ -185,6 +185,9 @@ def index():
 	return render_template('index.html', user = current_user)
 ########## end signin and signup views ##########
 
+########## user views ##########
+########## end user views ##########
+
 ########## assignment views ##########
 @app.route('/assignmentlist')
 def list_assignments():
