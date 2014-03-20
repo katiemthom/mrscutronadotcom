@@ -235,7 +235,6 @@ function load_main_chart() {
 				// .data(data)
 				.data(gradeObject)
 				.enter().append("g")
-				console.log("before mouseover");
 				.on("mouseover", function(d){
 					console.log("mouseover");
 					d3.select(this).style("cursor", "pointer");
