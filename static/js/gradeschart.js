@@ -105,24 +105,18 @@ $(document).ready(function() {
 				CWH_val += CWHGrades[i].score;
 				CWH_max += 4; 
 			};
-			console.log(CWH_val);
-			console.log(CWH_max); 
 			MK_val = 0
 			MK_max = 0
 			for (var i = 0; i < MKGrades.length; i++) {
 				MK_val += MKGrades[i].score;
 				MK_max += 4; 
 			};
-			console.log(MK_val);
-			console.log(MK_max); 
 			AK_val = 0
 			AK_max = 0
 			for (var i = 0; i < AKGrades.length; i++) {
 				AK_val += AKGrades[i].score;
 				AK_max += 4; 
 			};
-			console.log(AK_val);
-			console.log(AK_max);
 			add_to_cat_val = parseFloat($('#new-grade-val').val()) * parseFloat($('#new-num-val').val());
 			add_to_max_val = 4 * parseFloat($('#new-num-val').val());
 			if ($('#new-cat-val').val() == "CWH") {
@@ -230,7 +224,6 @@ function load_main_chart() {
 			var categories = ["CWH", "AK", "MK"];
 			// d3.keys(data[0]).filter(function(key) { return key !== "Category"; })
 			color.domain(categories);
-			console.log(gradeObject);
 			// data.forEach(function(d) {
 			// 	var y0 = 0;
 			// 	// d.cats = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name], y2: d}; });
@@ -450,6 +443,7 @@ function show_cwh(cwhData) {
         })
         .attr("fill", "#707070")
         .on("mouseover", function(d){
+        	console.log("mouseover");
             d3.select(this).style("fill", "#ADADAD");
             $('#assignment_title').append(d.atitle);
             $('#assignment_score').append(d.score);
