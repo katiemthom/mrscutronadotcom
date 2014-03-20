@@ -236,6 +236,7 @@ function load_main_chart() {
 				.data(gradeObject)
 				.enter().append("g")
 				.on("mouseover", function(d){
+					console.log("mouseover");
 					d3.select(this).style("cursor", "pointer");
 					$('#category_title').html("");
 					$('#max_possible').html("");
@@ -443,7 +444,6 @@ function show_cwh(cwhData) {
         })
         .attr("fill", "#707070")
         .on("mouseover", function(d){
-        	console.log("mouseover");
             d3.select(this).style("fill", "#ADADAD");
             $('#assignment_title').append(d.atitle);
             $('#assignment_score').append(d.score);
