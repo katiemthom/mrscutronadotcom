@@ -353,19 +353,19 @@ function load_main_chart() {
 					$('#category_title').html("");
 					$('#max_possible').html("");
 					$('#category_score').html("");
-					if (d.Category == "CWH") {
+					if (d.y1 == 15) {
 						$('#category_title').append("College Work Habits");
 						$('#max_possible').append("15%");
 						$('#category_score').append(CWHGrade+"%");
-					} else if (d.Category == "MK") {
+					} else if (d.y1 == 40) {
 						$('#category_title').append("Mastery of Knowledge");
 						$('#max_possible').append("40%");
 						$('#category_score').append(MKGrade+"%");
-					} else if (d.Category == "AK") {
+					} else if (d.y1 == 45) {
 						$('#category_title').append("Application of Knowledge");
 						$('#max_possible').append("45%");
 						$('#category_score').append(AKGrade+"%");
-					} else if (d.Category == "TOTAL") {
+					} else if (d.y1 == 100) {
 						$('#category_title').append("Total");
 						$('#max_possible').append("100%");
 						$('#category_score').append(TOTALGrade+"%");
