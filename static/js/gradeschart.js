@@ -235,6 +235,7 @@ function load_main_chart() {
 				// .data(data)
 				.data(gradeObject)
 				.enter().append("g")
+				console.log("before mouseover");
 				.on("mouseover", function(d){
 					console.log("mouseover");
 					d3.select(this).style("cursor", "pointer");
@@ -260,6 +261,7 @@ function load_main_chart() {
 					}
 				})
 				.on("click",function(d){
+					console.log("click");
 					$(".cwh-graph").html("");
 					$(".category-title").html("");
 					if (d.Category == "CWH") {
