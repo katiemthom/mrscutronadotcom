@@ -321,7 +321,6 @@ function load_main_chart() {
 				.attr("class", "cover")
 				.attr("transform", function(d) { return "translate(" + x(d.Category) + ",0)";})
 				.on("click",function(d){
-					console.log("click");
 					$(".cwh-graph").html("");
 					$(".testdiv").html("");
 					$(".category-title").html("");
@@ -348,10 +347,29 @@ function load_main_chart() {
 				.attr("width", x.rangeBand())
 				.attr("y", function(d) { return y(d.y1); })
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
-				.on("mouseover", function(){
+				.on("mouseover", function(d){
 					d3.select(this).style("cursor", "pointer");
-					console.log("hover");
-					
+					console.log(d);
+					$('#category_title').html("");
+					$('#max_possible').html("");
+					$('#category_score').html("");
+					if (d.Category == "CWH") {
+						$('#category_title').append("College Work Habits");
+						$('#max_possible').append("15%");
+						$('#category_score').append(CWHGrade+"%");
+					} else if (d.Category == "MK") {
+						$('#category_title').append("Mastery of Knowledge");
+						$('#max_possible').append("40%");
+						$('#category_score').append(MKGrade+"%");
+					} else if (d.Category == "AK") {
+						$('#category_title').append("Application of Knowledge");
+						$('#max_possible').append("45%");
+						$('#category_score').append(AKGrade+"%");
+					} else if (d.Category == "TOTAL") {
+						$('#category_title').append("Total");
+						$('#max_possible').append("100%");
+						$('#category_score').append(TOTALGrade+"%");
+					}
 				})
 				.style("fill", "transparent");
 		// ***************** END FIRST CALLBACK *****************

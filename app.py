@@ -186,6 +186,9 @@ def index():
 ########## end signin and signup views ##########
 
 ########## user views ##########
+@app.route('/profile')
+def show_profile():
+	return render_template('profile.html', user = current_user)
 ########## end user views ##########
 
 ########## assignment views ##########
