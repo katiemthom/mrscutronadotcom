@@ -69,7 +69,6 @@ def load_grade_csv(csv_file):
                         grade = float(data[j])
                     # get assignment
                     assignment_dict[d][1][student_id] = grade
-                    print assignment_dict
                     # add grade
                     d += 1 
         else: 
