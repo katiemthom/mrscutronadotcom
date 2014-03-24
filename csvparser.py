@@ -82,6 +82,8 @@ def load_grade_csv(csv_file):
                 assignment_dict[c] = [title,{}]
                 c += 1
     # now I have everthing and need to add it to the db 
+    print "done with for loop"
+    print assignment_dict
     for key in assignment_dict.keys():
         print assignment_dict[key]
         return
