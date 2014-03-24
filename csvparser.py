@@ -69,6 +69,7 @@ def load_grade_csv(csv_file):
                         grade = float(data[j])
                     # get assignment
                     assignment_dict[d][1][student_id] = grade
+                    print assignment_dict
                     # add grade
                     d += 1 
         else: 
@@ -89,11 +90,9 @@ def load_grade_csv(csv_file):
         grades_dict = assignment_dict[key][1]
         for student_id in grades_dict.keys():
             value = grades_dict[student_id]
-            print student_id
             try:
                 user = model.get_user_by_school_id(student_id)
                 user_id = user.user_id
-                print "user found"
                 try: 
                     assignment = model.get_assignment_by_title(title)
                     assignment_pk = assignment.assignment_pk
