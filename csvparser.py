@@ -65,7 +65,6 @@ def load_grade_csv(csv_file):
                     # grade
                     if data[j] != '': 
                         grade = float(data[j])
-                        print grade
                         # get assignment
                         assignment_dict[d][1][student_id] = grade
                         # add grade
@@ -84,6 +83,8 @@ def load_grade_csv(csv_file):
                 c += 1
     # now I have everthing and need to add it to the db 
     for key in assignment_dict.keys():
+        print assignment_dict[key]
+        return
         title = assignment_dict[key][0]
         grades_dict = assignment_dict[key][1]
         for student_id in grades_dict.keys():
