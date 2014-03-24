@@ -44,14 +44,12 @@ def load_period_2():
 #     return    
 
 def load_grade_csv(csv_file):
-    print "in csv parser"
     csv_file = string.replace(csv_file, "\n", "\r")
     reader=csv_file.split("\r")
     recording = False
     assignment_dict = {}
     c = 0
     for row in reader:
-        print row
         if row[:4].isdigit():
             recording = True
         if recording: 
@@ -81,6 +79,7 @@ def load_grade_csv(csv_file):
                 # print i
                 # return
                 title = row[i+2:]
+                print title
                 # print title
                 # return
                 assignment_dict[c] = [title,{}]
