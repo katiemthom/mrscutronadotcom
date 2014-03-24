@@ -61,16 +61,15 @@ def load_grade_csv(csv_file):
                 if j == 0: 
                     # student id
                     student_id = int(data[j])
+                    print student_id
                 elif j > 3:
                     # grade
-                    if data[j] == '':
-                        grade = 0
-                    else: 
+                    if data[j] != '': 
                         grade = float(data[j])
-                    # get assignment
-                    assignment_dict[d][1][student_id] = grade
-                    # add grade
-                    d += 1 
+                        # get assignment
+                        assignment_dict[d][1][student_id] = grade
+                        # add grade
+                        d += 1 
         else: 
             # give each title an order
             i = string.find(row, ',"')
@@ -79,7 +78,6 @@ def load_grade_csv(csv_file):
                 # print i
                 # return
                 title = row[i+2:]
-                print title
                 # print title
                 # return
                 assignment_dict[c] = [title,{}]
