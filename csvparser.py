@@ -92,6 +92,8 @@ def load_grade_csv(csv_file):
             try:
                 user = model.get_user_by_school_id(student_id)
                 user_id = user.user_id
+                print "user found"
+                print grades_dict
                 try: 
                     assignment = model.get_assignment_by_title(title)
                     assignment_pk = assignment.assignment_pk
