@@ -43,6 +43,7 @@ def load_period_2():
 #     # grades dict looks like 
 #     return    
 
+# Need a catch for if grade is not a number
 def load_grade_csv(csv_file):
     csv_file = string.replace(csv_file, "\n", "\r")
     reader=csv_file.split("\r")
@@ -70,9 +71,6 @@ def load_grade_csv(csv_file):
                 title = row[i+2:]
                 assignment_dict[title_counter] = [title,{}]
                 title_counter += 1
-    print "done with for loop"
-    print assignment_dict
-    return
     for key in assignment_dict.keys():
         print assignment_dict[key]
         return
