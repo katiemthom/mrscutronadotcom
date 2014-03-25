@@ -72,8 +72,6 @@ def load_grade_csv(csv_file):
                 assignment_dict[title_counter] = [title,{}]
                 title_counter += 1
     for key in assignment_dict.keys():
-        print assignment_dict[key]
-        return
         title = assignment_dict[key][0]
         grades_dict = assignment_dict[key][1]
         for student_id in grades_dict.keys():
