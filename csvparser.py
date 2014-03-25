@@ -55,6 +55,7 @@ def load_grade_csv(csv_file):
             recording = True
         if recording: 
             data = row.split(',')
+            print data
             grade = 0
             assignment_counter = 0
             for j in range(0,len(data)):
@@ -64,7 +65,6 @@ def load_grade_csv(csv_file):
                     grade = float(data[j])
                     assignment_dict[assignment_counter][1][student_id] = grade
                     assignment_counter += 1
-            print assignment_dict[assignment_counter - 1][1]
         else: 
             i = string.find(row, ',"')
             if i != -1: 
