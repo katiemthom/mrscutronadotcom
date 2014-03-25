@@ -61,7 +61,7 @@ def load_grade_csv(csv_file):
                 grade = 0
                 assignment_counter = 0
                 for j in range(0,len(data)):
-                    if j == 0: 
+                    if j == 0:
                         student_id = int(data[j])
                     elif j > 3 and data[j] != '':
                         grade = float(data[j])

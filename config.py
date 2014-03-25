@@ -5,5 +5,3 @@ SECRET_KEY = 'ilovemonkeys'
 epw = 'thankyoukatie!2013'
 DEBUG = True 
 WTF_CSRF_ENABLED=False
-aws_access_key_id = 'AKIAJTGXJSC46WYVOO6Q'
-aws_secret_access_key = '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'
