@@ -48,28 +48,28 @@ def load_grade_csv(csv_file):
     reader=csv_file.split("\r")
     recording = False
     assignment_dict = {}
-    c = 0
+    title_counter = 0
     for row in reader:
         if row[:4].isdigit():
             recording = True
         if recording: 
             data = row.split(',')
             grade = 0
-            d = 0
+            assignment_counter = 0
             for j in range(0,len(data)):
                 if j == 0: 
                     student_id = int(data[j])
                 elif j > 3 and data[j] != '':
                     grade = float(data[j])
-                    assignment_dict[d][1][student_id] = grade
-                    d += 1 
+                    assignment_dict[assignment_counter][1][student_id] = grade
+                    assignment_counter += 1
+            print assignment_dict[assignment_counter - 1][1][student_id]
         else: 
             i = string.find(row, ',"')
             if i != -1: 
                 title = row[i+2:]
-                assignment_dict[c] = [title,{}]
-                print assignment_dict[c]
-                c += 1
+                assignment_dict[title_counter] = [title,{}]
+                title_counter += 1
     print "done with for loop"
     print assignment_dict
     return
