@@ -545,7 +545,7 @@ def process_sign_up():
 		email = form.email.data
 		if email[-10:] != "es-cat.org":
 			flash('You must use your CAT email.','warning')
-			return render_template('signup.html', user=current_user, first=first_name, last=last_name, school_id=school_id)
+			return render_template('signup.html', user=current_user, first=first_name, last=last_name, school_id=school_id, form =form)
 		password = form.password.data
 		validate_password = form.pw_validation.data
 		period = form.period.data
@@ -555,7 +555,7 @@ def process_sign_up():
 		if password != validate_password:
 			flash('Passwords do not match.')
 			return render_template('signup.html', user=current_user, first=first_name
-				, last=last_name,email=email, school_id=school_id)
+				, last=last_name,email=email, school_id=school_id, form =form)
 		new_user = model.create_user(first_name,last_name,email,password,int(period),int(school_id),profile_pic)
 		login_user(new_user)
 		return render_template('index.html',user=new_user)
