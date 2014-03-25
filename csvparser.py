@@ -55,16 +55,18 @@ def load_grade_csv(csv_file):
             recording = True
         if recording: 
             data = row.split(',')
-            print data
-            grade = 0
-            assignment_counter = 0
-            for j in range(0,len(data)):
-                if j == 0: 
-                    student_id = int(data[j])
-                elif j > 3 and data[j] != '':
-                    grade = float(data[j])
-                    assignment_dict[assignment_counter][1][student_id] = grade
-                    assignment_counter += 1
+            if len(data) < 4:
+                pass
+            else:
+                grade = 0
+                assignment_counter = 0
+                for j in range(0,len(data)):
+                    if j == 0: 
+                        student_id = int(data[j])
+                    elif j > 3 and data[j] != '':
+                        grade = float(data[j])
+                        assignment_dict[assignment_counter][1][student_id] = grade
+                        assignment_counter += 1
         else: 
             i = string.find(row, ',"')
             if i != -1: 
