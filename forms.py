@@ -30,7 +30,7 @@ class SignupForm(Form):
 	password = TextField('Password', [validators.Required()])
 	email = TextField('Email', [validators.Required()])
 	pw_validation = TextField('Validate', [validators.Required()])
-	school_id = TextField('SchoolId', [validators.Required()])
+	school_id = TextField('SchoolId', [validators.Length(min=4,max=4)])
 	period = SelectField('Class Period', choices=[('2', '2'), ('3', '3'), ('4', '4'), ('5', '5')])
 	profile_pic = RadioField('ProfileImage', choices=[('/static/profile_pics/cat1.png','<img class="media-object" src="/static/profile_pics/cat1.png">'),('/static/profile_pics/cat2.png','<img class="media-object" src="/static/profile_pics/cat2.png">'),('/static/profile_pics/cat3.png','<img class="media-object" src="/static/profile_pics/cat3.png">')])
 	# profile_pic = TextField('Profile Picture')

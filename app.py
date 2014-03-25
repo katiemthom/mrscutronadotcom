@@ -530,6 +530,7 @@ def sign_up():
 def process_sign_up():
 	form = forms.SignupForm()
 	if not form.validate(): 
+		print form.errors
 		first_name = form.first_name.data
 		last_name = form.last_name.data
 		email = form.email.data
@@ -538,6 +539,7 @@ def process_sign_up():
 		return render_template('signup.html', user=current_user, first=first_name
 				, last=last_name,email=email, school_id=school_id)
 	else:
+		print form.errors
 		first_name = form.first_name.data
 		last_name = form.last_name.data
 		email = form.email.data
