@@ -53,37 +53,26 @@ def load_grade_csv(csv_file):
         if row[:4].isdigit():
             recording = True
         if recording: 
-            # do grade stufff
             data = row.split(',')
             grade = 0
             d = 0
             for j in range(0,len(data)):
                 if j == 0: 
-                    # student id
                     student_id = int(data[j])
-                elif j > 3:
-                    # grade
-                    if data[j] != '': 
-                        grade = float(data[j])
-                        # get assignment
-                        assignment_dict[d][1][student_id] = grade
-                        # add grade
-                        d += 1 
+                elif j > 3 and data[j] != '':
+                    grade = float(data[j])
+                    assignment_dict[d][1][student_id] = grade
+                    d += 1 
         else: 
-            # give each title an order
             i = string.find(row, ',"')
             if i != -1: 
-                # print row
-                # print i
-                # return
                 title = row[i+2:]
-                # print title
-                # return
                 assignment_dict[c] = [title,{}]
+                print assignment_dict[c]
                 c += 1
-    # now I have everthing and need to add it to the db 
     print "done with for loop"
     print assignment_dict
+    return
     for key in assignment_dict.keys():
         print assignment_dict[key]
         return
