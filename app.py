@@ -213,6 +213,7 @@ def add_assignment():
 			category = form.category.data
 			group = form.group.data
 			title = form.title.data
+			weight = form.weight.data
 			new_assignment = model.add_assignment(assigned_on,due_on,link,description,category,group,title)
 			return redirect('assignmentlist')
 	else:

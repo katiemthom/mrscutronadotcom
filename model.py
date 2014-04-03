@@ -93,6 +93,7 @@ class Assignment(Base):
 	assignment_id = Column(BigInteger, nullable = False)
 	is_deleted = Column(Boolean, nullable = False, default = False)
 	title = Column(String(120), nullable = False)
+	weight = Column(Float, nullable = False, default = 1)
 
 class Grade(Base):
 	__tablename__ = 'grades'
@@ -101,7 +102,6 @@ class Grade(Base):
 	value = Column(Float, nullable = False)
 	user_id = Column(BigInteger, ForeignKey('users.user_id'), nullable = False)
 	note = Column(Text, nullable = True)
-	weight = Column(Float, nullable = False, default = 1)
 	version_id = Column(Integer, nullable = False, default = 1)
 	is_deleted = Column(Boolean, nullable = False, default = False)
 	user = relationship("User", backref='grades')
@@ -316,14 +316,14 @@ def calc_grade(user_id):
 ########### END FUNCTIONS WITH GRADES ###########
 
 ########### FUNCTIONS WITH ASSIGNMENTS ###########
-def add_assignment(assigned_on,due_on,link,description,category,group,title):
+def add_assignment(assigned_on,due_on,link,description,category,group,title,weight):
 	#set assignment id see add comment below
 	last = session.query(Assignment).order_by(desc(Assignment.assignment_pk)).first()
 	if last: 
 		assignment_id = last.assignment_pk + 1
 	else: 
 		assignment_id = 1
-	new_assignment = Assignment(assigned_on=assigned_on,due_on=due_on,link=link,description=description,category=category,group=group,title=title,assignment_id=assignment_id)
+	new_assignment = Assignment(assigned_on=assigned_on,due_on=due_on,link=link,description=description,category=category,group=group,title=title,assignment_id=assignment_id,weight=weight)
 	session.add(new_assignment)
 	session.commit()
 	return new_assignment
