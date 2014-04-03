@@ -84,6 +84,8 @@ def load_grade_csv(csv_file):
                 try: 
                     assignment = model.get_assignment_by_title(title)
                     assignment_pk = assignment.assignment_pk
+                    assignment_weight = assignment.weight
+                    value = value * int(assignment_weight)
                     grade = model.add_grade(assignment_pk,value,user_id)
                     model.session.add(grade)
                 except:
