@@ -323,7 +323,8 @@ def add_assignment(assigned_on,due_on,link,description,category,group,title,weig
 		assignment_id = last.assignment_pk + 1
 	else: 
 		assignment_id = 1
-	new_assignment = Assignment(assigned_on=assigned_on,due_on=due_on,link=link,description=description,category=category,group=group,title=title,assignment_id=assignment_id,weight=weight)
+	max_points = 4 * weight
+	new_assignment = Assignment(assigned_on=assigned_on,due_on=due_on,link=link,description=description,category=category,group=group,title=title,assignment_id=assignment_id,weight=weight,max_points=max_points)
 	session.add(new_assignment)
 	session.commit()
 	return new_assignment
