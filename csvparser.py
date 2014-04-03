@@ -46,7 +46,7 @@ def load_period_2():
 # Need a catch for if grade is not a number
 def load_grade_csv(csv_file):
     csv_file = string.replace(csv_file, "\n", "\r")
-    reader=csv_file.split("\r")
+    reader = csv_file.split("\r")
     recording = False
     assignment_dict = {}
     title_counter = 0
@@ -63,7 +63,7 @@ def load_grade_csv(csv_file):
                 for j in range(0,len(data)):
                     if j == 0:
                         student_id = int(data[j])
-                    elif j > 3 and data[j] != '':
+                    elif j > 3 and data[j] != '' and data[j] != "Ex":
                         grade = float(data[j])
                         assignment_dict[assignment_counter][1][student_id] = grade
                         assignment_counter += 1
