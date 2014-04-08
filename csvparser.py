@@ -51,6 +51,8 @@ def load_grade_csv(csv_file):
     assignment_dict = {}
     title_counter = 0
     for row in reader:
+        print "row"
+        print row
         if row[:4].isdigit():
             recording = True
         if recording: 
@@ -68,13 +70,21 @@ def load_grade_csv(csv_file):
                         assignment_dict[assignment_counter][1][student_id] = grade
                         assignment_counter += 1
         else: 
+            print "finding titles"
             i = string.find(row, ',"')
+            print "i"
+            print i
             if i != -1: 
+                print "title found"
+                print "title"
                 title = row[i+2:]
+                print title
                 assignment_dict[title_counter] = [title,{}]
+                print "assignment_dict"
+                print assignment_dict
                 title_counter += 1
-    print "assignment_dict"
-    print assignment_dict
+    # print "assignment_dict"
+    # print assignment_dict
     for key in assignment_dict.keys():
         title = assignment_dict[key][0]
         grades_dict = assignment_dict[key][1]
