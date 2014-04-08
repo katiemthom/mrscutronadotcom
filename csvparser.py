@@ -73,16 +73,12 @@ def load_grade_csv(csv_file):
                 title = row[i+2:]
                 assignment_dict[title_counter] = [title,{}]
                 title_counter += 1
-    print "assignment_dict"
-    print assignment_dict
     for key in assignment_dict.keys():
         title = assignment_dict[key][0]
         grades_dict = assignment_dict[key][1]
         for student_id in grades_dict.keys():
             value = grades_dict[student_id]
             try:
-                print "student_id"
-                print student_id
                 user = model.get_user_by_school_id(student_id)
                 user_id = user.user_id
                 print "user_id"
