@@ -45,6 +45,7 @@ def load_period_2():
 
 # Need a catch for if grade is not a number
 def load_grade_csv(csv_file):
+    print "in csvparser"
     csv_file = string.replace(csv_file, "\n", "\r")
     reader = csv_file.split("\r")
     recording = False
