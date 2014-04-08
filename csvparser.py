@@ -45,7 +45,6 @@ def load_period_2():
 
 # Need a catch for if grade is not a number
 def load_grade_csv(csv_file):
-    print "in csvparser"
     csv_file = string.replace(csv_file, "\n", "\r")
     reader = csv_file.split("\r")
     recording = False
@@ -74,6 +73,8 @@ def load_grade_csv(csv_file):
                 title = row[i+2:]
                 assignment_dict[title_counter] = [title,{}]
                 title_counter += 1
+    print "assignment_dict"
+    print assignment_dict
     for key in assignment_dict.keys():
         title = assignment_dict[key][0]
         grades_dict = assignment_dict[key][1]
@@ -86,7 +87,7 @@ def load_grade_csv(csv_file):
                     assignment = model.get_assignment_by_title(title)
                     assignment_pk = assignment.assignment_pk
                     assignment_weight = assignment.weight
-                    value = value * int(assignment_weight)
+                    value = value * float(assignment_weight)
                     grade = model.add_grade(assignment_pk,value,user_id)
                     model.session.add(grade)
                 except:
