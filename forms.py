@@ -44,7 +44,7 @@ class AddAssignmentForm(Form):
 	link = TextField('Assignment Link')
 	description = TextField('Assignment Description')
 	group = SelectField('Group', choices=[('0','0'),('1','1'),('2','2'),('3','3'),('4','4')])
-	weight = SelectField('Assignment Weight', choices=[('1','1'),('2','2'),('3','3'),('4','4')])
+	weight = SelectField('Assignment Weight', choices=[('0','0'),('0.5','0.5'),('1','1'),('1.5','1.5'),('2','2'),('2.5','2.5'),('3','3'),('3.5','3.5'),('4','4'),('4.5','4.5'),('5','5')])
 
 class UploadGradesForm(Form):
 	csv_file = TextField("CSV", [validators.Required()])
