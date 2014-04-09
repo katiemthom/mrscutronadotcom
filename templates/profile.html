@@ -2,9 +2,10 @@
 {% block body %}
 
 <div class='container'>
-
+	{% for message in get_flashed_messages() %}
+    	<div class="alert alert-warning">{{ message }}</div>
+  	{% endfor %}
 	<br>
-
 	<div class="well" id='search-well'>
 
 		<div class="page-header">
