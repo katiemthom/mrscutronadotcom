@@ -60,5 +60,10 @@ class AddPhoneForm(Form):
 class SendTextForm(Form):
 	text_content = TextAreaField("Text Content", [validators.Required()])	
 
+class ChangePasswordForm(Form):
+	old_password = TextField("Old Password", [validators.Required()])
+	new_password = TextField("New Password", [validators.Required()])
+	new_password_v = TextField("New Password Validator", [validators.Required()])
+
 
 	

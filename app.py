@@ -183,9 +183,13 @@ def index():
 ########## end signin and signup views ##########
 
 ########## user views ##########
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
 def show_profile():
-	return render_template('profile.html', user = current_user)
+	if request.method == 'GET':
+		form = forms.ChangePasswordForm()
+		return render_template('profile.html', user=current_user, form=form)
+	elif request.method == 'POST':
+		return render_template('profile.html', user=current_user, form=form)
 ########## end user views ##########
 
 ########## assignment views ##########
@@ -525,7 +529,7 @@ def show_mark():
 @app.route('/signup')
 def sign_up():
 	form = forms.SignupForm()
-	return render_template('signup.html', user=current_user, form =form)
+	return render_template('signup.html', user=current_user, form=form)
 
 @app.route('/signup', methods=['POST'])
 def process_sign_up():

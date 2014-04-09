@@ -10,14 +10,27 @@
 		<div class="page-header">
 			<h1>Profile</h1>
 			<p>
-				<h3>Name:</h3>
+				<h3>Name</h3>
 				{{user.first_name}} {{user.last_name}}
 			</p>
 			<p>
-				<h3>Email:</h3>
+				<h3>Email</h3>
 				{{user.email}}
 			</p>
 			<h3>Change Password</h3>
+			<form action='{{url_for('show_profile')}}' method='post' enctype='multipart/form-data'>
+				<br>
+				<p>
+					<input class='form-control' name='old_password' type="password" placeholder='Old Password'/>
+				</p>
+				<p>
+					<input class='form-control' name='new_password' type="password" placeholder='New Password'/>
+				</p>
+				<p>
+					<input class='form-control' name='new_password_v' type="password" placeholder='Retype New Password'/>
+				</p>
+				<p><button type="submit" class="btn btn-default">Change Password</button></p>
+			</form>
 		</div>
   		
   	</div>
