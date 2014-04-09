@@ -154,7 +154,6 @@ $(document).ready(function() {
 
 // ***************** FUNCTIONS *****************
 function create_data() {
-	console.log("create_data");
 	for (var i = gradesDict.length - 1; i >= 0; i--) {
 		if ( gradesDict[i].category == "CWH" ) {
 			CWHGrades.push(gradesDict[i]);
@@ -165,7 +164,6 @@ function create_data() {
 		}
 		TOTALGrades.push(gradesDict[i]);
 	};
-	console.log(CWHGrades);
 }
 
 // ***************** LOADS MAIN GRADE CHART *****************
@@ -331,7 +329,6 @@ function load_main_chart() {
 				.attr("height", function(d) { return y(d.y0) - y(d.y1); })
 				.on("mouseover", function(d){
 					d3.select(this).style("cursor", "pointer");
-					console.log(d);
 					$('#category_title').html("");
 					$('#max_possible').html("");
 					$('#category_score').html("");
@@ -456,6 +453,7 @@ function show_cwh(cwhData) {
             $('#assignment_title').html("");
             $('#assignment_score').html("");
             $('#assignment_due_on').html("");
+            $('#assignment_weight').html("");
         });
 }
 
