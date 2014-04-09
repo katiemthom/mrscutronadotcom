@@ -458,7 +458,7 @@ function show_cwh(cwhData) {
 
 // ***************** SHOW ASSIGNMENT/GRADE DETAILS *****************
 function show_details() {
-    $(".cwh-graph").append('<div class="container" id="assignment_details"><h1>Assignment Details</h1><br><br><p class="larger">Assignment Title: <span id="assignment_title"></span></p><p class="larger">Score: <span id="assignment_score"></span></p><p class="larger">Due Date: <span id="assignment_due_on"></span></p></div>');
+    $(".cwh-graph").append('<div class="container" id="assignment_details"><h1>Assignment Details</h1><br><br><p class="larger">Assignment Title: <span id="assignment_title"></span></p><p class="larger">Score: <span id="assignment_score"></span></p><p class="larger">Weight: <span id="assignment_weight"></span></p><p class="larger">Due Date: <span id="assignment_due_on"></span></p></div>');
 }
 
 function show_main_details() {
