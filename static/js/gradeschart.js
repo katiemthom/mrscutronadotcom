@@ -444,9 +444,10 @@ function show_cwh(cwhData) {
         .on("mouseover", function(d){
             d3.select(this).style("fill", "#ADADAD");
             $('#assignment_title').append(d.atitle);
-            $('#assignment_score').append(d.score);
+            $('#assignment_score').append(d.score / d.weight);
             $('#assignment_due_on').append(d.date);
             $('#assignment_weight').append(d.weight);
+            $('#assignment_weighted_score').append(d.score);
         })
        .on("mouseout", function(){
             d3.select(this).style("fill", "#707070");
@@ -454,12 +455,13 @@ function show_cwh(cwhData) {
             $('#assignment_score').html("");
             $('#assignment_due_on').html("");
             $('#assignment_weight').html("");
+            $('#assignment_weighted_score').html("");
         });
 }
 
 // ***************** SHOW ASSIGNMENT/GRADE DETAILS *****************
 function show_details() {
-    $(".cwh-graph").append('<div class="container" id="assignment_details"><h1>Assignment Details</h1><br><br><p class="larger">Assignment Title: <span id="assignment_title"></span></p><p class="larger">Score: <span id="assignment_score"></span></p><p class="larger">Weight: <span id="assignment_weight"></span></p><p class="larger">Due Date: <span id="assignment_due_on"></span></p></div>');
+    $(".cwh-graph").append('<div class="container" id="assignment_details"><h1>Assignment Details</h1><br><br><p class="larger">Assignment Title: <span id="assignment_title"></span></p><p class="larger">Score: <span id="assignment_score"></span></p><p class="larger">Weight: <span id="assignment_weight"></span></p><p class="larger">Weighted Score: <span id="assignment_weighted_score"></span></p><p class="larger">Due Date: <span id="assignment_due_on"></span></p></div>');
 }
 
 function show_main_details() {
