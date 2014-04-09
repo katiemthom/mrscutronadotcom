@@ -447,6 +447,7 @@ function show_cwh(cwhData) {
             $('#assignment_title').append(d.atitle);
             $('#assignment_score').append(d.score);
             $('#assignment_due_on').append(d.date);
+            $('#assignment_weight').append(d.weight);
         })
        .on("mouseout", function(){
             d3.select(this).style("fill", "#707070");
