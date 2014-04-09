@@ -185,8 +185,8 @@ def index():
 ########## user views ##########
 @app.route('/profile', methods=['GET', 'POST'])
 def show_profile():
+	form = forms.ChangePasswordForm()
 	if request.method == 'GET':
-		form = forms.ChangePasswordForm()
 		return render_template('profile.html', user=current_user, form=form)
 	elif request.method == 'POST':
 		if not form.validate(): 
