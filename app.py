@@ -193,7 +193,12 @@ def show_profile():
 			flash('All fields are required.','warning')
 		else: 
 			# get form data
-			pass
+			password = form.old_password.data 
+			if not current_user.authenticate(password): 
+				flash('Incorrect old password.', 'warning')
+			# check that old password is correct
+			# check that new passwords match
+			# add new password to db
 		return render_template('profile.html', user=current_user, form=form)
 ########## end user views ##########
 
