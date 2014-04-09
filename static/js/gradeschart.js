@@ -154,6 +154,7 @@ $(document).ready(function() {
 
 // ***************** FUNCTIONS *****************
 function create_data() {
+	console.log("create_data");
 	for (var i = gradesDict.length - 1; i >= 0; i--) {
 		if ( gradesDict[i].category == "CWH" ) {
 			CWHGrades.push(gradesDict[i]);
@@ -164,6 +165,7 @@ function create_data() {
 		}
 		TOTALGrades.push(gradesDict[i]);
 	};
+	console.log(CWHGrades);
 }
 
 // ***************** LOADS MAIN GRADE CHART *****************
