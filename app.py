@@ -198,8 +198,11 @@ def show_profile():
 			if not current_user.authenticate(password): 
 				flash('Incorrect old password.', 'warning')
 			# check that new passwords match
-			if form.new_password.data != form.new_password_v.data:
+			elif form.new_password.data != form.new_password_v.data:
 				flash('New passwords must match.', 'warning')
+			else:
+				model.change_password(current_user.user_id, form.new_password.data)
+				flash('Your password has been changed.', 'success')
 			# add new password to db
 		return render_template('profile.html', user=current_user, form=form)
 ########## end user views ##########

@@ -194,6 +194,11 @@ def toggle_status_by_user_id(user_id, status):
 		user.is_banned = False
 	session.commit()
 	return 
+
+def change_password(user_id, new_password):
+	user = get_user_by_id(user_id)
+	user.setpw(new_password)
+	return 
 ########### END USER FUNCTIONS ###########
 
 ########### FUNCTIONS WITH NOTES ###########
